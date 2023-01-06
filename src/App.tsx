@@ -1,9 +1,17 @@
-function App() {
-  return (
-    <div className="App">
-      Testing
-    </div>
-  )
-}
+import { Route, Routes } from 'react-router-dom';
+import Navigation from './components/Navigation';
+import HomePage from './pages/HomePage';
+import React from 'react';
 
-export default App
+const App: React.FC = () => {
+  return (
+    <div className='App'>
+      <Navigation />
+      <Routes>
+        <Route path='/' element={<HomePage />}></Route>
+      </Routes>
+    </div>
+  );
+};
+
+export default App;
