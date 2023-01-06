@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import projectQueryKeys from '../query-keys/projectQueryKeys';
 
 const projects = [
   {
@@ -53,7 +54,7 @@ const useGetProjects = (): {
   isLoading: boolean;
 } => {
   const { data, isLoading } = useQuery({
-    queryKey: ['projects'],
+    queryKey: projectQueryKeys.lists(),
     queryFn: queryFunction,
   });
 
