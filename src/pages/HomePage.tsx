@@ -59,21 +59,19 @@ const projects = [
 
 const HomePage: React.FC = () => {
   return (
-    <div>
-      <Container>
-        <h1 style={{ padding: '1rem 0 1rem 1rem' }}>Dashboard</h1>
-        <GridContainer>
-          {projects?.map((project) => (
-            <Project key={project.id}>
-              <h3>{project.title}</h3>
-              <div>{`Number of members: ${project.number_of_members}`}</div>
-              <div>{`Start date: ${project.start_date}`}</div>
-              <div>{`Due date: ${project.due_date}`}</div>
-            </Project>
-          ))}
-        </GridContainer>
-      </Container>
-    </div>
+    <Container>
+      <h1 style={{ padding: '1rem 0 1rem 1rem' }}>Dashboard</h1>
+      <GridContainer>
+        {projects?.map((project) => (
+          <Project key={project.id}>
+            <h3>{project.title}</h3>
+            <div>{`Number of members: ${project.number_of_members}`}</div>
+            <div>{`Start date: ${project.start_date}`}</div>
+            <div>{`Due date: ${project.due_date}`}</div>
+          </Project>
+        ))}
+      </GridContainer>
+    </Container>
   );
 };
 
