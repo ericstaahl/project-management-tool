@@ -7,7 +7,8 @@ const NavContainer = styled.div({
   columnGap: '1.5rem',
   fontSize: '0.8rem',
   alignItems: 'center',
-  paddingLeft: '1rem',
+  padding: '1.5rem 0 1.5rem 1rem',
+  backgroundColor: '#21262e',
 });
 
 const Nav = styled.nav({
@@ -26,16 +27,14 @@ const StyledLink = styled(Link)({
 
 const Navigation: React.FC = () => {
   return (
-    <div>
-      <NavContainer>
-        <h1>Project Mangement Tool</h1>
-        <Nav>
-          <StyledLink to='/'>Dashboard</StyledLink>
-          <StyledLink to='#'>Projects</StyledLink>
-          <StyledLink to='#'>About</StyledLink>
-        </Nav>
-      </NavContainer>
-    </div>
+    <NavContainer>
+      <h1>Project Mangement Tool</h1>
+      <Nav>
+        <StyledLink to='/'>Dashboard</StyledLink>
+        <StyledLink to='#'>Projects</StyledLink>
+        <StyledLink to='#'>About</StyledLink>
+      </Nav>
+    </NavContainer>
   );
 };
 
