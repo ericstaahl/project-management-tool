@@ -35,7 +35,7 @@ const HomePage: React.FC = () => {
       <GridContainer>
         {!isLoading &&
           projects?.map((project) => (
-            <Project key={project.id}>
+            <Project key={project.project_id}>
               <h3>{project.title}</h3>
               <div>{`Number of members: ${project.number_of_members}`}</div>
               <div>{`Start date: ${project.start_date}`}</div>

@@ -6,7 +6,7 @@ const API_URL: string = import.meta.env.VITE_API_URL;
 
 type Projects = Array<{
   title: string;
-  id: number;
+  project_id: number;
   number_of_members: number;
   start_date: string;
   due_date: string;
@@ -24,7 +24,7 @@ const useGetProjects = (): {
   data:
     | Array<{
         title: string;
-        id: number;
+        project_id: number;
         number_of_members: number;
         start_date: string;
         due_date: string;
