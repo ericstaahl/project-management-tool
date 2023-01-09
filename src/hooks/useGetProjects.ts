@@ -1,45 +1,24 @@
 import { useQuery } from '@tanstack/react-query';
 import projectQueryKeys from '../query-keys/projectQueryKeys';
+import axios from 'axios';
 
-const projects = [
-  {
-    title: 'project1',
-    id: 1,
-    number_of_members: 2,
-    start_date: '2023/01/01',
-    due_date: '2023/02/28',
-  },
-  {
-    title: 'project2',
-    id: 2,
-    number_of_members: 4,
-    start_date: '2023/01/01',
-    due_date: '2023/02/28',
-  },
-  {
-    title: 'project3',
-    id: 3,
-    number_of_members: 5,
-    start_date: '2023/01/01',
-    due_date: '2023/02/28',
-  },
-  {
-    title: 'project4',
-    id: 4,
-    number_of_members: 5,
-    start_date: '2023/01/01',
-    due_date: '2023/02/28',
-  },
-];
+const API_URL: string = import.meta.env.VITE_API_URL;
 
-const queryFunction = (): Array<{
+type Projects = Array<{
   title: string;
   id: number;
   number_of_members: number;
   start_date: string;
   due_date: string;
-}> => {
-  return projects;
+}>;
+
+console.log(API_URL);
+const queryFunction = async (): Promise<Projects> => {
+  const res = await axios.get<Projects>(`${API_URL}/projects`);
+  console.log(res);
+  if (res.status === 200) {
+    return res.data;
+  } else throw new Error('An error occured');
 };
 const useGetProjects = (): {
   data:
