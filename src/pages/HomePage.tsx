@@ -38,8 +38,12 @@ const HomePage: React.FC = () => {
             <Project key={project.project_id}>
               <h3>{project.title}</h3>
               <div>{`Number of members: ${project.number_of_members}`}</div>
-              <div>{`Start date: ${project.start_date}`}</div>
-              <div>{`Due date: ${project.due_date}`}</div>
+              <div>{`Start date: ${new Date(
+                project.due_date
+              ).toLocaleDateString('sv-SE')}`}</div>
+              <div>{`Due date: ${new Date(project.due_date).toLocaleDateString(
+                'sv-SE'
+              )}`}</div>
             </Project>
           ))}
       </GridContainer>
