@@ -82,8 +82,9 @@ const CreateProjectPage: React.FC = () => {
           newInputErrors[key as keyof inputErrors] = true;
         }
       });
+
       setInputErrors(newInputErrors);
-      console.log(Object.values(newInputErrors).includes(true));
+
       if (
         newProject !== null &&
         !Object.values(newInputErrors).includes(true)
