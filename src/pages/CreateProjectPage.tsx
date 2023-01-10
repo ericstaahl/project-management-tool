@@ -25,6 +25,17 @@ const StyledForm = styled.form({
 const StyledInput = styled.input({
   padding: '0.3rem',
   fontFamily: 'inherit',
+  border: '0.1rem solid #f5f5f5',
+  borderRadius: '0.2rem',
+});
+
+const StyledButton = styled.button({
+  alignSelf: 'start',
+  backgroundColor: '#1927c2',
+  padding: '0.3rem 0.5rem 0.3rem 0.5rem',
+  border: '0.1rem solid #1927c2',
+  borderRadius: '0.2rem',
+  minWidth: '65px',
 });
 
 interface Project {
@@ -35,15 +46,59 @@ interface Project {
   due_date?: string;
 }
 
+interface inputErrors {
+  title?: boolean;
+  start_date?: boolean;
+  due_date?: boolean;
+}
+
 const CreateProjectPage: React.FC = () => {
   const [newProject, setNewProject] = useState<Project | null>(null);
+  const [inputErrors, setInputErrors] = useState<inputErrors>({
+    title: false,
+    start_date: false,
+    due_date: false,
+  });
   const addProject = useAddProject();
 
   const onSubmitFunction = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    console.log(newProject);
+    // if newProject has any values, check if they are ok
     if (newProject !== null) {
-      addProject.mutate(newProject);
+      const inputErrorKeys = Object.keys(inputErrors);
+      // reset errors
+      const newInputErrors = {
+        title: false,
+        start_date: false,
+        due_date: false,
+      };
+      // Get keys from the inputError object to check if they have correct values (or values at all)
+      inputErrorKeys.forEach((key) => {
+        if (
+          newProject[key as keyof Project] === null ||
+          newProject[key as keyof Project] === '' ||
+          newProject[key as keyof Project] === undefined
+        ) {
+          newInputErrors[key as keyof inputErrors] = true;
+        }
+      });
+      setInputErrors(newInputErrors);
+      console.log(Object.values(newInputErrors).includes(true));
+      if (
+        newProject !== null &&
+        !Object.values(newInputErrors).includes(true)
+      ) {
+        addProject.mutate(newProject);
+      }
+      // if newProject is null, set all values to true.
+    } else {
+      const newInputErrors = { ...inputErrors };
+      const inputErrorKeys = Object.keys(newInputErrors);
+
+      inputErrorKeys.forEach((key) => {
+        newInputErrors[key as keyof inputErrors] = true;
+        setInputErrors(newInputErrors);
+      });
     }
   };
 
@@ -52,7 +107,21 @@ const CreateProjectPage: React.FC = () => {
       <h2 style={{ marginBottom: '1rem' }}>Create new project</h2>
       <StyledForm onSubmit={onSubmitFunction}>
         <InputContainer>
-          <label htmlFor='title'>Title</label>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <label htmlFor='title'>Title</label>
+            {inputErrors.title === true && (
+              <span style={{ fontSize: '0.8rem', color: 'red' }}>
+                * Required
+              </span>
+            )}
+          </div>
+
           <StyledInput
             onChange={(e) => {
               if (newProject !== null) {
@@ -66,10 +135,26 @@ const CreateProjectPage: React.FC = () => {
             }}
             name='title'
             type='text'
+            // required={true}
           />
         </InputContainer>
+
         <InputContainer>
-          <label htmlFor='start_date'>Start date</label>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <label htmlFor='start_date'>Start date</label>
+            {inputErrors.start_date === true && (
+              <span style={{ fontSize: '0.8rem', color: 'red' }}>
+                * Required
+              </span>
+            )}{' '}
+          </div>
+
           <StyledInput
             onChange={(e) => {
               if (newProject !== null) {
@@ -83,10 +168,26 @@ const CreateProjectPage: React.FC = () => {
             }}
             name='start_date'
             type='date'
+            // required={true}
           />
         </InputContainer>
+
         <InputContainer>
-          <label htmlFor='due_date'>Due date</label>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <label htmlFor='due_date'>Due date</label>
+            {inputErrors.due_date === true && (
+              <span style={{ fontSize: '0.8rem', color: 'red' }}>
+                * Required
+              </span>
+            )}{' '}
+          </div>
+
           <StyledInput
             onChange={(e) => {
               if (newProject !== null) {
@@ -100,21 +201,11 @@ const CreateProjectPage: React.FC = () => {
             }}
             name='due_date'
             type='date'
+            // required={true}
           />
         </InputContainer>
-        <button
-          style={{
-            alignSelf: 'start',
-            backgroundColor: '#1927c2',
-            padding: '0.3rem 0.5rem 0.3rem 0.5rem',
-            border: '0.1rem solid #1927c2',
-            borderRadius: '0.2rem',
-            minWidth: '65px',
-          }}
-          type='submit'
-        >
-          Save
-        </button>
+
+        <StyledButton type={'submit'}>Save</StyledButton>
       </StyledForm>
     </Container>
   );
