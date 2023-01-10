@@ -14,7 +14,6 @@ type Projects = Array<{
 
 const queryFunction = async (): Promise<Projects> => {
   const res = await axios.get<Projects>(`${API_URL}/projects`);
-  console.log(res);
   if (res.status === 200) {
     return res.data;
   } else throw new Error('An error occured');
