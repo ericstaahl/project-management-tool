@@ -5,6 +5,7 @@ import React from 'react';
 import './assets/css/style.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import CreateProjectPage from './pages/CreateProjectPage';
 
 const queryClient = new QueryClient();
 
@@ -14,7 +15,8 @@ const App: React.FC = () => {
       <div className='App'>
         <Navigation />
         <Routes>
-          <Route path='/' element={<HomePage />}></Route>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/projects/new' element={<CreateProjectPage />} />
         </Routes>
       </div>
       <ReactQueryDevtools initialIsOpen={false} />

@@ -39,7 +39,7 @@ const HomePage: React.FC = () => {
               <h3>{project.title}</h3>
               <div>{`Number of members: ${project.number_of_members}`}</div>
               <div>{`Start date: ${new Date(
-                project.due_date
+                project.start_date
               ).toLocaleDateString('sv-SE')}`}</div>
               <div>{`Due date: ${new Date(project.due_date).toLocaleDateString(
                 'sv-SE'
