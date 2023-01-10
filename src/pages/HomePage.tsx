@@ -37,7 +37,11 @@ const HomePage: React.FC = () => {
           projects?.map((project) => (
             <Project key={project.project_id}>
               <h3>{project.title}</h3>
-              <div>{`Number of members: ${project.number_of_members}`}</div>
+              {project.number_of_members > 0 ? (
+                <div>{`Number of members: ${project.number_of_members}`}</div>
+              ) : (
+                <></>
+              )}
               <div>{`Start date: ${new Date(
                 project.start_date
               ).toLocaleDateString('sv-SE')}`}</div>
