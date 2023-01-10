@@ -12,7 +12,6 @@ type Projects = Array<{
   due_date: string;
 }>;
 
-console.log(API_URL);
 const queryFunction = async (): Promise<Projects> => {
   const res = await axios.get<Projects>(`${API_URL}/projects`);
   console.log(res);
