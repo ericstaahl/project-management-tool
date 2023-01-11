@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import useGetProjects from '../hooks/useGetProjects';
 
 const Container = styled.div({
@@ -31,7 +32,7 @@ const HomePage: React.FC = () => {
   const { isLoading, data: projects } = useGetProjects();
   return (
     <Container>
-      <h1 style={{ padding: '1rem 0 1rem 1rem' }}>Dashboard</h1>
+      <h2 style={{ padding: '1rem 0 1rem 1rem' }}>Dashboard</h2>
       <GridContainer>
         {!isLoading &&
           projects?.map((project) => (
@@ -48,6 +49,12 @@ const HomePage: React.FC = () => {
               <div>{`Due date: ${new Date(project.due_date).toLocaleDateString(
                 'sv-SE'
               )}`}</div>
+              <Link
+                style={{ color: 'white' }}
+                to={`/projects/${project.project_id}`}
+              >
+                See more
+              </Link>
             </Project>
           ))}
       </GridContainer>
