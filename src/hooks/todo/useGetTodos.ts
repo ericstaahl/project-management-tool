@@ -1,16 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import todoQueryKeys from '../../query-keys/todoQueryKeys';
 import axios from 'axios';
+import type { Todos } from '../../types/TodoTypes';
 
 const API_URL: string = import.meta.env.VITE_API_URL;
-
-type Todos = Array<{
-  todo_id: number;
-  title: string;
-  estimate: string;
-  description: string;
-  project_id: number;
-}>;
 
 const queryFunction = async (projectId: number): Promise<Todos> => {
   const res = await axios.get<Todos>(`${API_URL}/todos/${projectId}`);

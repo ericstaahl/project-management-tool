@@ -1,16 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import projectQueryKeys from '../../query-keys/projectQueryKeys';
 import axios from 'axios';
+import type { Projects } from '../../types/ProjectTypes';
 
 const API_URL: string = import.meta.env.VITE_API_URL;
-
-type Projects = Array<{
-  title: string;
-  project_id: number;
-  number_of_members: number;
-  start_date: string;
-  due_date: string;
-}>;
 
 const queryFunction = async (): Promise<Projects> => {
   const res = await axios.get<Projects>(`${API_URL}/projects`);

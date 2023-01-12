@@ -1,16 +1,9 @@
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import type { Project } from '../../types/ProjectTypes';
 
 const API_URL: string = import.meta.env.VITE_API_URL;
-
-interface Project {
-  title?: string;
-  project_id?: number;
-  number_of_members?: number;
-  start_date?: string;
-  due_date?: string;
-}
 
 const useAddProject = (): UseMutationResult<
   AxiosResponse<any, any>,
