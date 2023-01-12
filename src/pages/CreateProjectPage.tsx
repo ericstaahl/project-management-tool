@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import useAddProject from '../hooks/useAddProject';
+import useAddProject from '../hooks/project/useAddProject';
 
 const Container = styled.div({
   borderRadius: '5px',

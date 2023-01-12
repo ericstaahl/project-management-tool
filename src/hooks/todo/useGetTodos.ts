@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import todoQueryKeys from '../query-keys/todoQueryKeys';
+import todoQueryKeys from '../../query-keys/todoQueryKeys';
 import axios from 'axios';
 
 const API_URL: string = import.meta.env.VITE_API_URL;

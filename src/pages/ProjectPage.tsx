@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import useGetTodos from '../hooks/useGetTodos';
+import useGetTodos from '../hooks/todo/useGetTodos';
 
 const Container = styled.div({
   borderRadius: '5px',

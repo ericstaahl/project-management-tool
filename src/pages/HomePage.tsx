@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import useGetProjects from '../hooks/useGetProjects';
+import useGetProjects from '../hooks/project/useGetProjects';
 
 const Container = styled.div({
   borderRadius: '5px',
