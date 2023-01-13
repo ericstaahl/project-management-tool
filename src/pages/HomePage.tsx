@@ -1,14 +1,9 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Card from '../components/styled/Card';
+import Container from '../components/styled/Container';
 import useGetProjects from '../hooks/project/useGetProjects';
-
-const Container = styled.div({
-  borderRadius: '5px',
-  backgroundColor: '#1c1c1c',
-  margin: '1rem',
-  padding: '2rem',
-});
 
 const GridContainer = styled.div({
   display: 'grid',
@@ -16,16 +11,6 @@ const GridContainer = styled.div({
   gridTemplateColumns: '1fr 1fr 1fr 1fr',
   columnGap: '1rem',
   rowGap: '1rem',
-});
-
-const Project = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  rowGap: '0.5rem',
-  borderRadius: '5px',
-  minHeight: '200px',
-  backgroundColor: '#363942',
-  padding: '1rem',
 });
 
 const HomePage: React.FC = () => {
@@ -36,7 +21,7 @@ const HomePage: React.FC = () => {
       <GridContainer>
         {!isLoading &&
           projects?.map((project) => (
-            <Project key={project.project_id}>
+            <Card key={project.project_id}>
               <h3>{project.title}</h3>
               {project.number_of_members > 0 ? (
                 <div>{`Number of members: ${project.number_of_members}`}</div>
@@ -55,7 +40,7 @@ const HomePage: React.FC = () => {
               >
                 See more
               </Link>
-            </Project>
+            </Card>
           ))}
       </GridContainer>
     </Container>

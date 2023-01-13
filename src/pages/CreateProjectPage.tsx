@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import useAddProject from '../hooks/project/useAddProject';
-
-const Container = styled.div({
-  borderRadius: '5px',
-  backgroundColor: '#1c1c1c',
-  margin: '1rem',
-  padding: '2rem',
-});
+import Button from '../components/styled/Button';
+import Container from '../components/styled/Container';
 
 const InputContainer = styled.div({
   display: 'flex',
@@ -27,15 +22,6 @@ const StyledInput = styled.input({
   fontFamily: 'inherit',
   border: '0.1rem solid #f5f5f5',
   borderRadius: '0.2rem',
-});
-
-const StyledButton = styled.button({
-  alignSelf: 'start',
-  backgroundColor: '#1927c2',
-  padding: '0.3rem 0.5rem 0.3rem 0.5rem',
-  border: '0.1rem solid #1927c2',
-  borderRadius: '0.2rem',
-  minWidth: '65px',
 });
 
 interface Project {
@@ -206,7 +192,7 @@ const CreateProjectPage: React.FC = () => {
           />
         </InputContainer>
 
-        <StyledButton type={'submit'}>Save</StyledButton>
+        <Button type='submit'>Save</Button>
       </StyledForm>
     </Container>
   );
