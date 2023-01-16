@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import useAddProject from '../hooks/project/useAddProject';
 import Button from '../components/styled/Button';
 import Container from '../components/styled/Container';
+import Input from '../components/styled/Input';
 
 const InputContainer = styled.div({
   display: 'flex',
@@ -15,13 +16,6 @@ const StyledForm = styled.form({
   display: 'flex',
   flexDirection: 'column',
   rowGap: '0.8rem',
-});
-
-const StyledInput = styled.input({
-  padding: '0.3rem',
-  fontFamily: 'inherit',
-  border: '0.1rem solid #f5f5f5',
-  borderRadius: '0.2rem',
 });
 
 interface Project {
@@ -109,7 +103,7 @@ const CreateProjectPage: React.FC = () => {
             )}
           </div>
 
-          <StyledInput
+          <Input
             onChange={(e) => {
               if (newProject !== null) {
                 const newProjectCopy = { ...newProject };
@@ -142,7 +136,7 @@ const CreateProjectPage: React.FC = () => {
             )}{' '}
           </div>
 
-          <StyledInput
+          <Input
             onChange={(e) => {
               if (newProject !== null) {
                 const newProjectCopy = { ...newProject };
@@ -175,7 +169,7 @@ const CreateProjectPage: React.FC = () => {
             )}{' '}
           </div>
 
-          <StyledInput
+          <Input
             onChange={(e) => {
               if (newProject !== null) {
                 const newProjectCopy = { ...newProject };
