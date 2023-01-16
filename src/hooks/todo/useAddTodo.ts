@@ -8,13 +8,13 @@ const API_URL: string = import.meta.env.VITE_API_URL;
 const useAddTodo = (): UseMutationResult<
   AxiosResponse<any, any>,
   unknown,
-  Omit<Todo, 'todo_id'>,
+  Todo,
   unknown
 > => {
   const navigate = useNavigate();
 
   const mutation = useMutation({
-    mutationFn: async (newTodo: Omit<Todo, 'todo_id'>) => {
+    mutationFn: async (newTodo: Todo) => {
       return await axios.post(
         `${API_URL}/todos/${newTodo.project_id}`,
         newTodo

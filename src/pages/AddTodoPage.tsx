@@ -43,7 +43,7 @@ interface inputErrors {
 const AddTodoPage: React.FC = () => {
   const { id: projectId } = useParams();
 
-  const [newTodo, setNewTodo] = useState<Partial<Omit<TodoToSave, 'todo_id'>>>({
+  const [newTodo, setNewTodo] = useState<Partial<TodoToSave>>({
     project_id: Number(projectId),
   });
 
@@ -56,9 +56,9 @@ const AddTodoPage: React.FC = () => {
 
   const addTodo = useAddTodo();
 
-  const onChangeFunction = <K extends keyof Omit<TodoToSave, 'todo_id'>>(
+  const onChangeFunction = <K extends keyof TodoToSave>(
     objectKey: K,
-    value: Omit<TodoToSave, 'todo_id'>[K]
+    value: TodoToSave[K]
   ): void => {
     const newTodoCopy = { ...newTodo };
     if (newTodoCopy !== null) {
@@ -101,7 +101,7 @@ const AddTodoPage: React.FC = () => {
       newTodo.project_id !== undefined &&
       newTodo.title !== undefined
     ) {
-      const todoToSave: Omit<TodoToSave, 'todo_id'> = {
+      const todoToSave: TodoToSave = {
         title: newTodo.title,
         estimate: newTodo.estimate,
         description: newTodo.description,
