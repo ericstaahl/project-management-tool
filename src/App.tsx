@@ -7,7 +7,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import CreateProjectPage from './pages/CreateProjectPage';
 import ProjectPage from './pages/ProjectPage';
-import AddTodoPage from './pages/addTodoPage';
+import AddTodoPage from './pages/AddTodoPage';
+import RegisterUserPage from './pages/RegisterUser';
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App: React.FC = () => {
           <Route path='/projects/new' element={<CreateProjectPage />} />
           <Route path='/projects/:id' element={<ProjectPage />} />
           <Route path='/projects/:id/new-todo' element={<AddTodoPage />} />
+          <Route path='/register' element={<RegisterUserPage />} />
         </Routes>
       </div>
       <ReactQueryDevtools initialIsOpen={false} />
