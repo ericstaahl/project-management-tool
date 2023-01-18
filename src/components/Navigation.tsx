@@ -34,6 +34,7 @@ const Navigation: React.FC = () => {
         <StyledLink to='#'>Projects</StyledLink>
         <StyledLink to='/projects/new'>Add project</StyledLink>
         <StyledLink to='/register'>Register</StyledLink>
+        <StyledLink to='/login'>Login</StyledLink>
         <StyledLink to='#'>About</StyledLink>
       </Nav>
     </NavContainer>

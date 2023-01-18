@@ -10,7 +10,7 @@ interface User {
   password: string;
 }
 
-const useRegisterUser = (): UseMutationResult<
+const useLoginUser = (): UseMutationResult<
   AxiosResponse<any, any>,
   unknown,
   User,
@@ -19,8 +19,8 @@ const useRegisterUser = (): UseMutationResult<
   const navigate = useNavigate();
 
   const mutation = useMutation({
-    mutationFn: async (newUser: User) => {
-      return await axios.post(`${API_URL}/users`, newUser);
+    mutationFn: async (userCredentials: User) => {
+      return await axios.post(`${API_URL}/users/login`, userCredentials);
     },
 
     onSuccess: async (res) => {
@@ -28,11 +28,11 @@ const useRegisterUser = (): UseMutationResult<
       navigate('/');
     },
     onError: async () => {
-      console.log('An error occured when trying to register user');
+      console.log('An error occured when trying to log in user.');
     },
   });
 
   return mutation;
 };
 
-export default useRegisterUser;
+export default useLoginUser;

@@ -9,6 +9,7 @@ import CreateProjectPage from './pages/CreateProjectPage';
 import ProjectPage from './pages/ProjectPage';
 import AddTodoPage from './pages/AddTodoPage';
 import RegisterUserPage from './pages/RegisterUser';
+import LoginUserPage from './pages/LoginUserPage';
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App: React.FC = () => {
           <Route path='/projects/:id' element={<ProjectPage />} />
           <Route path='/projects/:id/new-todo' element={<AddTodoPage />} />
           <Route path='/register' element={<RegisterUserPage />} />
+          <Route path='/login' element={<LoginUserPage />} />
         </Routes>
       </div>
       <ReactQueryDevtools initialIsOpen={false} />
