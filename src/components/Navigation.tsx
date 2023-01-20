@@ -30,7 +30,7 @@ const Navigation: React.FC = () => {
     <NavContainer>
       <h1>Project Mangement Tool</h1>
       <Nav>
-        <StyledLink to='/'>Dashboard</StyledLink>
+        <StyledLink to='/dashboard'>Dashboard</StyledLink>
         <StyledLink to='#'>Projects</StyledLink>
         <StyledLink to='/projects/new'>Add project</StyledLink>
         <StyledLink to='/register'>Register</StyledLink>

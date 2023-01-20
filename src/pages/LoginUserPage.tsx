@@ -4,6 +4,8 @@ import Button from '../components/styled/Button';
 import Container from '../components/styled/Container';
 import Input from '../components/styled/Input';
 import useLoginUser from '../hooks/user/useLoginUser';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useUpdateAuth } from '../context/AuthContext';
 
 const InputContainer = styled.div({
   display: 'flex',
@@ -29,17 +31,27 @@ interface User {
   password: string;
 }
 
-interface inputErrors {
+interface InputErrors {
   username: boolean;
   password: boolean;
 }
 
+interface LocationState {
+  state: {
+    from: { pathname: string } | null;
+  } | null;
+}
+
 const LoginUserPage: React.FC = () => {
+  const { state }: LocationState = useLocation();
+  console.log(state?.from);
+  const navigate = useNavigate();
   const [userCredentials, setUserCredentials] = useState<Partial<User>>({});
+  const updateAuthFunc = useUpdateAuth();
 
   const loginUser = useLoginUser();
 
-  const [inputErrors, setInputErrors] = useState<inputErrors>({
+  const [inputErrors, setInputErrors] = useState<InputErrors>({
     username: false,
     password: false,
   });
@@ -72,7 +84,7 @@ const LoginUserPage: React.FC = () => {
           userCredentials[key as keyof User] === '' ||
           userCredentials[key as keyof User] === undefined
         ) {
-          newInputErrors[key as keyof inputErrors] = true;
+          newInputErrors[key as keyof InputErrors] = true;
         }
       }
     });
@@ -87,7 +99,21 @@ const LoginUserPage: React.FC = () => {
         username: userCredentials.username,
         password: userCredentials.password,
       };
-      loginUser.mutate(userCredentialsToUse);
+      loginUser.mutate(userCredentialsToUse, {
+        onSuccess: (res) => {
+          if (updateAuthFunc !== null) updateAuthFunc(res.data);
+          if (
+            state?.from?.pathname !== undefined &&
+            state?.from?.pathname.length > 0
+          ) {
+            navigate(
+              state.from.pathname.length > 0 ? state.from.pathname : '/'
+            );
+          } else {
+            navigate('/dashboard');
+          }
+        },
+      });
     } else {
       console.log('Something is undefined');
     }

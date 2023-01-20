@@ -1,8 +1,6 @@
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 
-import { useNavigate } from 'react-router-dom';
-
 const API_URL: string = import.meta.env.VITE_API_URL;
 
 interface User {
@@ -16,18 +14,15 @@ const useLoginUser = (): UseMutationResult<
   User,
   unknown
 > => {
-  const navigate = useNavigate();
-
   const mutation = useMutation({
     mutationFn: async (userCredentials: User) => {
       return await axios.post(`${API_URL}/users/login`, userCredentials);
     },
 
-    onSuccess: async (res) => {
-      console.log(res);
-      navigate('/');
+    onSuccess: (res) => {
+      localStorage.setItem('token', res.data.token);
     },
-    onError: async () => {
+    onError: () => {
       console.log('An error occured when trying to log in user.');
     },
   });

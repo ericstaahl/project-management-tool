@@ -2,15 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import projectQueryKeys from '../../query-keys/projectQueryKeys';
 import axios from 'axios';
 import type { Projects } from '../../types/ProjectTypes';
+import useAuth from '../../context/AuthContext';
 
 const API_URL: string = import.meta.env.VITE_API_URL;
 
-const queryFunction = async (): Promise<Projects> => {
-  const res = await axios.get<Projects>(`${API_URL}/projects`);
-  if (res.status === 200) {
-    return res.data;
-  } else throw new Error('An error occured');
-};
 const useGetProjects = (): {
   data:
     | Array<{
@@ -23,9 +18,21 @@ const useGetProjects = (): {
     | undefined;
   isLoading: boolean;
 } => {
+  const auth = useAuth();
+  console.log(auth);
   const { data, isLoading } = useQuery({
     queryKey: projectQueryKeys.lists(),
-    queryFn: queryFunction,
+    queryFn: async (): Promise<Projects> => {
+      const res = await axios.get<Projects>(`${API_URL}/projects`, {
+        headers: {
+          Authorization: auth !== null ? `Bearer ${auth.token}` : '',
+        },
+      });
+      if (res.status === 200) {
+        return res.data;
+      } else throw new Error('An error occured');
+    },
+    enabled: auth !== null,
   });
 
   return { data, isLoading };

@@ -10,23 +10,29 @@ import ProjectPage from './pages/ProjectPage';
 import AddTodoPage from './pages/AddTodoPage';
 import RegisterUserPage from './pages/RegisterUser';
 import LoginUserPage from './pages/LoginUserPage';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const queryClient = new QueryClient();
 
 const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className='App'>
-        <Navigation />
-        <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/projects/new' element={<CreateProjectPage />} />
-          <Route path='/projects/:id' element={<ProjectPage />} />
-          <Route path='/projects/:id/new-todo' element={<AddTodoPage />} />
-          <Route path='/register' element={<RegisterUserPage />} />
-          <Route path='/login' element={<LoginUserPage />} />
-        </Routes>
-      </div>
+      <AuthProvider>
+        <div className='App'>
+          <Navigation />
+          <Routes>
+            <Route path='/' element={<ProtectedRoute />}>
+              <Route path='/dashboard' element={<HomePage />} />
+              <Route path='/projects/new' element={<CreateProjectPage />} />
+              <Route path='/projects/:id' element={<ProjectPage />} />
+              <Route path='/projects/:id/new-todo' element={<AddTodoPage />} />
+            </Route>
+            <Route path='/register' element={<RegisterUserPage />} />
+            <Route path='/login' element={<LoginUserPage />} />
+          </Routes>
+        </div>
+      </AuthProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
