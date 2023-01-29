@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 
 interface AuthState {
-  token: string;
+  access_token: string;
 }
 
 interface Props {
@@ -24,7 +24,7 @@ export const useUpdateAuth: () => ((state: AuthState) => void) | null = () => {
 export const AuthProvider: React.FC<Props> = (props) => {
   const token = localStorage.getItem('token');
   const [authState, setAuthState] = useState<AuthState | null>(
-    token !== null ? { token } : null
+    token !== null ? { access_token: token } : null
   );
 
   console.log(authState);

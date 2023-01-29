@@ -25,7 +25,7 @@ const useGetProjects = (): {
     queryFn: async (): Promise<Projects> => {
       const res = await axios.get<Projects>(`${API_URL}/projects`, {
         headers: {
-          Authorization: auth !== null ? `Bearer ${auth.token}` : '',
+          Authorization: auth !== null ? `Bearer ${auth.access_token}` : '',
         },
       });
       if (res.status === 200) {
