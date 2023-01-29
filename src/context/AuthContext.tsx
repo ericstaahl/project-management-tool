@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import useRefreshToken from '../hooks/user/useRefreshToken';
 
 interface AuthState {
   access_token: string;
@@ -22,16 +23,22 @@ export const useUpdateAuth: () => ((state: AuthState) => void) | null = () => {
 };
 
 export const AuthProvider: React.FC<Props> = (props) => {
-  const token = localStorage.getItem('token');
-  const [authState, setAuthState] = useState<AuthState | null>(
-    token !== null ? { access_token: token } : null
-  );
-
-  console.log(authState);
+  const refreshToken = localStorage.getItem('token');
+  const refreshAccessToken = useRefreshToken();
+  const [authState, setAuthState] = useState<AuthState | null>(null);
 
   const handleSetAuthState: (value: AuthState) => void = (value) => {
     setAuthState(value);
   };
+  useEffect(() => {
+    if (refreshToken !== null) {
+      refreshAccessToken.mutate(refreshToken, {
+        onSuccess: (res) => {
+          setAuthState({ access_token: res.data.access_token });
+        },
+      });
+    }
+  }, []);
 
   return (
     <AuthContext.Provider value={authState}>

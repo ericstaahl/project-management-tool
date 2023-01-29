@@ -20,7 +20,7 @@ const useLoginUser = (): UseMutationResult<
     },
 
     onSuccess: (res) => {
-      localStorage.setItem('token', res.data.access_token);
+      localStorage.setItem('token', res.data.refresh_token);
     },
     onError: () => {
       console.log('An error occured when trying to log in user.');
