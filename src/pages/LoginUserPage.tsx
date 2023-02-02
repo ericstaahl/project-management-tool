@@ -44,7 +44,6 @@ interface LocationState {
 
 const LoginUserPage: React.FC = () => {
   const { state }: LocationState = useLocation();
-  console.log(state?.from);
   const navigate = useNavigate();
   const [userCredentials, setUserCredentials] = useState<Partial<User>>({});
   const updateAuthFunc = useUpdateAuth();
