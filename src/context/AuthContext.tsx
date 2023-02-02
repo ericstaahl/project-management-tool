@@ -9,25 +9,32 @@ interface Props {
   children: React.ReactNode;
 }
 
-const AuthContext = createContext<AuthState | null>(null);
-const UpdateAuthContext = createContext<((state: AuthState) => void) | null>(
-  null
-);
+const AuthContext = createContext<AuthState | null | undefined>(null);
+const LoadingContext = createContext<boolean>(true);
+const UpdateAuthContext = createContext<
+  ((state: AuthState | null) => void) | null
+>(null);
 
-const useAuth = (): AuthState | null => {
+const useAuth = (): AuthState | null | undefined => {
   return useContext(AuthContext);
 };
 
-export const useUpdateAuth: () => ((state: AuthState) => void) | null = () => {
+export const useUpdateAuth: () =>
+  | ((state: AuthState | null) => void)
+  | null = () => {
   return useContext(UpdateAuthContext);
+};
+
+export const useLoadingContext = (): boolean => {
+  return useContext(LoadingContext);
 };
 
 export const AuthProvider: React.FC<Props> = (props) => {
   const refreshToken = localStorage.getItem('token');
   const refreshAccessToken = useRefreshToken();
-  const [authState, setAuthState] = useState<AuthState | null>(null);
+  const [authState, setAuthState] = useState<AuthState | null>();
 
-  const handleSetAuthState: (value: AuthState) => void = (value) => {
+  const handleSetAuthState: (value: AuthState | null) => void = (value) => {
     setAuthState(value);
   };
   useEffect(() => {
@@ -36,14 +43,17 @@ export const AuthProvider: React.FC<Props> = (props) => {
         onSuccess: (res) => {
           setAuthState({ access_token: res.data.access_token });
         },
+        onError: () => {
+          setAuthState(null);
+        },
       });
-    }
+    } else setAuthState(null);
   }, []);
 
   return (
     <AuthContext.Provider value={authState}>
       <UpdateAuthContext.Provider value={handleSetAuthState}>
-        {props.children}
+        {authState === undefined ? <p>Loading...</p> : props.children}
       </UpdateAuthContext.Provider>
     </AuthContext.Provider>
   );

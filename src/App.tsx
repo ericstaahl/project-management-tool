@@ -12,6 +12,7 @@ import RegisterUserPage from './pages/RegisterUser';
 import LoginUserPage from './pages/LoginUserPage';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import LogoutUserPage from './pages/LogoutUserPage';
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App: React.FC = () => {
             </Route>
             <Route path='/register' element={<RegisterUserPage />} />
             <Route path='/login' element={<LoginUserPage />} />
+            <Route path='/logout' element={<LogoutUserPage />} />
           </Routes>
         </div>
       </AuthProvider>

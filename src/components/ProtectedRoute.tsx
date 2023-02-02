@@ -1,11 +1,15 @@
 import React from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import useAuth from '../context/AuthContext';
+import useAuth, { useLoadingContext } from '../context/AuthContext';
 
 const ProtectedRoute: React.FC = () => {
   const auth = useAuth();
+  const loading = useLoadingContext();
+
   console.log(auth);
   const location = useLocation();
+
+  console.log(auth, loading);
 
   if (auth === null) {
     console.log('Null check true');
