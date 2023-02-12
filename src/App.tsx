@@ -13,6 +13,7 @@ import LoginUserPage from './pages/LoginUserPage';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import LogoutUserPage from './pages/LogoutUserPage';
+import ProjectsPage from './pages/ProjectsPage';
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path='/' element={<ProtectedRoute />}>
               <Route path='/dashboard' element={<HomePage />} />
+              <Route path='/projects' element={<ProjectsPage />} />
               <Route path='/projects/new' element={<CreateProjectPage />} />
               <Route path='/projects/:id' element={<ProjectPage />} />
               <Route path='/projects/:id/new-todo' element={<AddTodoPage />} />

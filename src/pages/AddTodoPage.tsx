@@ -5,7 +5,7 @@ import Container from '../components/styled/Container';
 import Input from '../components/styled/Input';
 import useAddTodo from '../hooks/todo/useAddTodo';
 import { Todo as TodoToSave } from '../types/TodoTypes';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const InputContainer = styled.div({
   display: 'flex',
@@ -42,6 +42,7 @@ interface inputErrors {
 
 const AddTodoPage: React.FC = () => {
   const { id: projectId } = useParams();
+  const navigate = useNavigate();
 
   const [newTodo, setNewTodo] = useState<Partial<TodoToSave>>({
     project_id: Number(projectId),
@@ -108,7 +109,11 @@ const AddTodoPage: React.FC = () => {
         project_id: newTodo.project_id,
       };
 
-      addTodo.mutate(todoToSave);
+      addTodo.mutate(todoToSave, {
+        onSuccess: () => {
+          if (projectId !== undefined) navigate(`/projects/${projectId}`);
+        },
+      });
     } else {
       console.log('Something is undefined');
     }

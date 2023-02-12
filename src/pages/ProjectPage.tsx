@@ -14,9 +14,16 @@ const GridContainer = styled.div({
   rowGap: '1rem',
 });
 
+const statuses = {
+  NOT_STARTED: 'Not started',
+  IN_PROGRESS: 'In progress',
+  DONE: 'Done',
+};
+
 const ProjectPage: React.FC = () => {
   const { id: projectId } = useParams();
   const { data, isLoading } = useGetTodos(Number(projectId));
+  console.log('Todos:', data);
   const navigate = useNavigate();
 
   return (
@@ -29,6 +36,7 @@ const ProjectPage: React.FC = () => {
               <h3>{`${todo.title}`}</h3>
               <div>{`Estimation: ${todo.estimate}`}</div>
               <div>{`Description: ${todo.description}`}</div>
+              <div>{`Status: ${statuses[todo.status]}`}</div>
             </Card>
           ))}
       </GridContainer>

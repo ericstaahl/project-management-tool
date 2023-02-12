@@ -34,7 +34,7 @@ const useAddTodo = (): UseMutationResult<
 
     onSuccess: async () => {
       console.log('Successfully added new to-do.');
-      navigate('/dashboard');
+      navigate(`/projects`);
     },
     onError: async () => {
       console.log('An error occured when trying to add a new to-do.');

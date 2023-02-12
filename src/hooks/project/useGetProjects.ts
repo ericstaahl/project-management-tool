@@ -14,6 +14,9 @@ const useGetProjects = (): {
         number_of_members: number;
         start_date: string;
         due_date: string;
+        _count: {
+          todo: number;
+        };
       }>
     | undefined;
   isLoading: boolean;

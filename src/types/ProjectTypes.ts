@@ -4,6 +4,9 @@ export type Projects = Array<{
   number_of_members: number;
   start_date: string;
   due_date: string;
+  _count: {
+    todo: number;
+  };
 }>;
 
 export interface Project {
