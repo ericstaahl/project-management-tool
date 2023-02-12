@@ -20,7 +20,10 @@ const useAddProject = (): UseMutationResult<
     mutationFn: async (newProject: Project) => {
       return await axios.post(`${API_URL}/projects`, newProject, {
         headers: {
-          Authorization: auth !== null ? `Bearer ${auth.access_token}` : '',
+          Authorization:
+            auth !== null && auth !== undefined
+              ? `Bearer ${auth.access_token}`
+              : '',
         },
       });
     },
