@@ -9,6 +9,10 @@ const StyledButton = styled.button({
     border: '0.1rem solid #1927c2',
     borderRadius: '0.2rem',
     minWidth: '65px',
+    cursor: 'pointer',
+    ':hover': {
+        backgroundColor: '#1c2cd9',
+    },
 });
 
 const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = (
