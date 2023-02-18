@@ -5,10 +5,11 @@ import Card from '../components/styled/Card';
 import Container from '../components/styled/Container';
 import useGetProjects from '../hooks/project/useGetProjects';
 import Select from 'react-select';
+import H2 from '../components/styled/H2';
 
 const GridContainer = styled.div({
     display: 'grid',
-    padding: '1rem',
+    margin: '1rem 0',
     gridTemplateColumns: '1fr 1fr 1fr 1fr',
     columnGap: '1rem',
     rowGap: '1rem',
@@ -29,10 +30,10 @@ const ProjectsPage: React.FC = () => {
     console.log(projects);
     return (
         <Container>
-            <h2 style={{ padding: '1rem 0 1rem 1rem' }}>Projects Page</h2>
+            <H2>Projects</H2>
             <div
                 style={{
-                    margin: '1rem',
+                    margin: '1rem 0',
                     width: '40%',
                     display: 'flex',
                     alignContent: 'center',

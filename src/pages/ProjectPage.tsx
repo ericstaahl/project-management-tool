@@ -4,11 +4,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/styled/Button';
 import Card from '../components/styled/Card';
 import Container from '../components/styled/Container';
+import H2 from '../components/styled/H2';
 import useGetTodos from '../hooks/todo/useGetTodos';
 
 const GridContainer = styled.div({
     display: 'grid',
-    padding: '1rem',
+    margin: '1rem 0',
     gridTemplateColumns: '1fr 1fr 1fr 1fr',
     columnGap: '1rem',
     rowGap: '1rem',
@@ -28,7 +29,7 @@ const ProjectPage: React.FC = () => {
 
     return (
         <Container>
-            <h2 style={{ padding: '1rem 0 1rem 1rem' }}>Project</h2>
+            <H2>Project</H2>
             <GridContainer>
                 {!isLoading &&
                     data?.map((todo) => (

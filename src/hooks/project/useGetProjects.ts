@@ -7,7 +7,7 @@ import useAuth from '../../context/AuthContext';
 const API_URL: string = import.meta.env.VITE_API_URL;
 
 const useGetProjects = (
-    sortBy: string
+    sortBy: string = 'due_date'
 ): {
     data:
         | Array<{
