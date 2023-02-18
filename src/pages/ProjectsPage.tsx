@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import Card from '../components/styled/Card';
 import Container from '../components/styled/Container';
 import useGetProjects from '../hooks/project/useGetProjects';
-import Select from 'react-select';
 import H2 from '../components/styled/H2';
+import SortBy from '../components/SortBy';
 
 const GridContainer = styled.div({
     display: 'grid',
@@ -31,49 +31,20 @@ const ProjectsPage: React.FC = () => {
     return (
         <Container>
             <H2>Projects</H2>
-            <div
-                style={{
-                    margin: '1rem 0',
-                    width: '40%',
-                    display: 'flex',
-                    alignContent: 'center',
-                    columnGap: '1rem',
-                }}
-            >
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        fontSize: '1.2rem',
-                    }}
-                >
-                    Sort by:
-                </div>
-                <Select
-                    isDisabled={projects === undefined || projects?.length <= 0}
-                    options={sortOptions}
-                    defaultValue={{ value: 'due_date', label: 'Due date' }}
-                    isSearchable={false}
-                    isMulti={false}
-                    styles={{
-                        container: (baseStyles) => ({
-                            ...baseStyles,
-                            minWidth: '180px',
-                        }),
-                        option: (baseStyles) => ({
-                            ...baseStyles,
-                            color: '#111',
-                        }),
-                    }}
-                    onChange={(selected) => {
+            <SortBy<typeof sortOptions[0]>
+                selectProps={{
+                    isDisabled: projects === undefined || projects?.length <= 0,
+                    options: sortOptions,
+                    defaultValue: { value: 'due_date', label: 'Due date' },
+                    onChange: (selected) => {
                         if (selected !== null)
                             setSortBy({
                                 label: selected.label,
                                 value: selected.value,
                             });
-                    }}
-                />
-            </div>
+                    },
+                }}
+            />
             <GridContainer>
                 {!isLoading &&
                     projects !== undefined &&

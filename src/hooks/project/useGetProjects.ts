@@ -27,7 +27,7 @@ const useGetProjects = (
     console.log(auth);
     console.log('sortBy:', sortBy);
     const { data, isLoading } = useQuery({
-        queryKey: projectQueryKeys.lists(sortBy),
+        queryKey: projectQueryKeys.list(sortBy),
         queryFn: async (): Promise<Projects> => {
             const res = await axios.get<Projects>(`${API_URL}/projects`, {
                 headers: {
@@ -44,6 +44,7 @@ const useGetProjects = (
                 return res.data;
             } else throw new Error('An error occured');
         },
+        keepPreviousData: true,
         enabled: auth !== null,
     });
 

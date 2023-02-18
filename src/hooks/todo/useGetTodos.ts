@@ -7,14 +7,15 @@ import useAuth from '../../context/AuthContext';
 const API_URL: string = import.meta.env.VITE_API_URL;
 
 const useGetTodos = (
-    projectId: number
+    projectId: number,
+    sortBy: string = 'title'
 ): {
     data: Todos | undefined;
     isLoading: boolean;
 } => {
     const auth = useAuth();
     const { data, isLoading } = useQuery({
-        queryKey: todoQueryKeys.list(projectId),
+        queryKey: todoQueryKeys.list(projectId, sortBy),
         queryFn: async (): Promise<Todos> => {
             const res = await axios.get<Todos>(
                 `${API_URL}/todos/${projectId}`,
@@ -25,12 +26,16 @@ const useGetTodos = (
                                 ? `Bearer ${auth.access_token}`
                                 : '',
                     },
+                    params: {
+                        sortRule: sortBy,
+                    },
                 }
             );
             if (res.status === 200) {
                 return res.data;
             } else throw new Error('An error occured');
         },
+        keepPreviousData: true,
     });
 
     return { data, isLoading };

@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import SortBy from '../components/SortBy';
 import Button from '../components/styled/Button';
 import Card from '../components/styled/Card';
 import Container from '../components/styled/Container';
@@ -21,15 +22,36 @@ const statuses = {
     DONE: 'Done',
 };
 
+const sortOptions = [
+    { value: 'estimate', label: 'Estimate' },
+    { value: 'title', label: 'Title' },
+    { value: 'status', label: 'Status' },
+];
+
 const ProjectPage: React.FC = () => {
     const { id: projectId } = useParams();
-    const { data, isLoading } = useGetTodos(Number(projectId));
+    const [sortBy, setSortBy] = useState({ value: 'title', label: 'Title' });
+    const { data, isLoading } = useGetTodos(Number(projectId), sortBy.value);
     console.log('Todos:', data);
     const navigate = useNavigate();
 
     return (
         <Container>
             <H2>Project</H2>
+            <SortBy<typeof sortOptions[0]>
+                selectProps={{
+                    isDisabled: data === undefined || data?.length <= 0,
+                    options: sortOptions,
+                    defaultValue: { value: 'title', label: 'Title' },
+                    onChange: (selected) => {
+                        if (selected !== null)
+                            setSortBy({
+                                label: selected.label,
+                                value: selected.value,
+                            });
+                    },
+                }}
+            />{' '}
             <GridContainer>
                 {!isLoading &&
                     data?.map((todo) => (
