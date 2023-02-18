@@ -73,7 +73,9 @@ const ProjectsPage: React.FC = () => {
                             </Card>
                         ))
                     ) : (
-                        <div>No projects exists</div>
+                        <div style={{ fontStyle: 'italic' }}>
+                            No projects found
+                        </div>
                     ))}
             </GridContainer>
         </Container>
