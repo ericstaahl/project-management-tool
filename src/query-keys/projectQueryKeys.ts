@@ -1,6 +1,7 @@
 const projectQueryKeys = {
-  all: ['projects'] as const,
-  lists: () => [...projectQueryKeys.all, 'list'] as const,
+    all: ['projects'] as const,
+    lists: (sortBy: string) =>
+        [...projectQueryKeys.all, 'list', sortBy] as const,
 };
 
 export default projectQueryKeys;
