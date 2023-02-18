@@ -12,6 +12,7 @@ interface ComponentProps<
     IsMulti extends boolean = false,
     Group extends GroupBase<Option> = GroupBase<Option>
 > {
+    label: string;
     selectProps: SelectProps<Option, IsMulti, Group>;
 }
 
@@ -26,10 +27,10 @@ const SortBy = <
         <div
             style={{
                 margin: '1rem 0',
-                width: '40%',
                 display: 'flex',
                 alignContent: 'center',
                 columnGap: '1rem',
+                justifyContent: 'space-between',
             }}
         >
             <div
@@ -39,7 +40,7 @@ const SortBy = <
                     fontSize: '1.2rem',
                 }}
             >
-                Sort by:
+                {props.label}
             </div>
             <Select
                 styles={{

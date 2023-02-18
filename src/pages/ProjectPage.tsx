@@ -25,22 +25,39 @@ const statuses = {
 const sortOptions = [
     { value: 'estimate', label: 'Estimate' },
     { value: 'title', label: 'Title' },
-    { value: 'status', label: 'Status' },
+];
+
+interface StatusOptions {
+    value: 'NOT_STARTED' | 'IN_PROGRESS' | 'DONE';
+    label: string;
+}
+
+const statusOptions: StatusOptions[] = [
+    { value: 'NOT_STARTED', label: 'Not started' },
+    { value: 'IN_PROGRESS', label: 'In progress' },
+    { value: 'DONE', label: 'Done' },
 ];
 
 const ProjectPage: React.FC = () => {
     const { id: projectId } = useParams();
     const [sortBy, setSortBy] = useState({ value: 'title', label: 'Title' });
-    const { data, isLoading } = useGetTodos(Number(projectId), sortBy.value);
-    console.log('Todos:', data);
+    const [statusFilter, setStatusFilter] = useState<{
+        value: 'NOT_STARTED' | 'IN_PROGRESS' | 'DONE';
+        label: string;
+    } | null>(null);
+    const { data, isLoading } = useGetTodos(
+        Number(projectId),
+        sortBy.value,
+        statusFilter?.value ?? null
+    );
     const navigate = useNavigate();
 
     return (
         <Container>
             <H2>Project</H2>
             <SortBy<typeof sortOptions[0]>
+                label={'Sort by'}
                 selectProps={{
-                    isDisabled: data === undefined || data?.length <= 0,
                     options: sortOptions,
                     defaultValue: { value: 'title', label: 'Title' },
                     onChange: (selected) => {
@@ -51,7 +68,24 @@ const ProjectPage: React.FC = () => {
                             });
                     },
                 }}
-            />{' '}
+            />
+            <SortBy<typeof statusOptions[0]>
+                label={'Filter'}
+                selectProps={{
+                    options: statusOptions,
+                    onChange: (selected) => {
+                        if (selected !== null)
+                            setStatusFilter({
+                                label: selected.label,
+                                value: selected.value,
+                            });
+                        else {
+                            setStatusFilter(null);
+                        }
+                    },
+                    isClearable: true,
+                }}
+            />
             <GridContainer>
                 {!isLoading &&
                     data?.map((todo) => (

@@ -32,8 +32,8 @@ const ProjectsPage: React.FC = () => {
         <Container>
             <H2>Projects</H2>
             <SortBy<typeof sortOptions[0]>
+                label={'Sort by'}
                 selectProps={{
-                    isDisabled: projects === undefined || projects?.length <= 0,
                     options: sortOptions,
                     defaultValue: { value: 'due_date', label: 'Due date' },
                     onChange: (selected) => {
