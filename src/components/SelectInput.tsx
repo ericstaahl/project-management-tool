@@ -16,7 +16,7 @@ interface ComponentProps<
     selectProps: SelectProps<Option, IsMulti, Group>;
 }
 
-const SortBy = <
+const SelectInput = <
     Option,
     IsMulti extends boolean = false,
     Group extends GroupBase<Option> = GroupBase<Option>
@@ -60,4 +60,4 @@ const SortBy = <
     );
 };
 
-export default SortBy;
+export default SelectInput;

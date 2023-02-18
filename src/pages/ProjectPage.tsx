@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import SortBy from '../components/SortBy';
+import SelectInput from '../components/SelectInput';
 import Button from '../components/styled/Button';
 import Card from '../components/styled/Card';
 import Container from '../components/styled/Container';
@@ -55,7 +55,7 @@ const ProjectPage: React.FC = () => {
     return (
         <Container>
             <H2>Project</H2>
-            <SortBy<typeof sortOptions[0]>
+            <SelectInput<typeof sortOptions[0]>
                 label={'Sort by'}
                 selectProps={{
                     options: sortOptions,
@@ -69,7 +69,7 @@ const ProjectPage: React.FC = () => {
                     },
                 }}
             />
-            <SortBy<typeof statusOptions[0]>
+            <SelectInput<typeof statusOptions[0]>
                 label={'Filter'}
                 selectProps={{
                     options: statusOptions,

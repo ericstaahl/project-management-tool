@@ -5,7 +5,7 @@ import Card from '../components/styled/Card';
 import Container from '../components/styled/Container';
 import useGetProjects from '../hooks/project/useGetProjects';
 import H2 from '../components/styled/H2';
-import SortBy from '../components/SortBy';
+import SelectInput from '../components/SelectInput';
 
 const GridContainer = styled.div({
     display: 'grid',
@@ -31,7 +31,7 @@ const ProjectsPage: React.FC = () => {
     return (
         <Container>
             <H2>Projects</H2>
-            <SortBy<typeof sortOptions[0]>
+            <SelectInput<typeof sortOptions[0]>
                 label={'Sort by'}
                 selectProps={{
                     options: sortOptions,
