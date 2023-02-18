@@ -7,7 +7,8 @@ import useAuth from '../../context/AuthContext';
 const API_URL: string = import.meta.env.VITE_API_URL;
 
 const useGetProjects = (
-    sortBy: string = 'due_date'
+    sortBy: string = 'due_date',
+    sortOrder: 'asc' | 'desc' = 'asc'
 ): {
     data:
         | Array<{
@@ -24,10 +25,8 @@ const useGetProjects = (
     isLoading: boolean;
 } => {
     const auth = useAuth();
-    console.log(auth);
-    console.log('sortBy:', sortBy);
     const { data, isLoading } = useQuery({
-        queryKey: projectQueryKeys.list(sortBy),
+        queryKey: projectQueryKeys.list(sortBy, sortOrder),
         queryFn: async (): Promise<Projects> => {
             const res = await axios.get<Projects>(`${API_URL}/projects`, {
                 headers: {
@@ -38,6 +37,7 @@ const useGetProjects = (
                 },
                 params: {
                     sortRule: sortBy,
+                    sortOrder,
                 },
             });
             if (res.status === 200) {

@@ -26,7 +26,11 @@ const ProjectsPage: React.FC = () => {
         value: 'due_date',
         label: 'Due date',
     });
-    const { isLoading, data: projects } = useGetProjects(sortBy.value);
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+    const { isLoading, data: projects } = useGetProjects(
+        sortBy.value,
+        sortOrder
+    );
     console.log(projects);
     return (
         <Container>
@@ -45,6 +49,16 @@ const ProjectsPage: React.FC = () => {
                     },
                 }}
             />
+            <div
+                style={{ cursor: 'pointer' }}
+                onClick={() => {
+                    sortOrder === 'asc'
+                        ? setSortOrder('desc')
+                        : setSortOrder('asc');
+                }}
+            >
+                ↓
+            </div>
             <GridContainer>
                 {!isLoading &&
                     projects !== undefined &&
