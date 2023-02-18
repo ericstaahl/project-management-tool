@@ -88,13 +88,20 @@ const ProjectPage: React.FC = () => {
             />
             <GridContainer>
                 {!isLoading &&
-                    data?.map((todo) => (
-                        <Card key={todo.todo_id}>
-                            <h3>{`${todo.title}`}</h3>
-                            <div>{`Estimation: ${todo.estimate}`}</div>
-                            <div>{`Description: ${todo.description}`}</div>
-                            <div>{`Status: ${statuses[todo.status]}`}</div>
-                        </Card>
+                    data !== undefined &&
+                    (data.length > 0 ? (
+                        data?.map((todo) => (
+                            <Card key={todo.todo_id}>
+                                <h3>{`${todo.title}`}</h3>
+                                <div>{`Estimation: ${todo.estimate}`}</div>
+                                <div>{`Description: ${todo.description}`}</div>
+                                <div>{`Status: ${statuses[todo.status]}`}</div>
+                            </Card>
+                        ))
+                    ) : (
+                        <div style={{ fontStyle: 'italic' }}>
+                            No to-dos found
+                        </div>
                     ))}
             </GridContainer>
             <Button
