@@ -18,28 +18,43 @@ import ProjectsPage from './pages/ProjectsPage';
 const queryClient = new QueryClient();
 
 const App: React.FC = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <div className='App'>
-          <Navigation />
-          <Routes>
-            <Route path='/' element={<ProtectedRoute />}>
-              <Route path='/dashboard' element={<HomePage />} />
-              <Route path='/projects' element={<ProjectsPage />} />
-              <Route path='/projects/new' element={<CreateProjectPage />} />
-              <Route path='/projects/:id' element={<ProjectPage />} />
-              <Route path='/projects/:id/new-todo' element={<AddTodoPage />} />
-            </Route>
-            <Route path='/register' element={<RegisterUserPage />} />
-            <Route path='/login' element={<LoginUserPage />} />
-            <Route path='/logout' element={<LogoutUserPage />} />
-          </Routes>
-        </div>
-      </AuthProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
-  );
+    return (
+        <QueryClientProvider client={queryClient}>
+            <AuthProvider>
+                <div className='App'>
+                    <Navigation />
+                    <Routes>
+                        <Route path='/' element={<ProtectedRoute />}>
+                            <Route path='/dashboard' element={<HomePage />} />
+                            <Route
+                                path='/projects'
+                                element={<ProjectsPage />}
+                            />
+                            <Route
+                                path='/projects/new'
+                                element={<CreateProjectPage />}
+                            />
+                            <Route
+                                path='/projects/:id'
+                                element={<ProjectPage />}
+                            />
+                            <Route
+                                path='/projects/:id/new-todo'
+                                element={<AddTodoPage />}
+                            />
+                        </Route>
+                        <Route
+                            path='/register'
+                            element={<RegisterUserPage />}
+                        />
+                        <Route path='/login' element={<LoginUserPage />} />
+                        <Route path='/logout' element={<LogoutUserPage />} />
+                    </Routes>
+                </div>
+            </AuthProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+    );
 };
 
 export default App;

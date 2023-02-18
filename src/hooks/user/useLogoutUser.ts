@@ -3,17 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { useUpdateAuth } from '../../context/AuthContext';
 
 const useLogoutUser = (): void => {
-  const updateAuth = useUpdateAuth();
-  const navigate = useNavigate();
+    const updateAuth = useUpdateAuth();
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log('logging out');
+    useEffect(() => {
+        console.log('logging out');
 
-    localStorage.removeItem('token');
-    if (updateAuth !== null) updateAuth(null);
+        localStorage.removeItem('token');
+        if (updateAuth !== null) updateAuth(null);
 
-    navigate('/login');
-  }, []);
+        navigate('/login');
+    }, []);
 };
 
 export default useLogoutUser;

@@ -6,33 +6,33 @@ import { useNavigate } from 'react-router-dom';
 const API_URL: string = import.meta.env.VITE_API_URL;
 
 interface User {
-  username: string;
-  password: string;
+    username: string;
+    password: string;
 }
 
 const useRegisterUser = (): UseMutationResult<
-  AxiosResponse<any, any>,
-  unknown,
-  User,
-  unknown
+    AxiosResponse<any, any>,
+    unknown,
+    User,
+    unknown
 > => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const mutation = useMutation({
-    mutationFn: async (newUser: User) => {
-      return await axios.post(`${API_URL}/users`, newUser);
-    },
+    const mutation = useMutation({
+        mutationFn: async (newUser: User) => {
+            return await axios.post(`${API_URL}/users`, newUser);
+        },
 
-    onSuccess: async (res) => {
-      console.log(res);
-      navigate('/');
-    },
-    onError: async () => {
-      console.log('An error occured when trying to register user');
-    },
-  });
+        onSuccess: async (res) => {
+            console.log(res);
+            navigate('/');
+        },
+        onError: async () => {
+            console.log('An error occured when trying to register user');
+        },
+    });
 
-  return mutation;
+    return mutation;
 };
 
 export default useRegisterUser;
