@@ -7,36 +7,36 @@ import type { Project } from '../../types/ProjectTypes';
 const API_URL: string = import.meta.env.VITE_API_URL;
 
 const useAddProject = (): UseMutationResult<
-  AxiosResponse<any, any>,
-  unknown,
-  Project,
-  unknown
+    AxiosResponse<any, any>,
+    unknown,
+    Project,
+    unknown
 > => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const auth = useAuth();
+    const auth = useAuth();
 
-  const mutation = useMutation({
-    mutationFn: async (newProject: Project) => {
-      return await axios.post(`${API_URL}/projects`, newProject, {
-        headers: {
-          Authorization:
-            auth !== null && auth !== undefined
-              ? `Bearer ${auth.access_token}`
-              : '',
+    const mutation = useMutation({
+        mutationFn: async (newProject: Project) => {
+            return await axios.post(`${API_URL}/projects`, newProject, {
+                headers: {
+                    Authorization:
+                        auth !== null && auth !== undefined
+                            ? `Bearer ${auth.access_token}`
+                            : '',
+                },
+            });
         },
-      });
-    },
-    onSuccess: async () => {
-      console.log('Successfully added new project.');
-      navigate('/dashboard');
-    },
-    onError: async () => {
-      console.log('An error occured when trying to add a new project.');
-    },
-  });
+        onSuccess: async () => {
+            console.log('Successfully added new project.');
+            navigate('/projects');
+        },
+        onError: async () => {
+            console.log('An error occured when trying to add a new project.');
+        },
+    });
 
-  return mutation;
+    return mutation;
 };
 
 export default useAddProject;

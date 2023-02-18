@@ -49,6 +49,7 @@ const ProjectsPage: React.FC = () => {
                     Sort by:
                 </div>
                 <Select
+                    isDisabled={projects === undefined || projects?.length <= 0}
                     options={sortOptions}
                     defaultValue={{ value: 'due_date', label: 'Due date' }}
                     isSearchable={false}
@@ -74,28 +75,33 @@ const ProjectsPage: React.FC = () => {
             </div>
             <GridContainer>
                 {!isLoading &&
-                    projects?.map((project) => (
-                        <Card key={project.project_id}>
-                            <h3>{project.title}</h3>
-                            {project.number_of_members > 0 ? (
-                                <div>{`Number of members: ${project.number_of_members}`}</div>
-                            ) : (
-                                <></>
-                            )}
-                            <div>{`Start date: ${new Date(
-                                project.start_date
-                            ).toLocaleDateString('sv-SE')}`}</div>
-                            <div>{`Due date: ${new Date(
-                                project.due_date
-                            ).toLocaleDateString('sv-SE')}`}</div>
-                            <div>{`Number of todos: ${project._count.todo}`}</div>
-                            <Link
-                                style={{ color: 'white' }}
-                                to={`/projects/${project.project_id}`}
-                            >
-                                See more
-                            </Link>
-                        </Card>
+                    projects !== undefined &&
+                    (projects.length > 0 ? (
+                        projects?.map((project) => (
+                            <Card key={project.project_id}>
+                                <h3>{project.title}</h3>
+                                {project.number_of_members > 0 ? (
+                                    <div>{`Number of members: ${project.number_of_members}`}</div>
+                                ) : (
+                                    <></>
+                                )}
+                                <div>{`Start date: ${new Date(
+                                    project.start_date
+                                ).toLocaleDateString('sv-SE')}`}</div>
+                                <div>{`Due date: ${new Date(
+                                    project.due_date
+                                ).toLocaleDateString('sv-SE')}`}</div>
+                                <div>{`Number of todos: ${project._count.todo}`}</div>
+                                <Link
+                                    style={{ color: 'white' }}
+                                    to={`/projects/${project.project_id}`}
+                                >
+                                    See more
+                                </Link>
+                            </Card>
+                        ))
+                    ) : (
+                        <div>No projects exists</div>
                     ))}
             </GridContainer>
         </Container>
