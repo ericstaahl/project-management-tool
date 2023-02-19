@@ -9,14 +9,20 @@ const API_URL: string = import.meta.env.VITE_API_URL;
 const useGetTodos = (
     projectId: number,
     sortBy: string = 'title',
-    statusFilter: 'NOT_STARTED' | 'IN_PROGRESS' | 'DONE' | null
+    statusFilter: 'NOT_STARTED' | 'IN_PROGRESS' | 'DONE' | null,
+    sortOrder: 'asc' | 'desc' = 'asc'
 ): {
     data: Todos | undefined;
     isLoading: boolean;
 } => {
     const auth = useAuth();
     const { data, isLoading } = useQuery({
-        queryKey: todoQueryKeys.list(projectId, sortBy, statusFilter),
+        queryKey: todoQueryKeys.list(
+            projectId,
+            sortBy,
+            statusFilter,
+            sortOrder
+        ),
         queryFn: async (): Promise<Todos> => {
             const res = await axios.get<Todos>(
                 `${API_URL}/todos/${projectId}`,
@@ -30,6 +36,7 @@ const useGetTodos = (
                     params: {
                         sortRule: sortBy,
                         statusFilter,
+                        sortOrder,
                     },
                 }
             );

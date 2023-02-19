@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import SelectInput from '../components/SelectInput';
+import SortOrderArrow from '../components/SortOrderArrow';
 import Button from '../components/styled/Button';
 import Card from '../components/styled/Card';
 import Container from '../components/styled/Container';
@@ -41,6 +42,7 @@ const statusOptions: StatusOptions[] = [
 const ProjectPage: React.FC = () => {
     const { id: projectId } = useParams();
     const [sortBy, setSortBy] = useState({ value: 'title', label: 'Title' });
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
     const [statusFilter, setStatusFilter] = useState<{
         value: 'NOT_STARTED' | 'IN_PROGRESS' | 'DONE';
         label: string;
@@ -48,7 +50,8 @@ const ProjectPage: React.FC = () => {
     const { data, isLoading } = useGetTodos(
         Number(projectId),
         sortBy.value,
-        statusFilter?.value ?? null
+        statusFilter?.value ?? null,
+        sortOrder
     );
     const navigate = useNavigate();
 
@@ -68,6 +71,12 @@ const ProjectPage: React.FC = () => {
                             });
                     },
                 }}
+            />
+            <SortOrderArrow
+                handleSetSortOrder={(order) => {
+                    setSortOrder(order);
+                }}
+                sortOrder={sortOrder}
             />
             <SelectInput<typeof statusOptions[0]>
                 label={'Filter'}
