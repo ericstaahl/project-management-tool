@@ -6,6 +6,7 @@ import Container from '../components/styled/Container';
 import useGetProjects from '../hooks/project/useGetProjects';
 import H2 from '../components/styled/H2';
 import SelectInput from '../components/SelectInput';
+import SortOrderArrow from '../components/SortOrderArrow';
 
 const GridContainer = styled.div({
     display: 'grid',
@@ -49,16 +50,12 @@ const ProjectsPage: React.FC = () => {
                     },
                 }}
             />
-            <div
-                style={{ cursor: 'pointer' }}
-                onClick={() => {
-                    sortOrder === 'asc'
-                        ? setSortOrder('desc')
-                        : setSortOrder('asc');
+            <SortOrderArrow
+                handleSetSortOrder={(order) => {
+                    setSortOrder(order);
                 }}
-            >
-                ↓
-            </div>
+                sortOrder={sortOrder}
+            />
             <GridContainer>
                 {!isLoading &&
                     projects !== undefined &&
