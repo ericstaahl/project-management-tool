@@ -38,7 +38,7 @@ interface inputErrors {
 const EditProjectPage: React.FC = () => {
     const { id: projectId } = useParams();
     const { data: project } = useGetProject(projectId);
-    const [newProject, setNewProject] = useState<Project | null>({
+    const [updatedProject, setUpdatedProject] = useState<Project | null>({
         due_date: dayjs(project?.due_date).format('YYYY-MM-DD'),
         number_of_members: project?.project_id,
         project_id: project?.project_id,
@@ -54,7 +54,7 @@ const EditProjectPage: React.FC = () => {
     const [initialRender, setInitialRender] = useState(true);
 
     const resetProject = (): void => {
-        setNewProject({
+        setUpdatedProject({
             due_date: dayjs(project?.due_date).format('YYYY-MM-DD'),
             number_of_members: project?.project_id,
             project_id: project?.project_id,
@@ -65,7 +65,7 @@ const EditProjectPage: React.FC = () => {
 
     useEffect(() => {
         if (project !== undefined && initialRender) {
-            setNewProject({
+            setUpdatedProject({
                 due_date: dayjs(project?.due_date).format('YYYY-MM-DD'),
                 number_of_members: project?.number_of_members,
                 project_id: project?.project_id,
@@ -78,8 +78,8 @@ const EditProjectPage: React.FC = () => {
 
     const onSubmitFunction = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        // if newProject has any values, check if they are ok
-        if (newProject !== null) {
+        // if updatedProject has any values, check if they are ok
+        if (updatedProject !== null) {
             const inputErrorKeys = Object.keys(inputErrors);
             // reset errors
             const newInputErrors = {
@@ -90,9 +90,9 @@ const EditProjectPage: React.FC = () => {
             // Get keys from the inputError object to check if they have correct values (or values at all)
             inputErrorKeys.forEach((key) => {
                 if (
-                    newProject[key as keyof Project] === null ||
-                    newProject[key as keyof Project] === '' ||
-                    newProject[key as keyof Project] === undefined
+                    updatedProject[key as keyof Project] === null ||
+                    updatedProject[key as keyof Project] === '' ||
+                    updatedProject[key as keyof Project] === undefined
                 ) {
                     newInputErrors[key as keyof inputErrors] = true;
                 }
@@ -101,12 +101,12 @@ const EditProjectPage: React.FC = () => {
             setInputErrors(newInputErrors);
 
             if (
-                newProject !== null &&
+                updatedProject !== null &&
                 !Object.values(newInputErrors).includes(true)
             ) {
-                addProject.mutate(newProject);
+                addProject.mutate(updatedProject);
             }
-            // if newProject is null, set all values to true.
+            // if updatedProject is null, set all values to true.
         } else {
             const newInputErrors = { ...inputErrors };
             const inputErrorKeys = Object.keys(newInputErrors);
@@ -139,18 +139,22 @@ const EditProjectPage: React.FC = () => {
 
                     <Input
                         onChange={(e) => {
-                            if (newProject !== null) {
-                                const newProjectCopy = { ...newProject };
-                                newProjectCopy.title = e.target.value;
-                                setNewProject(newProjectCopy);
+                            if (updatedProject !== null) {
+                                const updatedProjectCopy = {
+                                    ...updatedProject,
+                                };
+                                updatedProjectCopy.title = e.target.value;
+                                setUpdatedProject(updatedProjectCopy);
                                 return;
                             }
-                            const newProjectCopy = { title: e.target.value };
-                            setNewProject(newProjectCopy);
+                            const updatedProjectCopy = {
+                                title: e.target.value,
+                            };
+                            setUpdatedProject(updatedProjectCopy);
                         }}
                         name='title'
                         type='text'
-                        value={newProject?.title ?? ''}
+                        value={updatedProject?.title ?? ''}
                         // required={true}
                     />
                 </InputContainer>
@@ -173,20 +177,22 @@ const EditProjectPage: React.FC = () => {
 
                     <Input
                         onChange={(e) => {
-                            if (newProject !== null) {
-                                const newProjectCopy = { ...newProject };
-                                newProjectCopy.start_date = e.target.value;
-                                setNewProject(newProjectCopy);
+                            if (updatedProject !== null) {
+                                const updatedProjectCopy = {
+                                    ...updatedProject,
+                                };
+                                updatedProjectCopy.start_date = e.target.value;
+                                setUpdatedProject(updatedProjectCopy);
                                 return;
                             }
-                            const newProjectCopy = {
+                            const updatedProjectCopy = {
                                 start_date: e.target.value,
                             };
-                            setNewProject(newProjectCopy);
+                            setUpdatedProject(updatedProjectCopy);
                         }}
                         name='start_date'
                         type='date'
-                        value={newProject?.start_date ?? ''}
+                        value={updatedProject?.start_date ?? ''}
                         // required={true}
                     />
                 </InputContainer>
@@ -209,18 +215,22 @@ const EditProjectPage: React.FC = () => {
 
                     <Input
                         onChange={(e) => {
-                            if (newProject !== null) {
-                                const newProjectCopy = { ...newProject };
-                                newProjectCopy.due_date = e.target.value;
-                                setNewProject(newProjectCopy);
+                            if (updatedProject !== null) {
+                                const updatedProjectCopy = {
+                                    ...updatedProject,
+                                };
+                                updatedProjectCopy.due_date = e.target.value;
+                                setUpdatedProject(updatedProjectCopy);
                                 return;
                             }
-                            const newProjectCopy = { due_date: e.target.value };
-                            setNewProject(newProjectCopy);
+                            const updatedProjectCopy = {
+                                due_date: e.target.value,
+                            };
+                            setUpdatedProject(updatedProjectCopy);
                         }}
                         name='due_date'
                         type='date'
-                        value={newProject?.due_date ?? ''}
+                        value={updatedProject?.due_date ?? ''}
                         // required={true}
                     />
                 </InputContainer>
