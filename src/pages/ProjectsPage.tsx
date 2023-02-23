@@ -62,7 +62,30 @@ const ProjectsPage: React.FC = () => {
                     (projects.length > 0 ? (
                         projects?.map((project) => (
                             <Card key={project.project_id}>
-                                <h3>{project.title}</h3>
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignContent: 'center',
+                                        height: 'auto',
+                                    }}
+                                >
+                                    <h3>{project.title}</h3>
+                                    <Link
+                                        style={{
+                                            color: 'white',
+                                            textDecoration: 'none',
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignContent: 'center',
+                                            fontSize: '1.5rem',
+                                            textAlign: 'center',
+                                        }}
+                                        to={`/projects/${project.project_id}/edit`}
+                                    >
+                                        ...
+                                    </Link>
+                                </div>
                                 {project.number_of_members > 0 ? (
                                     <div>{`Number of members: ${project.number_of_members}`}</div>
                                 ) : (

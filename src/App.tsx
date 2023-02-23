@@ -14,6 +14,7 @@ import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import LogoutUserPage from './pages/LogoutUserPage';
 import ProjectsPage from './pages/ProjectsPage';
+import EditProjectPage from './pages/EditProjectPage';
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,10 @@ const App: React.FC = () => {
                             <Route
                                 path='/projects/:id'
                                 element={<ProjectPage />}
+                            />
+                            <Route
+                                path='/projects/:id/edit'
+                                element={<EditProjectPage />}
                             />
                             <Route
                                 path='/projects/:id/new-todo'
