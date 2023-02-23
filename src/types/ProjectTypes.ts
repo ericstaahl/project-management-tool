@@ -16,3 +16,10 @@ export interface Project {
     start_date?: string;
     due_date?: string;
 }
+
+export interface UpdateProject {
+    due_date?: string | undefined;
+    title?: string | undefined;
+    number_of_members?: number | undefined;
+    start_date?: string | undefined;
+}

@@ -2,12 +2,12 @@ import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../context/AuthContext';
-import type { Project } from '../../types/ProjectTypes';
+import type { UpdateProject } from '../../types/ProjectTypes';
 
 const API_URL: string = import.meta.env.VITE_API_URL;
 
 interface Params {
-    updatedProject: Project;
+    updatedProject: UpdateProject;
     projectId: string;
 }
 

@@ -7,6 +7,7 @@ import Input from '../components/styled/Input';
 import useGetProject from '../hooks/project/useGetProject';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { UpdateProject } from '../types/ProjectTypes';
 
 const InputContainer = styled.div({
     display: 'flex',
@@ -21,14 +22,6 @@ const StyledForm = styled.form({
     rowGap: '0.8rem',
 });
 
-interface Project {
-    title?: string;
-    project_id?: number;
-    number_of_members?: number;
-    start_date?: string;
-    due_date?: string;
-}
-
 interface inputErrors {
     title?: boolean;
     start_date?: boolean;
@@ -38,10 +31,8 @@ interface inputErrors {
 const EditProjectPage: React.FC = () => {
     const { id: projectId } = useParams();
     const { data: project } = useGetProject(projectId);
-    const [updatedProject, setUpdatedProject] = useState<Project | null>({
+    const [updatedProject, setUpdatedProject] = useState<UpdateProject | null>({
         due_date: dayjs(project?.due_date).format('YYYY-MM-DD'),
-        number_of_members: project?.project_id,
-        project_id: project?.project_id,
         start_date: dayjs(project?.start_date).format('YYYY-MM-DD'),
         title: project?.title,
     });
@@ -56,8 +47,6 @@ const EditProjectPage: React.FC = () => {
     const resetProject = (): void => {
         setUpdatedProject({
             due_date: dayjs(project?.due_date).format('YYYY-MM-DD'),
-            number_of_members: project?.project_id,
-            project_id: project?.project_id,
             start_date: dayjs(project?.start_date).format('YYYY-MM-DD'),
             title: project?.title,
         });
@@ -67,8 +56,6 @@ const EditProjectPage: React.FC = () => {
         if (project !== undefined && initialRender) {
             setUpdatedProject({
                 due_date: dayjs(project?.due_date).format('YYYY-MM-DD'),
-                number_of_members: project?.number_of_members,
-                project_id: project?.project_id,
                 start_date: dayjs(project?.start_date).format('YYYY-MM-DD'),
                 title: project?.title,
             });
@@ -90,9 +77,9 @@ const EditProjectPage: React.FC = () => {
             // Get keys from the inputError object to check if they have correct values (or values at all)
             inputErrorKeys.forEach((key) => {
                 if (
-                    updatedProject[key as keyof Project] === null ||
-                    updatedProject[key as keyof Project] === '' ||
-                    updatedProject[key as keyof Project] === undefined
+                    updatedProject[key as keyof UpdateProject] === null ||
+                    updatedProject[key as keyof UpdateProject] === '' ||
+                    updatedProject[key as keyof UpdateProject] === undefined
                 ) {
                     newInputErrors[key as keyof inputErrors] = true;
                 }
