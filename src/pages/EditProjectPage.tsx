@@ -53,6 +53,16 @@ const EditProjectPage: React.FC = () => {
     const addProject = useAddProject();
     const [initialRender, setInitialRender] = useState(true);
 
+    const resetProject = (): void => {
+        setNewProject({
+            due_date: dayjs(project?.due_date).format('YYYY-MM-DD'),
+            number_of_members: project?.project_id,
+            project_id: project?.project_id,
+            start_date: dayjs(project?.start_date).format('YYYY-MM-DD'),
+            title: project?.title,
+        });
+    };
+
     useEffect(() => {
         if (project !== undefined && initialRender) {
             setNewProject({
@@ -214,8 +224,10 @@ const EditProjectPage: React.FC = () => {
                         // required={true}
                     />
                 </InputContainer>
-
-                <Button type='submit'>Save</Button>
+                <div style={{ display: 'flex', columnGap: '1rem' }}>
+                    <Button type='submit'>Save</Button>
+                    <Button onClick={resetProject}>Reset</Button>
+                </div>
             </StyledForm>
         </Container>
     );
