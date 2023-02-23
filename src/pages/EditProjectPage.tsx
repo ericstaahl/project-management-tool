@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import useAddProject from '../hooks/project/useAddProject';
+import useUpdateProject from '../hooks/project/useUpdateProject';
 import Button from '../components/styled/Button';
 import Container from '../components/styled/Container';
 import Input from '../components/styled/Input';
@@ -50,7 +50,7 @@ const EditProjectPage: React.FC = () => {
         start_date: false,
         due_date: false,
     });
-    const addProject = useAddProject();
+    const updateProject = useUpdateProject();
     const [initialRender, setInitialRender] = useState(true);
 
     const resetProject = (): void => {
@@ -102,9 +102,10 @@ const EditProjectPage: React.FC = () => {
 
             if (
                 updatedProject !== null &&
-                !Object.values(newInputErrors).includes(true)
+                !Object.values(newInputErrors).includes(true) &&
+                projectId !== undefined
             ) {
-                addProject.mutate(updatedProject);
+                updateProject.mutate({ updatedProject, projectId });
             }
             // if updatedProject is null, set all values to true.
         } else {
