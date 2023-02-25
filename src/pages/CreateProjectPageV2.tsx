@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import Button from '../components/styled/Button';
 import Container from '../components/styled/Container';
 import Input from '../components/styled/Input';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 const InputContainer = styled.div({
     display: 'flex',
@@ -39,12 +39,14 @@ const CreateProjectPage: React.FC = () => {
         formState: { errors },
     } = useForm<FormValues>();
 
-    const submitFunction = (data) => console.log(data);
+    const onSubmit: SubmitHandler<FormValues> = (data) => {
+        console.log(data);
+    };
 
     return (
         <Container>
             <h2 style={{ marginBottom: '1rem' }}>Create new project</h2>
-            <StyledForm onSubmit={handleSubmit(submitFunction)}>
+            <StyledForm onSubmit={handleSubmit(onSubmit)}>
                 <InputContainer>
                     <div
                         style={{
@@ -62,9 +64,8 @@ const CreateProjectPage: React.FC = () => {
                     </div>
 
                     <Input
-                        {...register('title')}
+                        {...register('title', { required: true })}
                         type='text'
-                        // required={true}
                     />
                 </InputContainer>
 
@@ -84,7 +85,10 @@ const CreateProjectPage: React.FC = () => {
                         )}{' '}
                     </div>
 
-                    <Input {...register('start_date')} type='date' />
+                    <Input
+                        {...register('start_date', { required: true })}
+                        type='date'
+                    />
                 </InputContainer>
 
                 <InputContainer>
@@ -103,7 +107,10 @@ const CreateProjectPage: React.FC = () => {
                         )}{' '}
                     </div>
 
-                    <Input type='date' {...register('due_date')} />
+                    <Input
+                        {...register('due_date', { required: true })}
+                        type='date'
+                    />
                 </InputContainer>
 
                 <Button type='submit'>Save</Button>
