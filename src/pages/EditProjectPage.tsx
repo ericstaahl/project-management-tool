@@ -8,6 +8,7 @@ import useGetProject from '../hooks/project/useGetProject';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { UpdateProject } from '../types/ProjectTypes';
+import useDeleteProject from '../hooks/project/useDeleteProject';
 
 const InputContainer = styled.div({
     display: 'flex',
@@ -42,6 +43,7 @@ const EditProjectPage: React.FC = () => {
         due_date: false,
     });
     const updateProject = useUpdateProject();
+    const deleteProject = useDeleteProject();
     const [initialRender, setInitialRender] = useState(true);
 
     const resetProject = (): void => {
@@ -104,6 +106,10 @@ const EditProjectPage: React.FC = () => {
                 setInputErrors(newInputErrors);
             });
         }
+    };
+
+    const handleDeleteProject = (): void => {
+        if (projectId !== undefined) deleteProject.mutate({ projectId });
     };
     return (
         <Container>
@@ -225,6 +231,7 @@ const EditProjectPage: React.FC = () => {
                 <div style={{ display: 'flex', columnGap: '1rem' }}>
                     <Button type='submit'>Save</Button>
                     <Button onClick={resetProject}>Reset</Button>
+                    <Button onClick={handleDeleteProject}>Delete</Button>
                 </div>
             </StyledForm>
         </Container>

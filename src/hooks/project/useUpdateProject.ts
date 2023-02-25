@@ -1,6 +1,5 @@
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
-import { useNavigate } from 'react-router-dom';
 import useAuth from '../../context/AuthContext';
 import type { UpdateProject } from '../../types/ProjectTypes';
 
@@ -17,8 +16,6 @@ const useUpdateProject = (): UseMutationResult<
     Params,
     unknown
 > => {
-    const navigate = useNavigate();
-
     const auth = useAuth();
 
     const mutation = useMutation({
@@ -38,7 +35,6 @@ const useUpdateProject = (): UseMutationResult<
         },
         onSuccess: async () => {
             console.log('Successfully updated project.');
-            navigate('/projects');
         },
         onError: async () => {
             console.log('An error occured when trying to update project.');
