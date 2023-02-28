@@ -33,7 +33,7 @@ interface FormValues {
     due_date: string;
 }
 
-const CreateProjectPage: React.FC = () => {
+const AddProjectPage: React.FC = () => {
     const {
         register,
         handleSubmit,
@@ -122,4 +122,4 @@ const CreateProjectPage: React.FC = () => {
     );
 };
 
-export default CreateProjectPage;
+export default AddProjectPage;

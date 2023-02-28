@@ -14,7 +14,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import LogoutUserPage from './pages/LogoutUserPage';
 import ProjectsPage from './pages/ProjectsPage';
 import EditProjectPage from './pages/EditProjectPage';
-import CreateProjectPageV2 from './pages/CreateProjectPageV2';
+import AddProjectPage from './pages/AddProjectPage';
 
 const queryClient = new QueryClient();
 
@@ -33,7 +33,7 @@ const App: React.FC = () => {
                             />
                             <Route
                                 path='/projects/new'
-                                element={<CreateProjectPageV2 />}
+                                element={<AddProjectPage />}
                             />
                             <Route
                                 path='/projects/:id'
