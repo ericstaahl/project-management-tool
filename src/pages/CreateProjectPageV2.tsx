@@ -4,6 +4,7 @@ import Button from '../components/styled/Button';
 import Container from '../components/styled/Container';
 import Input from '../components/styled/Input';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import useAddProject from '../hooks/project/useAddProject';
 
 const InputContainer = styled.div({
     display: 'flex',
@@ -39,8 +40,10 @@ const CreateProjectPage: React.FC = () => {
         formState: { errors },
     } = useForm<FormValues>();
 
+    const addProject = useAddProject();
+
     const onSubmit: SubmitHandler<FormValues> = (data) => {
-        console.log(data);
+        addProject.mutate(data);
     };
 
     return (

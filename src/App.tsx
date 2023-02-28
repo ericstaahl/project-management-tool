@@ -5,7 +5,6 @@ import React from 'react';
 import './assets/css/style.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import CreateProjectPage from './pages/CreateProjectPage';
 import ProjectPage from './pages/ProjectPage';
 import AddTodoPage from './pages/AddTodoPage';
 import RegisterUserPage from './pages/RegisterUser';
@@ -34,10 +33,6 @@ const App: React.FC = () => {
                             />
                             <Route
                                 path='/projects/new'
-                                element={<CreateProjectPage />}
-                            />
-                            <Route
-                                path='/projects/new2'
                                 element={<CreateProjectPageV2 />}
                             />
                             <Route
