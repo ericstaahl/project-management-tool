@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import Modal from '../components/Modal';
 import SelectInput from '../components/SelectInput';
 import SortOrderArrow from '../components/SortOrderArrow';
 import Button from '../components/styled/Button';
@@ -54,73 +55,86 @@ const ProjectPage: React.FC = () => {
         sortOrder
     );
     const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
 
     return (
-        <Container>
-            <H2>Project</H2>
-            <SelectInput<typeof sortOptions[0]>
-                label={'Sort by'}
-                selectProps={{
-                    options: sortOptions,
-                    defaultValue: { value: 'title', label: 'Title' },
-                    onChange: (selected) => {
-                        if (selected !== null)
-                            setSortBy({
-                                label: selected.label,
-                                value: selected.value,
-                            });
-                    },
-                }}
-            />
-            <SortOrderArrow
-                handleSetSortOrder={(order) => {
-                    setSortOrder(order);
-                }}
-                sortOrder={sortOrder}
-            />
-            <SelectInput<typeof statusOptions[0]>
-                label={'Filter'}
-                selectProps={{
-                    options: statusOptions,
-                    onChange: (selected) => {
-                        if (selected !== null)
-                            setStatusFilter({
-                                label: selected.label,
-                                value: selected.value,
-                            });
-                        else {
-                            setStatusFilter(null);
-                        }
-                    },
-                    isClearable: true,
-                }}
-            />
-            <GridContainer>
-                {!isLoading &&
-                    data !== undefined &&
-                    (data.length > 0 ? (
-                        data?.map((todo) => (
-                            <Card key={todo.todo_id}>
-                                <h3>{`${todo.title}`}</h3>
-                                <div>{`Estimation: ${todo.estimate}`}</div>
-                                <div>{`Description: ${todo.description}`}</div>
-                                <div>{`Status: ${statuses[todo.status]}`}</div>
-                            </Card>
-                        ))
-                    ) : (
-                        <div style={{ fontStyle: 'italic' }}>
-                            No to-dos found
-                        </div>
-                    ))}
-            </GridContainer>
-            <Button
-                onClick={() => {
-                    navigate('new-todo');
-                }}
-            >
-                Add to-do
-            </Button>
-        </Container>
+        <>
+            {showModal && <Modal />}
+            <Container>
+                <H2>Project</H2>
+                <SelectInput<typeof sortOptions[0]>
+                    label={'Sort by'}
+                    selectProps={{
+                        options: sortOptions,
+                        defaultValue: { value: 'title', label: 'Title' },
+                        onChange: (selected) => {
+                            if (selected !== null)
+                                setSortBy({
+                                    label: selected.label,
+                                    value: selected.value,
+                                });
+                        },
+                    }}
+                />
+                <SortOrderArrow
+                    handleSetSortOrder={(order) => {
+                        setSortOrder(order);
+                    }}
+                    sortOrder={sortOrder}
+                />
+                <SelectInput<typeof statusOptions[0]>
+                    label={'Filter'}
+                    selectProps={{
+                        options: statusOptions,
+                        onChange: (selected) => {
+                            if (selected !== null)
+                                setStatusFilter({
+                                    label: selected.label,
+                                    value: selected.value,
+                                });
+                            else {
+                                setStatusFilter(null);
+                            }
+                        },
+                        isClearable: true,
+                    }}
+                />
+                <GridContainer>
+                    {!isLoading &&
+                        data !== undefined &&
+                        (data.length > 0 ? (
+                            data?.map((todo) => (
+                                <Card key={todo.todo_id}>
+                                    <h3>{`${todo.title}`}</h3>
+                                    <div>{`Estimation: ${todo.estimate}`}</div>
+                                    <div>{`Description: ${todo.description}`}</div>
+                                    <div>{`Status: ${
+                                        statuses[todo.status]
+                                    }`}</div>
+                                </Card>
+                            ))
+                        ) : (
+                            <div style={{ fontStyle: 'italic' }}>
+                                No to-dos found
+                            </div>
+                        ))}
+                </GridContainer>
+                <Button
+                    onClick={() => {
+                        navigate('new-todo');
+                    }}
+                >
+                    Add to-do
+                </Button>
+                <Button
+                    onClick={() => {
+                        setShowModal(true);
+                    }}
+                >
+                    Add users
+                </Button>
+            </Container>
+        </>
     );
 };
 
