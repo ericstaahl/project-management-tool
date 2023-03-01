@@ -52,17 +52,16 @@ const EditProjectPage: React.FC = () => {
             setValue(
                 'start_date',
                 dayjs(project?.start_date).format('YYYY-MM-DD')
-                );
-                setValue('due_date', dayjs(project?.due_date).format('YYYY-MM-DD'));
-            }
-    }
+            );
+            setValue('due_date', dayjs(project?.due_date).format('YYYY-MM-DD'));
+        }
+    };
     useEffect(() => {
         if (project !== undefined && initialRender) {
-            resetValues()
+            resetValues();
             setInitialRender(false);
         }
     }, [project]);
-
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
         if (projectId !== undefined)

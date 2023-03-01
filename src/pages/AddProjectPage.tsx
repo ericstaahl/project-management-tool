@@ -45,11 +45,8 @@ const AddProjectPage: React.FC = () => {
     const addProject = useAddProject();
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
-        console.log(data)
         addProject.mutate(data);
     };
-
-    console.log(errors);
 
     return (
         <Container>
