@@ -4,6 +4,7 @@ export type Projects = Array<{
     number_of_members: number;
     start_date: string;
     due_date: string;
+    description?: string;
     _count: {
         todo: number;
     };
@@ -15,6 +16,7 @@ export interface Project {
     number_of_members?: number;
     start_date?: string;
     due_date?: string;
+    description?: string;
 }
 
 export interface UpdateProject {
@@ -22,4 +24,5 @@ export interface UpdateProject {
     title?: string | undefined;
     number_of_members?: number | undefined;
     start_date?: string | undefined;
+    description?: string;
 }

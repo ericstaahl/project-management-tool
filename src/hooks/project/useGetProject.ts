@@ -16,6 +16,7 @@ const useGetProject = (
               number_of_members: number;
               start_date: string;
               due_date: string;
+              description?: string;
               _count: {
                   todo: number;
               };

@@ -5,6 +5,7 @@ import Container from '../components/styled/Container';
 import Input from '../components/styled/Input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useAddProject from '../hooks/project/useAddProject';
+import TextArea from '../components/styled/TextArea';
 
 const InputContainer = styled.div({
     display: 'flex',
@@ -31,6 +32,7 @@ interface FormValues {
     title: string;
     start_date: string;
     due_date: string;
+    description: string;
 }
 
 const AddProjectPage: React.FC = () => {
@@ -43,8 +45,11 @@ const AddProjectPage: React.FC = () => {
     const addProject = useAddProject();
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
+        console.log(data)
         addProject.mutate(data);
     };
+
+    console.log(errors);
 
     return (
         <Container>
@@ -111,8 +116,37 @@ const AddProjectPage: React.FC = () => {
                     </div>
 
                     <Input
-                        {...register('due_date', { required: true })}
+                        {...register('due_date', {
+                            required: true,
+                        })}
                         type='date'
+                    />
+                </InputContainer>
+
+                <InputContainer>
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <label htmlFor='description'>Description</label>
+                        {errors.description !== undefined &&
+                            errors.description.type === 'maxLength' && (
+                                <span
+                                    style={{ fontSize: '0.8rem', color: 'red' }}
+                                >
+                                    * Max 500 characters
+                                </span>
+                            )}{' '}
+                    </div>
+
+                    <TextArea
+                        rows={6}
+                        {...register('description', {
+                            maxLength: 500,
+                        })}
                     />
                 </InputContainer>
 
