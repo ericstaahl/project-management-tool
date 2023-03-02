@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import AddUserToProject from '../components/AddUserToProject';
 import Modal from '../components/Modal';
 import SelectInput from '../components/SelectInput';
 import SortOrderArrow from '../components/SortOrderArrow';
@@ -59,7 +60,15 @@ const ProjectPage: React.FC = () => {
 
     return (
         <>
-            {showModal && <Modal />}
+            {showModal && (
+                <Modal
+                    handleSetShowModal={() => {
+                        setShowModal(false);
+                    }}
+                >
+                    <AddUserToProject />
+                </Modal>
+            )}
             <Container>
                 <H2>Project</H2>
                 <SelectInput<typeof sortOptions[0]>

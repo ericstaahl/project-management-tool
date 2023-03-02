@@ -12,7 +12,7 @@ interface ComponentProps<
     IsMulti extends boolean = false,
     Group extends GroupBase<Option> = GroupBase<Option>
 > {
-    label: string;
+    label?: string;
     selectProps: SelectProps<Option, IsMulti, Group>;
 }
 
@@ -33,15 +33,17 @@ const SelectInput = <
                 justifyContent: 'space-between',
             }}
         >
-            <div
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    fontSize: '1.2rem',
-                }}
-            >
-                {props.label}
-            </div>
+            {props.label !== undefined && (
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontSize: '1.2rem',
+                    }}
+                >
+                    {props.label}
+                </div>
+            )}
             <Select
                 styles={{
                     container: (baseStyles) => ({
