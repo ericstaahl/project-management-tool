@@ -1,9 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import useGetAllUsers from '../hooks/user/useGetAllUsers';
+import useInviteUser from '../hooks/user/useInviteUsers';
 import SelectInput from './SelectInput';
 import Button from './styled/Button';
 
-const AddUserToProject: React.FC = () => {
+const AddUserToProject: React.FC<{ projectId: string | undefined }> = ({
+    projectId,
+}) => {
     const { data: users, isLoading } = useGetAllUsers();
     console.log(users);
     const options = useMemo(() => {
@@ -17,6 +20,9 @@ const AddUserToProject: React.FC = () => {
         label: string;
     }>();
     console.log(selectedUser);
+
+    const inviteUser = useInviteUser();
+
     return (
         <div
             style={{
@@ -48,7 +54,18 @@ const AddUserToProject: React.FC = () => {
                     />
                 )}
             </div>
-            <Button>Add</Button>
+            <Button
+                onClick={() => {
+                    if (selectedUser === undefined || projectId === undefined)
+                        return;
+                    inviteUser.mutate({
+                        userId: selectedUser.value,
+                        projectId,
+                    });
+                }}
+            >
+                Add
+            </Button>
         </div>
     );
 };

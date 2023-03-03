@@ -66,7 +66,7 @@ const ProjectPage: React.FC = () => {
                         setShowModal(false);
                     }}
                 >
-                    <AddUserToProject />
+                    <AddUserToProject projectId={projectId} />
                 </Modal>
             )}
             <Container>
