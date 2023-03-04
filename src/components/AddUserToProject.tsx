@@ -59,7 +59,7 @@ const AddUserToProject: React.FC<{ projectId: string | undefined }> = ({
                     if (selectedUser === undefined || projectId === undefined)
                         return;
                     inviteUser.mutate({
-                        userId: selectedUser.value,
+                        username: selectedUser.value,
                         projectId,
                     });
                 }}

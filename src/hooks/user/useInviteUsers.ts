@@ -5,7 +5,7 @@ import useAuth from '../../context/AuthContext';
 const API_URL: string = import.meta.env.VITE_API_URL;
 
 interface Params {
-    userId: string;
+    username: string;
     projectId: string;
 }
 
@@ -18,10 +18,10 @@ const useInviteUser = (): UseMutationResult<
     const auth = useAuth();
 
     const mutation = useMutation({
-        mutationFn: async ({ userId, projectId }: Params) => {
+        mutationFn: async ({ username, projectId }: Params) => {
             return await axios.post(
                 `${API_URL}/projects/${projectId}/invite`,
-                userId,
+                { username },
                 {
                     headers: {
                         Authorization:
