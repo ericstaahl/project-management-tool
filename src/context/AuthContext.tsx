@@ -56,8 +56,6 @@ export const AuthProvider: React.FC<Props> = (props) => {
         } else setAuthState(null);
     }, []);
 
-    console.log(authState);
-
     return (
         <AuthContext.Provider value={authState}>
             <UpdateAuthContext.Provider value={handleSetAuthState}>
