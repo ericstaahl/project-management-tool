@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import Button from '../components/styled/Button';
 import Container from '../components/styled/Container';
@@ -6,6 +6,8 @@ import Input from '../components/styled/Input';
 import useAddTodo from '../hooks/todo/useAddTodo';
 import { Todo as TodoToSave } from '../types/TodoTypes';
 import { useNavigate, useParams } from 'react-router-dom';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import UserSelect from '../components/UserSelect';
 
 const InputContainer = styled.div({
     display: 'flex',
@@ -26,109 +28,64 @@ const InputLabelWrapper = styled.div({
     alignItems: 'center',
 });
 
-interface Todo {
+interface FormValues {
     title: string;
     estimate: string;
     description: string;
-    project_id: number;
-}
-
-interface inputErrors {
-    title: boolean;
-    estimate: boolean;
-    description: boolean;
-    project_id: boolean;
+    assignee: {
+        label: string;
+        value: string;
+    };
 }
 
 const AddTodoPage: React.FC = () => {
+    const {
+        register,
+        handleSubmit,
+        control,
+        formState: { errors },
+    } = useForm<FormValues>();
     const { id: projectId } = useParams();
     const navigate = useNavigate();
 
-    const [newTodo, setNewTodo] = useState<Partial<TodoToSave>>({
-        project_id: Number(projectId),
-    });
+    // const [selectedUser, setSelectedUser] = React.useState<{
+    //     value: string;
+    //     label: string;
+    // }>();
 
-    const [inputErrors, setInputErrors] = useState<inputErrors>({
-        title: false,
-        estimate: false,
-        description: false,
-        project_id: false,
-    });
+    // const handleSetSelectedUser = (selected: {
+    //     label: string;
+    //     value: string;
+    // }): void => {
+    //     setSelectedUser(selected);
+    // };
 
     const addTodo = useAddTodo();
 
-    const onChangeFunction = <K extends keyof TodoToSave>(
-        objectKey: K,
-        value: TodoToSave[K]
-    ): void => {
-        const newTodoCopy = { ...newTodo };
-        if (newTodoCopy !== null) {
-            newTodoCopy[objectKey] = value;
-            setNewTodo(newTodoCopy);
-        }
-    };
-
-    const onSubmitFunction = (e: React.FormEvent<HTMLFormElement>): void => {
-        e.preventDefault();
-        const inputErrorKeys = Object.keys(inputErrors);
-        // reset errors
-        const newInputErrors = {
-            title: false,
-            estimate: false,
-            description: false,
-            project_id: false,
+    const onSubmit: SubmitHandler<FormValues> = (data) => {
+        const todoToSave: TodoToSave = {
+            title: data.title,
+            estimate: data.estimate,
+            description: data.description,
+            project_id: Number(projectId),
+            assignee: data.assignee.value,
         };
 
-        // Get keys from the inputError object to check if they have correct values (or values at all)
-        inputErrorKeys.forEach((key) => {
-            if (newTodo !== null) {
-                if (
-                    newTodo[key as keyof Todo] === null ||
-                    newTodo[key as keyof Todo] === '' ||
-                    newTodo[key as keyof Todo] === undefined
-                ) {
-                    newInputErrors[key as keyof inputErrors] = true;
-                }
-            }
+        addTodo.mutate(todoToSave, {
+            onSuccess: () => {
+                if (projectId !== undefined) navigate(`/projects/${projectId}`);
+            },
         });
-
-        setInputErrors(newInputErrors);
-
-        // if (newTodo !== null && !Object.values(newInputErrors).includes(true)) {
-
-        if (
-            newTodo.description !== undefined &&
-            newTodo.estimate !== undefined &&
-            newTodo.project_id !== undefined &&
-            newTodo.title !== undefined
-        ) {
-            const todoToSave: TodoToSave = {
-                title: newTodo.title,
-                estimate: newTodo.estimate,
-                description: newTodo.description,
-                project_id: newTodo.project_id,
-            };
-
-            addTodo.mutate(todoToSave, {
-                onSuccess: () => {
-                    if (projectId !== undefined)
-                        navigate(`/projects/${projectId}`);
-                },
-            });
-        } else {
-            console.log('Something is undefined');
-        }
-        // }
     };
 
     return (
         <Container>
             <h2 style={{ marginBottom: '1rem' }}>Add new to-do</h2>
-            <StyledForm onSubmit={onSubmitFunction}>
+            <StyledForm onSubmit={handleSubmit(onSubmit)}>
                 <InputContainer>
                     <InputLabelWrapper>
                         <label htmlFor='title'>Title</label>
-                        {inputErrors.title && (
+                        {errors.title !== undefined && (
                             <span style={{ fontSize: '0.8rem', color: 'red' }}>
                                 * Required
                             </span>
@@ -136,11 +93,8 @@ const AddTodoPage: React.FC = () => {
                     </InputLabelWrapper>
 
                     <Input
-                        name='title'
+                        {...register('title', { required: true })}
                         type='text'
-                        onChange={(e) => {
-                            onChangeFunction('title', e.currentTarget.value);
-                        }}
                         // required={true}
                     />
                 </InputContainer>
@@ -148,7 +102,7 @@ const AddTodoPage: React.FC = () => {
                 <InputContainer>
                     <InputLabelWrapper>
                         <label htmlFor='estimate'>Estimate</label>
-                        {inputErrors.estimate && (
+                        {errors.estimate !== undefined && (
                             <span style={{ fontSize: '0.8rem', color: 'red' }}>
                                 * Required
                             </span>
@@ -156,11 +110,8 @@ const AddTodoPage: React.FC = () => {
                     </InputLabelWrapper>
 
                     <Input
-                        name='estimate'
+                        {...register('estimate', { required: true })}
                         type='text'
-                        onChange={(e) => {
-                            onChangeFunction('estimate', e.currentTarget.value);
-                        }}
                         // required={true}
                     />
                 </InputContainer>
@@ -168,7 +119,7 @@ const AddTodoPage: React.FC = () => {
                 <InputContainer>
                     <InputLabelWrapper>
                         <label htmlFor='description'>Description</label>
-                        {inputErrors.description && (
+                        {errors.description !== undefined && (
                             <span style={{ fontSize: '0.8rem', color: 'red' }}>
                                 * Required
                             </span>
@@ -176,15 +127,20 @@ const AddTodoPage: React.FC = () => {
                     </InputLabelWrapper>
 
                     <Input
-                        name='description'
+                        {...register('description', { required: true })}
                         type='text'
-                        onChange={(e) => {
-                            onChangeFunction(
-                                'description',
-                                e.currentTarget.value
-                            );
-                        }}
-                        // required={true}
+                    />
+                </InputContainer>
+
+                <InputContainer>
+                    <InputLabelWrapper>
+                        <label htmlFor='description'>Assignee</label>
+                    </InputLabelWrapper>
+
+                    <UserSelect<FormValues>
+                        control={control}
+                        name='assignee'
+                        projectId={Number(projectId)}
                     />
                 </InputContainer>
 

@@ -13,4 +13,5 @@ export interface Todo {
     estimate: string;
     description: string;
     project_id: number;
+    assignee: string;
 }
