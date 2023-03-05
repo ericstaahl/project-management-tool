@@ -10,6 +10,7 @@ const useLogoutUser = (): void => {
         console.log('logging out');
 
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
         if (updateAuth !== null) updateAuth(null);
 
         navigate('/login');

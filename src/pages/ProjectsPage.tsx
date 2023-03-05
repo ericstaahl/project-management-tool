@@ -7,6 +7,7 @@ import useGetProjects from '../hooks/project/useGetProjects';
 import H2 from '../components/styled/H2';
 import SelectInput from '../components/SelectInput';
 import SortOrderArrow from '../components/SortOrderArrow';
+import useAuth from '../context/AuthContext';
 
 const GridContainer = styled.div({
     display: 'grid',
@@ -23,6 +24,8 @@ const sortOptions = [
 ];
 
 const ProjectsPage: React.FC = () => {
+    const auth = useAuth();
+
     const [sortBy, setSortBy] = useState({
         value: 'due_date',
         label: 'Due date',
@@ -98,6 +101,11 @@ const ProjectsPage: React.FC = () => {
                                     project.due_date
                                 ).toLocaleDateString('sv-SE')}`}</div>
                                 <div>{`Number of todos: ${project._count.todo}`}</div>
+                                <div>
+                                    {project.user_id === auth?.user_id
+                                        ? 'Role: Owner'
+                                        : 'Role: Member'}
+                                </div>
                                 <Link
                                     style={{ color: 'white' }}
                                     to={`/projects/${project.project_id}`}

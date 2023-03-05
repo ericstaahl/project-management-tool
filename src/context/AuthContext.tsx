@@ -3,6 +3,8 @@ import useRefreshToken from '../hooks/user/useRefreshToken';
 
 interface AuthState {
     access_token: string;
+    username: string;
+    user_id: number;
 }
 
 interface Props {
@@ -41,7 +43,11 @@ export const AuthProvider: React.FC<Props> = (props) => {
         if (refreshToken !== null) {
             refreshAccessToken.mutate(refreshToken, {
                 onSuccess: (res) => {
-                    setAuthState({ access_token: res.data.access_token });
+                    setAuthState({
+                        access_token: res.data.access_token,
+                        user_id: res.data.user.user_id,
+                        username: res.data.user.username,
+                    });
                 },
                 onError: () => {
                     setAuthState(null);
@@ -49,6 +55,8 @@ export const AuthProvider: React.FC<Props> = (props) => {
             });
         } else setAuthState(null);
     }, []);
+
+    console.log(authState);
 
     return (
         <AuthContext.Provider value={authState}>

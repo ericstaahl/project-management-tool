@@ -8,8 +8,15 @@ interface User {
     password: string;
 }
 
+interface LoginResponse {
+    user_id: string;
+    username: string;
+    access_token: string;
+    refresh_token: string;
+}
+
 const useLoginUser = (): UseMutationResult<
-    AxiosResponse<any, any>,
+    AxiosResponse<LoginResponse, any>,
     unknown,
     User,
     unknown
@@ -21,6 +28,13 @@ const useLoginUser = (): UseMutationResult<
 
         onSuccess: (res) => {
             localStorage.setItem('token', res.data.refresh_token);
+            localStorage.setItem(
+                'user',
+                JSON.stringify({
+                    user_id: res.data.user_id,
+                    username: res.data.username,
+                })
+            );
         },
         onError: () => {
             console.log('An error occured when trying to log in user.');
