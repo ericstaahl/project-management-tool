@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Button from '../components/styled/Button';
 import Container from '../components/styled/Container';
 import Input from '../components/styled/Input';
-import useAddTodo from '../hooks/todo/useAddTodo';
-import { Todo as TodoToSave } from '../types/TodoTypes';
+import { UpdatedTodo } from '../types/TodoTypes';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import UserSelect from '../components/UserSelect';
+import useGetTodo from '../hooks/todo/useGetTodo';
+import useUpdateTodo from '../hooks/todo/useUpdateTodo';
 
 const InputContainer = styled.div({
     display: 'flex',
@@ -38,44 +39,55 @@ interface FormValues {
     };
 }
 
-const AddTodoPage: React.FC = () => {
+const EditTodoPage: React.FC = () => {
+    const { id: projectId, todoId } = useParams();
+    const { data: todo } = useGetTodo(projectId, todoId);
+    console.log('todo', todo);
+    const updateTodo = useUpdateTodo();
+    // const deleteTodo = useDeleteTodo();
+    const [initialRender, setInitialRender] = useState(true);
+
     const {
         register,
         handleSubmit,
         control,
         formState: { errors },
+        setValue,
     } = useForm<FormValues>();
-    const { id: projectId } = useParams();
+
+    const resetValues = (): void => {
+        if (todo !== undefined) {
+            setValue('title', todo.title);
+            setValue('description', todo.description ?? '');
+            setValue('estimate', todo.estimate ?? '');
+        }
+    };
+    useEffect(() => {
+        if (todo !== undefined && initialRender) {
+            resetValues();
+            setInitialRender(false);
+        }
+    }, [todo]);
+
     const navigate = useNavigate();
 
-    // const [selectedUser, setSelectedUser] = React.useState<{
-    //     value: string;
-    //     label: string;
-    // }>();
-
-    // const handleSetSelectedUser = (selected: {
-    //     label: string;
-    //     value: string;
-    // }): void => {
-    //     setSelectedUser(selected);
-    // };
-
-    const addTodo = useAddTodo();
-
     const onSubmit: SubmitHandler<FormValues> = (data) => {
-        const todoToSave: TodoToSave = {
+        const todoToSave: UpdatedTodo = {
             title: data.title,
             estimate: data.estimate,
             description: data.description,
-            project_id: Number(projectId),
             assignee: data?.assignee?.value,
         };
 
-        addTodo.mutate(todoToSave, {
-            onSuccess: () => {
-                if (projectId !== undefined) navigate(`/projects/${projectId}`);
-            },
-        });
+        updateTodo.mutate(
+            { updatedTodo: todoToSave, todoId, projectId },
+            {
+                onSuccess: () => {
+                    if (projectId !== undefined)
+                        navigate(`/projects/${projectId}`);
+                },
+            }
+        );
     };
 
     return (
@@ -150,4 +162,4 @@ const AddTodoPage: React.FC = () => {
     );
 };
 
-export default AddTodoPage;
+export default EditTodoPage;

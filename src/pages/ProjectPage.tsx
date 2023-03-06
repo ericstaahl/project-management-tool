@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import AddUserToProject from '../components/AddUserToProject';
 import Modal from '../components/Modal';
 import SelectInput from '../components/SelectInput';
@@ -42,6 +42,8 @@ const statusOptions: StatusOptions[] = [
 ];
 
 const ProjectPage: React.FC = () => {
+    const location = useLocation();
+    console.log(location);
     const { id: projectId } = useParams();
     const [sortBy, setSortBy] = useState({ value: 'title', label: 'Title' });
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
@@ -115,10 +117,27 @@ const ProjectPage: React.FC = () => {
                             data?.map((todo) => (
                                 <Card key={todo.todo_id}>
                                     <h3>{`${todo.title}`}</h3>
+                                    <Link
+                                        style={{
+                                            color: 'white',
+                                            textDecoration: 'none',
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignContent: 'center',
+                                            fontSize: '1.5rem',
+                                            textAlign: 'center',
+                                        }}
+                                        to={`${location.pathname}/todo/${todo.todo_id}/edit`}
+                                    >
+                                        ...
+                                    </Link>
                                     <div>{`Estimation: ${todo.estimate}`}</div>
                                     <div>{`Description: ${todo.description}`}</div>
                                     <div>{`Status: ${
                                         statuses[todo.status]
+                                    }`}</div>
+                                    <div>{`Assignee: ${
+                                        todo.assignee ?? 'None'
                                     }`}</div>
                                 </Card>
                             ))

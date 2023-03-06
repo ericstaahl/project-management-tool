@@ -15,6 +15,7 @@ import LogoutUserPage from './pages/LogoutUserPage';
 import ProjectsPage from './pages/ProjectsPage';
 import EditProjectPage from './pages/EditProjectPage';
 import AddProjectPage from './pages/AddProjectPage';
+import EditTodoPage from './pages/EditTodoPage';
 
 const queryClient = new QueryClient();
 
@@ -38,6 +39,10 @@ const App: React.FC = () => {
                             <Route
                                 path='/projects/:id'
                                 element={<ProjectPage />}
+                            />
+                            <Route
+                                path='/projects/:id/todo/:todoId/edit'
+                                element={<EditTodoPage />}
                             />
                             <Route
                                 path='/projects/:id/edit'
