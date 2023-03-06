@@ -11,6 +11,13 @@ import useDeleteProject from '../hooks/project/useDeleteProject';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import TextArea from '../components/styled/TextArea';
 
+interface FormValues {
+    title: string;
+    start_date: string;
+    due_date: string;
+    description: string;
+}
+
 const InputContainer = styled.div({
     display: 'flex',
     flexDirection: 'column',
@@ -30,13 +37,6 @@ const EditProjectPage: React.FC = () => {
     const updateProject = useUpdateProject();
     const deleteProject = useDeleteProject();
     const [initialRender, setInitialRender] = useState(true);
-
-    interface FormValues {
-        title: string;
-        start_date: string;
-        due_date: string;
-        description: string;
-    }
 
     const {
         register,
