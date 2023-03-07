@@ -1,10 +1,10 @@
-const todoQueryKeys = {
+const userQueryKeys = {
     all: ['users'] as const,
-    lists: () => [...todoQueryKeys.all, 'list'] as const,
+    lists: () => [...userQueryKeys.all, 'list'] as const,
     list: (projectId: number | undefined) => [
-        ...todoQueryKeys.lists(),
+        ...userQueryKeys.lists(),
         projectId,
     ],
 };
 
-export default todoQueryKeys;
+export default userQueryKeys;

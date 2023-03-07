@@ -8,6 +8,7 @@ import { Todo as TodoToSave } from '../types/TodoTypes';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import UserSelect from '../components/UserSelect';
+import TextArea from '../components/styled/TextArea';
 
 const InputContainer = styled.div({
     display: 'flex',
@@ -126,9 +127,9 @@ const AddTodoPage: React.FC = () => {
                         )}
                     </InputLabelWrapper>
 
-                    <Input
+                    <TextArea
                         {...register('description', { required: true })}
-                        type='text'
+                        rows={4}
                     />
                 </InputContainer>
 

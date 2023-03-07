@@ -9,6 +9,10 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import UserSelect from '../components/UserSelect';
 import useGetTodo from '../hooks/todo/useGetTodo';
 import useUpdateTodo from '../hooks/todo/useUpdateTodo';
+import TextArea from '../components/styled/TextArea';
+import { useQueryClient } from '@tanstack/react-query';
+import todoQueryKeys from '../query-keys/todoQueryKeys';
+import useDeleteTodo from '../hooks/todo/useDeleteTodo';
 
 const InputContainer = styled.div({
     display: 'flex',
@@ -46,6 +50,13 @@ const EditTodoPage: React.FC = () => {
     const updateTodo = useUpdateTodo();
     // const deleteTodo = useDeleteTodo();
     const [initialRender, setInitialRender] = useState(true);
+    const queryClient = useQueryClient();
+    const deleteTodo = useDeleteTodo();
+
+    const handleDeleteTodo = (): void => {
+        if (projectId === undefined || todoId === undefined) return;
+        deleteTodo.mutate({ projectId, todoId });
+    };
 
     const {
         register,
@@ -71,7 +82,7 @@ const EditTodoPage: React.FC = () => {
 
     const navigate = useNavigate();
 
-    const onSubmit: SubmitHandler<FormValues> = (data) => {
+    const onSubmit: SubmitHandler<FormValues> = async (data) => {
         const todoToSave: UpdatedTodo = {
             title: data.title,
             estimate: data.estimate,
@@ -79,12 +90,17 @@ const EditTodoPage: React.FC = () => {
             assignee: data?.assignee?.value,
         };
 
-        updateTodo.mutate(
+        await updateTodo.mutateAsync(
             { updatedTodo: todoToSave, todoId, projectId },
             {
                 onSuccess: () => {
-                    if (projectId !== undefined)
+                    if (projectId !== undefined) {
+                        queryClient
+                            .invalidateQueries(todoQueryKeys.lists())
+                            .then()
+                            .catch((err) => err);
                         navigate(`/projects/${projectId}`);
+                    }
                 },
             }
         );
@@ -92,7 +108,7 @@ const EditTodoPage: React.FC = () => {
 
     return (
         <Container>
-            <h2 style={{ marginBottom: '1rem' }}>Add new to-do</h2>
+            <h2 style={{ marginBottom: '1rem' }}>Edit to-do</h2>
             <StyledForm onSubmit={handleSubmit(onSubmit)}>
                 <InputContainer>
                     <InputLabelWrapper>
@@ -138,9 +154,9 @@ const EditTodoPage: React.FC = () => {
                         )}
                     </InputLabelWrapper>
 
-                    <Input
+                    <TextArea
                         {...register('description', { required: true })}
-                        type='text'
+                        rows={4}
                     />
                 </InputContainer>
 
@@ -156,7 +172,11 @@ const EditTodoPage: React.FC = () => {
                     />
                 </InputContainer>
 
-                <Button type='submit'>Save</Button>
+                <div style={{ display: 'flex', columnGap: '1rem' }}>
+                    <Button type='submit'>Save</Button>
+                    <Button onClick={resetValues}>Reset</Button>
+                    <Button onClick={handleDeleteTodo}>Delete</Button>
+                </div>
             </StyledForm>
         </Container>
     );
