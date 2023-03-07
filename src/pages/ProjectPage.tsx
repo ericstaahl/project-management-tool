@@ -116,21 +116,28 @@ const ProjectPage: React.FC = () => {
                         (data.length > 0 ? (
                             data?.map((todo) => (
                                 <Card key={todo.todo_id}>
-                                    <h3>{`${todo.title}`}</h3>
-                                    <Link
+                                    <div
                                         style={{
-                                            color: 'white',
-                                            textDecoration: 'none',
                                             display: 'flex',
-                                            justifyContent: 'center',
-                                            alignContent: 'center',
-                                            fontSize: '1.5rem',
-                                            textAlign: 'center',
+                                            justifyContent: 'space-between',
                                         }}
-                                        to={`${location.pathname}/todo/${todo.todo_id}/edit`}
                                     >
-                                        ...
-                                    </Link>
+                                        <h3>{`${todo.title}`}</h3>
+                                        <Link
+                                            style={{
+                                                color: 'white',
+                                                textDecoration: 'none',
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignContent: 'center',
+                                                fontSize: '1.5rem',
+                                                textAlign: 'center',
+                                            }}
+                                            to={`${location.pathname}/todo/${todo.todo_id}/edit`}
+                                        >
+                                            ...
+                                        </Link>
+                                    </div>
                                     <div>{`Estimation: ${todo.estimate}`}</div>
                                     <div>{`Description: ${todo.description}`}</div>
                                     <div>{`Status: ${
