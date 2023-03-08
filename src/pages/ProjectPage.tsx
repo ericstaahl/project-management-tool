@@ -20,9 +20,10 @@ const GridContainer = styled.div({
 });
 
 const TextContainer = styled.div({
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
+    display: '-webkit-box',
     width: '250px',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 3,
     overflow: 'hidden',
 });
 
@@ -150,27 +151,29 @@ const ProjectPage: React.FC = () => {
                                         </Link>
                                     </div>
                                     <div>
+                                        <BoldSpan>Estimation: </BoldSpan>
                                         <TextContainer>
-                                            <BoldSpan>Estimation: </BoldSpan>
                                             {todo.estimate}
                                         </TextContainer>
                                     </div>
                                     <div>
+                                        <BoldSpan>Status: </BoldSpan>
                                         <TextContainer>
-                                            <BoldSpan>Description: </BoldSpan>
-                                            {todo.description}
-                                        </TextContainer>
-                                    </div>
-                                    <div>
-                                        <TextContainer>
-                                            <BoldSpan>Status: </BoldSpan>
                                             {statuses[todo.status]}
                                         </TextContainer>
                                     </div>
                                     <div>
+                                        <BoldSpan>Assignee: </BoldSpan>
                                         <TextContainer>
-                                            <BoldSpan>Assignee: </BoldSpan>
                                             {todo.assignee ?? 'None'}
+                                        </TextContainer>
+                                    </div>
+                                    <div>
+                                        <BoldSpan>Description: </BoldSpan>
+                                        <TextContainer
+                                            style={{ fontSize: '0.9rem' }}
+                                        >
+                                            {todo.description}
                                         </TextContainer>
                                     </div>
                                 </Card>

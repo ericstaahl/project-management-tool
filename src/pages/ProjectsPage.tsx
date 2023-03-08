@@ -17,6 +17,17 @@ const GridContainer = styled.div({
     rowGap: '1rem',
 });
 
+const TextContainer = styled.div({
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    width: '250px',
+    overflow: 'hidden',
+});
+
+const BoldSpan = styled.span({
+    fontWeight: 'bold',
+});
+
 const sortOptions = [
     { value: 'due_date', label: 'Due date' },
     { value: 'title', label: 'Title' },
@@ -90,21 +101,44 @@ const ProjectsPage: React.FC = () => {
                                     </Link>
                                 </div>
                                 {project.number_of_members > 0 ? (
-                                    <div>{`Number of members: ${project.number_of_members}`}</div>
+                                    <div>
+                                        <BoldSpan>Number of members: </BoldSpan>
+                                        <TextContainer>
+                                            {`${project.number_of_members}`}
+                                        </TextContainer>
+                                    </div>
                                 ) : (
                                     <></>
                                 )}
-                                <div>{`Start date: ${new Date(
-                                    project.start_date
-                                ).toLocaleDateString('sv-SE')}`}</div>
-                                <div>{`Due date: ${new Date(
-                                    project.due_date
-                                ).toLocaleDateString('sv-SE')}`}</div>
-                                <div>{`Number of todos: ${project._count.todo}`}</div>
                                 <div>
-                                    {project.user_id === auth?.user_id
-                                        ? 'Role: Owner'
-                                        : 'Role: Member'}
+                                    <BoldSpan>Start date: </BoldSpan>
+                                    <TextContainer>
+                                        {`${new Date(
+                                            project.start_date
+                                        ).toLocaleDateString('sv-SE')}`}
+                                    </TextContainer>
+                                </div>
+                                <div>
+                                    <BoldSpan>Due date: </BoldSpan>
+                                    <TextContainer>
+                                        {`${new Date(
+                                            project.due_date
+                                        ).toLocaleDateString('sv-SE')}`}
+                                    </TextContainer>
+                                </div>
+                                <div>
+                                    <BoldSpan>Number of todos: </BoldSpan>
+                                    <TextContainer>
+                                        {`${project._count.todo}`}
+                                    </TextContainer>
+                                </div>
+                                <div>
+                                    <BoldSpan>Role: </BoldSpan>
+                                    <TextContainer>
+                                        {project.user_id === auth?.user_id
+                                            ? 'Owner'
+                                            : 'Member'}
+                                    </TextContainer>
                                 </div>
                                 <Link
                                     style={{ color: 'white' }}

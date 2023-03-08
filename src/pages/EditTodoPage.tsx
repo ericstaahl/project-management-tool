@@ -95,10 +95,13 @@ const EditTodoPage: React.FC = () => {
             {
                 onSuccess: () => {
                     if (projectId !== undefined) {
-                        queryClient
-                            .invalidateQueries(todoQueryKeys.lists())
+                        Promise.all([
+                            queryClient.invalidateQueries(todoQueryKeys.all),
+                        ])
                             .then()
-                            .catch((err) => err);
+                            .catch((err) => {
+                                console.log(err);
+                            });
                         navigate(`/projects/${projectId}`);
                     }
                 },
@@ -147,15 +150,21 @@ const EditTodoPage: React.FC = () => {
                 <InputContainer>
                     <InputLabelWrapper>
                         <label htmlFor='description'>Description</label>
-                        {errors.description !== undefined && (
-                            <span style={{ fontSize: '0.8rem', color: 'red' }}>
-                                * Required
-                            </span>
-                        )}
+                        {errors.description !== undefined &&
+                            errors.description.type === 'maxLength' && (
+                                <span
+                                    style={{ fontSize: '0.8rem', color: 'red' }}
+                                >
+                                    * Max 255 characters
+                                </span>
+                            )}{' '}
                     </InputLabelWrapper>
 
                     <TextArea
-                        {...register('description', { required: true })}
+                        {...register('description', {
+                            required: true,
+                            maxLength: 255,
+                        })}
                         rows={4}
                     />
                 </InputContainer>
