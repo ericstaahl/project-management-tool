@@ -21,7 +21,6 @@ const GridContainer = styled.div({
 
 const TextContainer = styled.div({
     display: '-webkit-box',
-    width: '250px',
     WebkitBoxOrient: 'vertical',
     WebkitLineClamp: 3,
     overflow: 'hidden',
@@ -127,14 +126,27 @@ const ProjectPage: React.FC = () => {
                         data !== undefined &&
                         (data.length > 0 ? (
                             data?.map((todo) => (
-                                <Card key={todo.todo_id}>
+                                <Card
+                                    style={{ width: '250px' }}
+                                    key={todo.todo_id}
+                                >
                                     <div
                                         style={{
                                             display: 'flex',
                                             justifyContent: 'space-between',
                                         }}
                                     >
-                                        <h3>{`${todo.title}`}</h3>
+                                        <div
+                                            style={{
+                                                display: '-webkit-box',
+                                                WebkitBoxOrient: 'vertical',
+                                                WebkitLineClamp: 2,
+                                                overflow: 'hidden',
+                                                wordBreak: 'break-all',
+                                            }}
+                                        >
+                                            <h3>{`${todo.title}`}</h3>
+                                        </div>
                                         <Link
                                             style={{
                                                 color: 'white',

@@ -84,7 +84,17 @@ const ProjectsPage: React.FC = () => {
                                         height: 'auto',
                                     }}
                                 >
-                                    <h3>{project.title}</h3>
+                                    <div
+                                        style={{
+                                            display: '-webkit-box',
+                                            WebkitBoxOrient: 'vertical',
+                                            WebkitLineClamp: 2,
+                                            overflow: 'hidden',
+                                            wordBreak: 'break-all',
+                                        }}
+                                    >
+                                        <h3>{`${project.title}`}</h3>
+                                    </div>
                                     <Link
                                         style={{
                                             color: 'white',
