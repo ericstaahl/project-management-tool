@@ -19,6 +19,13 @@ const GridContainer = styled.div({
     rowGap: '1rem',
 });
 
+const TextContainer = styled.div({
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    width: '250px',
+    overflow: 'hidden',
+});
+
 const statuses = {
     NOT_STARTED: 'Not started',
     IN_PROGRESS: 'In progress',
@@ -40,6 +47,10 @@ const statusOptions: StatusOptions[] = [
     { value: 'IN_PROGRESS', label: 'In progress' },
     { value: 'DONE', label: 'Done' },
 ];
+
+const BoldSpan = styled.span({
+    fontWeight: 'bold',
+});
 
 const ProjectPage: React.FC = () => {
     const location = useLocation();
@@ -138,14 +149,30 @@ const ProjectPage: React.FC = () => {
                                             ...
                                         </Link>
                                     </div>
-                                    <div>{`Estimation: ${todo.estimate}`}</div>
-                                    <div>{`Description: ${todo.description}`}</div>
-                                    <div>{`Status: ${
-                                        statuses[todo.status]
-                                    }`}</div>
-                                    <div>{`Assignee: ${
-                                        todo.assignee ?? 'None'
-                                    }`}</div>
+                                    <div>
+                                        <TextContainer>
+                                            <BoldSpan>Estimation: </BoldSpan>
+                                            {todo.estimate}
+                                        </TextContainer>
+                                    </div>
+                                    <div>
+                                        <TextContainer>
+                                            <BoldSpan>Description: </BoldSpan>
+                                            {todo.description}
+                                        </TextContainer>
+                                    </div>
+                                    <div>
+                                        <TextContainer>
+                                            <BoldSpan>Status: </BoldSpan>
+                                            {statuses[todo.status]}
+                                        </TextContainer>
+                                    </div>
+                                    <div>
+                                        <TextContainer>
+                                            <BoldSpan>Assignee: </BoldSpan>
+                                            {todo.assignee ?? 'None'}
+                                        </TextContainer>
+                                    </div>
                                 </Card>
                             ))
                         ) : (
