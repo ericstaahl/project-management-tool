@@ -5,7 +5,7 @@ import Button from '../components/styled/Button';
 import Container from '../components/styled/Container';
 import Input from '../components/styled/Input';
 import useGetProject from '../hooks/project/useGetProject';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import useDeleteProject from '../hooks/project/useDeleteProject';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -33,10 +33,11 @@ const StyledForm = styled.form({
 
 const EditProjectPage: React.FC = () => {
     const { id: projectId } = useParams();
-    const { data: project } = useGetProject(projectId);
+    const { data: project, remove } = useGetProject(projectId);
     const updateProject = useUpdateProject();
     const deleteProject = useDeleteProject();
     const [initialRender, setInitialRender] = useState(true);
+    const navigate = useNavigate();
 
     const {
         register,
@@ -64,8 +65,11 @@ const EditProjectPage: React.FC = () => {
     }, [project]);
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
-        if (projectId !== undefined)
-            updateProject.mutate({ updatedProject: data, projectId });
+        if (projectId === undefined) return;
+
+        updateProject.mutate({ updatedProject: data, projectId });
+        remove();
+        navigate(`/projects`);
     };
 
     const handleDeleteProject = (): void => {

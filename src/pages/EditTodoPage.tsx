@@ -10,8 +10,6 @@ import UserSelect from '../components/UserSelect';
 import useGetTodo from '../hooks/todo/useGetTodo';
 import useUpdateTodo from '../hooks/todo/useUpdateTodo';
 import TextArea from '../components/styled/TextArea';
-import { useQueryClient } from '@tanstack/react-query';
-import todoQueryKeys from '../query-keys/todoQueryKeys';
 import useDeleteTodo from '../hooks/todo/useDeleteTodo';
 
 const InputContainer = styled.div({
@@ -45,12 +43,11 @@ interface FormValues {
 
 const EditTodoPage: React.FC = () => {
     const { id: projectId, todoId } = useParams();
-    const { data: todo } = useGetTodo(projectId, todoId);
+    const { data: todo, remove } = useGetTodo(projectId, todoId);
     console.log('todo', todo);
     const updateTodo = useUpdateTodo();
     // const deleteTodo = useDeleteTodo();
     const [initialRender, setInitialRender] = useState(true);
-    const queryClient = useQueryClient();
     const deleteTodo = useDeleteTodo();
 
     const handleDeleteTodo = (): void => {
@@ -94,16 +91,9 @@ const EditTodoPage: React.FC = () => {
             { updatedTodo: todoToSave, todoId, projectId },
             {
                 onSuccess: () => {
-                    if (projectId !== undefined) {
-                        Promise.all([
-                            queryClient.invalidateQueries(todoQueryKeys.all),
-                        ])
-                            .then()
-                            .catch((err) => {
-                                console.log(err);
-                            });
-                        navigate(`/projects/${projectId}`);
-                    }
+                    if (projectId === undefined) return;
+                    remove();
+                    navigate(`/projects/${projectId}`);
                 },
             }
         );

@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import projectQueryKeys from '../../query-keys/projectQueryKeys';
 import axios from 'axios';
 import type { Projects } from '../../types/ProjectTypes';
@@ -8,24 +8,23 @@ const API_URL: string = import.meta.env.VITE_API_URL;
 
 const useGetProject = (
     projectId: string | undefined
-): {
-    data:
-        | {
-              title: string;
-              project_id: number;
-              number_of_members: number;
-              start_date: string;
-              due_date: string;
-              description?: string;
-              _count: {
-                  todo: number;
-              };
-          }
-        | undefined;
-    isLoading: boolean;
-} => {
+): UseQueryResult<
+    {
+        title: string;
+        project_id: number;
+        number_of_members: number;
+        start_date: string;
+        due_date: string;
+        description?: string | undefined;
+        user_id: number;
+        _count: {
+            todo: number;
+        };
+    },
+    unknown
+> => {
     const auth = useAuth();
-    const { data, isLoading } = useQuery({
+    const query = useQuery({
         queryKey: projectQueryKeys.detail(projectId),
         queryFn: async (): Promise<Projects[0]> => {
             const res = await axios.get<Projects[0]>(
@@ -47,7 +46,7 @@ const useGetProject = (
         enabled: auth !== null && projectId !== undefined,
     });
 
-    return { data, isLoading };
+    return query;
 };
 
 export default useGetProject;
