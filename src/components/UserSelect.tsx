@@ -10,6 +10,7 @@ import SelectInput from './SelectInput';
 interface Props<T extends FieldValues> extends UseControllerProps<T> {
     label?: string;
     projectId: number;
+    defaultInputValue?: string;
 }
 
 interface InputValue {
@@ -20,6 +21,7 @@ interface InputValue {
 const UserSelect = <T extends FieldValues>({
     label,
     projectId,
+    defaultInputValue,
     ...props
 }: Props<T>): JSX.Element => {
     console.log(props);
@@ -33,6 +35,13 @@ const UserSelect = <T extends FieldValues>({
         }));
     }, [users]);
 
+    const defaultValue =
+        defaultInputValue !== undefined
+            ? { value: defaultInputValue, label: defaultInputValue }
+            : undefined;
+
+    console.log(props.defaultValue);
+
     return (
         <div style={{ display: 'flex' }}>
             {options !== undefined && !isLoading && (
@@ -45,6 +54,7 @@ const UserSelect = <T extends FieldValues>({
                                 ? field.value
                                 : null,
                         options,
+                        defaultValue,
                     }}
                 />
             )}

@@ -196,20 +196,22 @@ const ProjectPage: React.FC = () => {
                             </div>
                         ))}
                 </GridContainer>
-                <Button
-                    onClick={() => {
-                        navigate('new-todo');
-                    }}
-                >
-                    Add to-do
-                </Button>
-                <Button
-                    onClick={() => {
-                        setShowModal(true);
-                    }}
-                >
-                    Add users
-                </Button>
+                <div style={{ display: 'flex', columnGap: '1rem' }}>
+                    <Button
+                        onClick={() => {
+                            navigate('new-todo');
+                        }}
+                    >
+                        Add to-do
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            setShowModal(true);
+                        }}
+                    >
+                        Add users
+                    </Button>
+                </div>
             </Container>
         </>
     );

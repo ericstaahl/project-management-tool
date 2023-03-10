@@ -43,7 +43,7 @@ interface FormValues {
 
 const EditTodoPage: React.FC = () => {
     const { id: projectId, todoId } = useParams();
-    const { data: todo, remove } = useGetTodo(projectId, todoId);
+    const { data: todo, remove, isLoading } = useGetTodo(projectId, todoId);
     console.log('todo', todo);
     const updateTodo = useUpdateTodo();
     // const deleteTodo = useDeleteTodo();
@@ -68,6 +68,7 @@ const EditTodoPage: React.FC = () => {
             setValue('title', todo.title);
             setValue('description', todo.description ?? '');
             setValue('estimate', todo.estimate ?? '');
+            setValue('assignee.value', todo.assignee ?? '');
         }
     };
     useEffect(() => {
@@ -102,81 +103,91 @@ const EditTodoPage: React.FC = () => {
     return (
         <Container>
             <h2 style={{ marginBottom: '1rem' }}>Edit to-do</h2>
-            <StyledForm onSubmit={handleSubmit(onSubmit)}>
-                <InputContainer>
-                    <InputLabelWrapper>
-                        <label htmlFor='title'>Title</label>
-                        {errors.title !== undefined && (
-                            <span style={{ fontSize: '0.8rem', color: 'red' }}>
-                                * Required
-                            </span>
-                        )}
-                    </InputLabelWrapper>
-
-                    <Input
-                        {...register('title', { required: true })}
-                        type='text'
-                        // required={true}
-                    />
-                </InputContainer>
-
-                <InputContainer>
-                    <InputLabelWrapper>
-                        <label htmlFor='estimate'>Estimate</label>
-                        {errors.estimate !== undefined && (
-                            <span style={{ fontSize: '0.8rem', color: 'red' }}>
-                                * Required
-                            </span>
-                        )}
-                    </InputLabelWrapper>
-
-                    <Input
-                        {...register('estimate', { required: true })}
-                        type='text'
-                        // required={true}
-                    />
-                </InputContainer>
-
-                <InputContainer>
-                    <InputLabelWrapper>
-                        <label htmlFor='description'>Description</label>
-                        {errors.description !== undefined &&
-                            errors.description.type === 'maxLength' && (
+            {!isLoading && todo !== undefined && (
+                <StyledForm onSubmit={handleSubmit(onSubmit)}>
+                    <InputContainer>
+                        <InputLabelWrapper>
+                            <label htmlFor='title'>Title</label>
+                            {errors.title !== undefined && (
                                 <span
                                     style={{ fontSize: '0.8rem', color: 'red' }}
                                 >
-                                    * Max 255 characters
+                                    * Required
                                 </span>
-                            )}{' '}
-                    </InputLabelWrapper>
+                            )}
+                        </InputLabelWrapper>
 
-                    <TextArea
-                        {...register('description', {
-                            required: true,
-                            maxLength: 255,
-                        })}
-                        rows={4}
-                    />
-                </InputContainer>
+                        <Input
+                            {...register('title', { required: true })}
+                            type='text'
+                            // required={true}
+                        />
+                    </InputContainer>
 
-                <InputContainer>
-                    <InputLabelWrapper>
-                        <label htmlFor='description'>Assignee</label>
-                    </InputLabelWrapper>
+                    <InputContainer>
+                        <InputLabelWrapper>
+                            <label htmlFor='estimate'>Estimate</label>
+                            {errors.estimate !== undefined && (
+                                <span
+                                    style={{ fontSize: '0.8rem', color: 'red' }}
+                                >
+                                    * Required
+                                </span>
+                            )}
+                        </InputLabelWrapper>
 
-                    <UserSelect<FormValues>
-                        control={control}
-                        name='assignee'
-                        projectId={Number(projectId)}
-                    />
-                </InputContainer>
+                        <Input
+                            {...register('estimate', { required: true })}
+                            type='text'
+                            // required={true}
+                        />
+                    </InputContainer>
 
-                <div style={{ display: 'flex', columnGap: '1rem' }}>
-                    <Button type='submit'>Save</Button>
-                    <Button onClick={resetValues}>Reset</Button>
-                    <Button onClick={handleDeleteTodo}>Delete</Button>
-                </div>
-            </StyledForm>
+                    <InputContainer>
+                        <InputLabelWrapper>
+                            <label htmlFor='description'>Description</label>
+                            {errors.description !== undefined &&
+                                errors.description.type === 'maxLength' && (
+                                    <span
+                                        style={{
+                                            fontSize: '0.8rem',
+                                            color: 'red',
+                                        }}
+                                    >
+                                        * Max 255 characters
+                                    </span>
+                                )}{' '}
+                        </InputLabelWrapper>
+
+                        <TextArea
+                            {...register('description', {
+                                required: true,
+                                maxLength: 255,
+                            })}
+                            rows={4}
+                        />
+                    </InputContainer>
+
+                    <InputContainer>
+                        <InputLabelWrapper>
+                            <label htmlFor='description'>Assignee</label>
+                        </InputLabelWrapper>
+
+                        <UserSelect<FormValues>
+                            control={control}
+                            name='assignee'
+                            projectId={Number(projectId)}
+                            defaultInputValue={todo?.assignee}
+                        />
+                    </InputContainer>
+
+                    <div style={{ display: 'flex', columnGap: '1rem' }}>
+                        <Button type='submit'>Save</Button>
+                        <Button onClick={resetValues}>Reset</Button>
+                        <Button onClick={handleDeleteTodo}>Delete</Button>
+                    </div>
+                </StyledForm>
+            )}
         </Container>
     );
 };

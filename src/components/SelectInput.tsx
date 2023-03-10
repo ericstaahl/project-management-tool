@@ -1,13 +1,13 @@
 import React from 'react';
 import Select, { GroupBase, Props } from 'react-select';
 
-type SelectProps<
+export type SelectProps<
     Option,
     isMulti extends boolean = false,
     Group extends GroupBase<Option> = GroupBase<Option>
 > = Props<Option, isMulti, Group>;
 
-interface ComponentProps<
+export interface ComponentProps<
     Option,
     IsMulti extends boolean = false,
     Group extends GroupBase<Option> = GroupBase<Option>
