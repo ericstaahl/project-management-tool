@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import Button from '../components/styled/Button';
-import Container from '../components/styled/Container';
-import Input from '../components/styled/Input';
-import useRegisterUser from '../hooks/user/useRegisterUser';
+import Button from '../../components/styled/Button';
+import Container from '../../components/styled/Container';
+import Input from '../../components/styled/Input';
+import useRegisterUser from '../../hooks/user/useRegisterUser';
 
 const InputContainer = styled.div({
     display: 'flex',

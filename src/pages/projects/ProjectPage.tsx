@@ -1,17 +1,17 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import AddUserToProject from '../components/AddUserToProject';
-import Modal from '../components/Modal';
-import ProjectDescription from '../components/ProjectDescription';
-import SelectInput from '../components/SelectInput';
-import Button from '../components/styled/Button';
-import Card from '../components/styled/Card';
-import Container from '../components/styled/Container';
-import H2 from '../components/styled/H2';
-import useAuth from '../context/AuthContext';
-import useGetProject from '../hooks/project/useGetProject';
-import useGetTodos from '../hooks/todo/useGetTodos';
+import AddUserToProject from '../../components/AddUserToProject';
+import Modal from '../../components/Modal';
+import ProjectDescription from '../../components/ProjectDescription';
+import SelectInput from '../../components/SelectInput';
+import Button from '../../components/styled/Button';
+import Card from '../../components/styled/Card';
+import Container from '../../components/styled/Container';
+import H2 from '../../components/styled/H2';
+import useAuth from '../../context/AuthContext';
+import useGetProject from '../../hooks/project/useGetProject';
+import useGetTodos from '../../hooks/todo/useGetTodos';
 
 const GridContainer = styled.div({
     display: 'grid',

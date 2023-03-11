@@ -1,5 +1,5 @@
 import React from 'react';
-import useLogoutUser from '../hooks/user/useLogoutUser';
+import useLogoutUser from '../../hooks/user/useLogoutUser';
 
 const LogoutUserPage: React.FC = () => {
     useLogoutUser();

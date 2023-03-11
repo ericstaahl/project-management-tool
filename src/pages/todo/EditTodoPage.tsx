@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import Button from '../components/styled/Button';
-import Container from '../components/styled/Container';
-import Input from '../components/styled/Input';
-import { UpdatedTodo } from '../types/TodoTypes';
+import Button from '../../components/styled/Button';
+import Container from '../../components/styled/Container';
+import Input from '../../components/styled/Input';
+import { UpdatedTodo } from '../../types/TodoTypes';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import UserSelect from '../components/UserSelect';
-import useGetTodo from '../hooks/todo/useGetTodo';
-import useUpdateTodo from '../hooks/todo/useUpdateTodo';
-import TextArea from '../components/styled/TextArea';
-import useDeleteTodo from '../hooks/todo/useDeleteTodo';
+import UserSelect from '../../components/UserSelect';
+import useGetTodo from '../../hooks/todo/useGetTodo';
+import useUpdateTodo from '../../hooks/todo/useUpdateTodo';
+import TextArea from '../../components/styled/TextArea';
+import useDeleteTodo from '../../hooks/todo/useDeleteTodo';
 
 const InputContainer = styled.div({
     display: 'flex',

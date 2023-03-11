@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
-import Card from '../components/styled/Card';
-import Container from '../components/styled/Container';
-import useGetProjects from '../hooks/project/useGetProjects';
-import H2 from '../components/styled/H2';
-import SelectInput from '../components/SelectInput';
-import useAuth from '../context/AuthContext';
-import ProjectDescription from '../components/ProjectDescription';
+import Card from '../../components/styled/Card';
+import Container from '../../components/styled/Container';
+import useGetProjects from '../../hooks/project/useGetProjects';
+import H2 from '../../components/styled/H2';
+import SelectInput from '../../components/SelectInput';
+import useAuth from '../../context/AuthContext';
+import ProjectDescription from '../../components/ProjectDescription';
 
 const GridContainer = styled.div({
     display: 'grid',

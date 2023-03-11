@@ -1,22 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
-import useUpdateProject from '../hooks/project/useUpdateProject';
-import Button from '../components/styled/Button';
-import Container from '../components/styled/Container';
-import Input from '../components/styled/Input';
-import useGetProject from '../hooks/project/useGetProject';
-import { useNavigate, useParams } from 'react-router-dom';
-import dayjs from 'dayjs';
-import useDeleteProject from '../hooks/project/useDeleteProject';
+import Button from '../../components/styled/Button';
+import Container from '../../components/styled/Container';
+import Input from '../../components/styled/Input';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import TextArea from '../components/styled/TextArea';
-
-interface FormValues {
-    title: string;
-    start_date: string;
-    due_date: string;
-    description: string;
-}
+import useAddProject from '../../hooks/project/useAddProject';
+import TextArea from '../../components/styled/TextArea';
 
 const InputContainer = styled.div({
     display: 'flex',
@@ -31,54 +20,37 @@ const StyledForm = styled.form({
     rowGap: '0.8rem',
 });
 
-const EditProjectPage: React.FC = () => {
-    const { id: projectId } = useParams();
-    const { data: project, remove } = useGetProject(projectId);
-    const updateProject = useUpdateProject();
-    const deleteProject = useDeleteProject();
-    const [initialRender, setInitialRender] = useState(true);
-    const navigate = useNavigate();
+// interface Project {
+//     title?: string;
+//     project_id?: number;
+//     number_of_members?: number;
+//     start_date?: string;
+//     due_date?: string;
+// }
 
+interface FormValues {
+    title: string;
+    start_date: string;
+    due_date: string;
+    description: string;
+}
+
+const AddProjectPage: React.FC = () => {
     const {
         register,
         handleSubmit,
         formState: { errors },
-        setValue,
     } = useForm<FormValues>();
 
-    const resetValues = (): void => {
-        if (project !== undefined) {
-            setValue('title', project.title);
-            setValue('description', project.description ?? '');
-            setValue(
-                'start_date',
-                dayjs(project?.start_date).format('YYYY-MM-DD')
-            );
-            setValue('due_date', dayjs(project?.due_date).format('YYYY-MM-DD'));
-        }
-    };
-    useEffect(() => {
-        if (project !== undefined && initialRender) {
-            resetValues();
-            setInitialRender(false);
-        }
-    }, [project]);
+    const addProject = useAddProject();
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
-        if (projectId === undefined) return;
-
-        updateProject.mutate({ updatedProject: data, projectId });
-        remove();
-        navigate(`/projects`);
+        addProject.mutate(data);
     };
 
-    const handleDeleteProject = (): void => {
-        if (projectId !== undefined) deleteProject.mutate({ projectId });
-    };
     return (
         <Container>
-            <h2 style={{ marginBottom: '1rem' }}>Edit project</h2>
-
+            <h2 style={{ marginBottom: '1rem' }}>Create new project</h2>
             <StyledForm onSubmit={handleSubmit(onSubmit)}>
                 <InputContainer>
                     <div
@@ -174,14 +146,11 @@ const EditProjectPage: React.FC = () => {
                         })}
                     />
                 </InputContainer>
-                <div style={{ display: 'flex', columnGap: '1rem' }}>
-                    <Button type='submit'>Save</Button>
-                    <Button onClick={resetValues}>Reset</Button>
-                    <Button onClick={handleDeleteProject}>Delete</Button>
-                </div>
+
+                <Button type='submit'>Save</Button>
             </StyledForm>
         </Container>
     );
 };
 
-export default EditProjectPage;
+export default AddProjectPage;

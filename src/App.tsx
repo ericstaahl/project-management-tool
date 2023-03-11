@@ -5,17 +5,17 @@ import React from 'react';
 import './assets/css/style.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import ProjectPage from './pages/ProjectPage';
-import AddTodoPage from './pages/AddTodoPage';
-import RegisterUserPage from './pages/RegisterUser';
-import LoginUserPage from './pages/LoginUserPage';
+import ProjectPage from './pages/projects/ProjectPage';
+import AddTodoPage from './pages/todo/AddTodoPage';
+import RegisterUserPage from './pages/auth/RegisterUser';
+import LoginUserPage from './pages/auth/LoginUserPage';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
-import LogoutUserPage from './pages/LogoutUserPage';
-import ProjectsPage from './pages/ProjectsPage';
-import EditProjectPage from './pages/EditProjectPage';
-import AddProjectPage from './pages/AddProjectPage';
-import EditTodoPage from './pages/EditTodoPage';
+import LogoutUserPage from './pages/auth/LogoutUserPage';
+import ProjectsPage from './pages/projects/ProjectsPage';
+import EditProjectPage from './pages/projects/EditProjectPage';
+import AddProjectPage from './pages/projects/AddProjectPage';
+import EditTodoPage from './pages/todo/EditTodoPage';
 
 const queryClient = new QueryClient();
 
