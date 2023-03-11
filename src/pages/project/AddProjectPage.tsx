@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import useAddProject from '../../hooks/project/useAddProject';
 import TextArea from '../../components/styled/TextArea';
 import InputError from '../../components/input/InputError';
+import InputWrapper from '../../components/input/InputWrapper';
 
 const InputContainer = styled.div({
     display: 'flex',
@@ -46,18 +47,12 @@ const AddProjectPage: React.FC = () => {
             <h2 style={{ marginBottom: '1rem' }}>Create new project</h2>
             <StyledForm onSubmit={handleSubmit(onSubmit)}>
                 <InputContainer>
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                        }}
-                    >
+                    <InputWrapper>
                         <label htmlFor='title'>Title</label>
                         {errors.title !== undefined && (
                             <InputError>* Required</InputError>
                         )}
-                    </div>
+                    </InputWrapper>
 
                     <Input
                         {...register('title', { required: true })}
@@ -66,18 +61,12 @@ const AddProjectPage: React.FC = () => {
                 </InputContainer>
 
                 <InputContainer>
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                        }}
-                    >
+                    <InputWrapper>
                         <label htmlFor='start_date'>Start date</label>
                         {errors.start_date !== undefined && (
                             <InputError>* Required</InputError>
                         )}{' '}
-                    </div>
+                    </InputWrapper>
 
                     <Input
                         {...register('start_date', { required: true })}
@@ -86,18 +75,12 @@ const AddProjectPage: React.FC = () => {
                 </InputContainer>
 
                 <InputContainer>
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                        }}
-                    >
+                    <InputWrapper>
                         <label htmlFor='due_date'>Due date</label>
                         {errors.due_date !== undefined && (
                             <InputError>* Required</InputError>
                         )}{' '}
-                    </div>
+                    </InputWrapper>
 
                     <Input
                         {...register('due_date', {
@@ -108,19 +91,13 @@ const AddProjectPage: React.FC = () => {
                 </InputContainer>
 
                 <InputContainer>
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                        }}
-                    >
+                    <InputWrapper>
                         <label htmlFor='description'>Description</label>
                         {errors.description !== undefined &&
                             errors.description.type === 'maxLength' && (
                                 <InputError>* Max 500 characters</InputError>
                             )}{' '}
-                    </div>
+                    </InputWrapper>
 
                     <TextArea
                         rows={6}
