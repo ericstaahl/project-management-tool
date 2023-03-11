@@ -10,19 +10,7 @@ const useGetProjects = (
     sortBy: string = 'due_date',
     sortOrder: 'asc' | 'desc' = 'asc'
 ): {
-    data:
-        | Array<{
-              title: string;
-              project_id: number;
-              number_of_members: number;
-              start_date: string;
-              due_date: string;
-              user_id: number;
-              _count: {
-                  todo: number;
-              };
-          }>
-        | undefined;
+    data: Projects | undefined;
     isLoading: boolean;
 } => {
     const auth = useAuth();

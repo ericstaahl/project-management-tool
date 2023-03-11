@@ -8,6 +8,7 @@ export type Projects = Array<{
     user_id: number;
     _count: {
         todo: number;
+        members: number;
     };
 }>;
 

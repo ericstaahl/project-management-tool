@@ -8,21 +8,7 @@ const API_URL: string = import.meta.env.VITE_API_URL;
 
 const useGetProject = (
     projectId: string | undefined
-): UseQueryResult<
-    {
-        title: string;
-        project_id: number;
-        number_of_members: number;
-        start_date: string;
-        due_date: string;
-        description?: string | undefined;
-        user_id: number;
-        _count: {
-            todo: number;
-        };
-    },
-    unknown
-> => {
+): UseQueryResult<Projects[0], unknown> => {
     const auth = useAuth();
     const query = useQuery({
         queryKey: projectQueryKeys.detail(projectId),

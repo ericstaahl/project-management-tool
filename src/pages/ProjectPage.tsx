@@ -3,12 +3,15 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import AddUserToProject from '../components/AddUserToProject';
 import Modal from '../components/Modal';
+import ProjectDescription from '../components/ProjectDescription';
 import SelectInput from '../components/SelectInput';
 import SortOrderArrow from '../components/SortOrderArrow';
 import Button from '../components/styled/Button';
 import Card from '../components/styled/Card';
 import Container from '../components/styled/Container';
 import H2 from '../components/styled/H2';
+import useAuth from '../context/AuthContext';
+import useGetProject from '../hooks/project/useGetProject';
 import useGetTodos from '../hooks/todo/useGetTodos';
 
 const GridContainer = styled.div({
@@ -24,6 +27,24 @@ const TextContainer = styled.div({
     WebkitBoxOrient: 'vertical',
     WebkitLineClamp: 3,
     overflow: 'hidden',
+});
+
+const EditTodoLink = styled(Link)({
+    color: 'white',
+    textDecoration: 'none',
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+    fontSize: '1.5rem',
+    textAlign: 'center',
+});
+
+const TitleWrapper = styled.div({
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 2,
+    overflow: 'hidden',
+    wordBreak: 'break-all',
 });
 
 const statuses = {
@@ -56,6 +77,9 @@ const ProjectPage: React.FC = () => {
     const location = useLocation();
     console.log(location);
     const { id: projectId } = useParams();
+    const { data: project, isLoading: projectIsLoading } =
+        useGetProject(projectId);
+    console.log(project);
     const [sortBy, setSortBy] = useState({ value: 'title', label: 'Title' });
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
     const [statusFilter, setStatusFilter] = useState<{
@@ -70,6 +94,7 @@ const ProjectPage: React.FC = () => {
     );
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
+    const auth = useAuth();
 
     return (
         <>
@@ -83,7 +108,18 @@ const ProjectPage: React.FC = () => {
                 </Modal>
             )}
             <Container>
-                <H2>Project</H2>
+                {!isLoading && project !== undefined && (
+                    <>
+                        <H2>{project?.title ?? 'Project'}</H2>
+                        <div>
+                            <ProjectDescription
+                                project={project}
+                                auth={auth}
+                                detail={true}
+                            />
+                        </div>
+                    </>
+                )}
                 <SelectInput<typeof sortOptions[0]>
                     label={'Sort by'}
                     selectProps={{
@@ -136,31 +172,14 @@ const ProjectPage: React.FC = () => {
                                             justifyContent: 'space-between',
                                         }}
                                     >
-                                        <div
-                                            style={{
-                                                display: '-webkit-box',
-                                                WebkitBoxOrient: 'vertical',
-                                                WebkitLineClamp: 2,
-                                                overflow: 'hidden',
-                                                wordBreak: 'break-all',
-                                            }}
-                                        >
+                                        <TitleWrapper>
                                             <h3>{`${todo.title}`}</h3>
-                                        </div>
-                                        <Link
-                                            style={{
-                                                color: 'white',
-                                                textDecoration: 'none',
-                                                display: 'flex',
-                                                justifyContent: 'center',
-                                                alignContent: 'center',
-                                                fontSize: '1.5rem',
-                                                textAlign: 'center',
-                                            }}
+                                        </TitleWrapper>
+                                        <EditTodoLink
                                             to={`${location.pathname}/todo/${todo.todo_id}/edit`}
                                         >
                                             ...
-                                        </Link>
+                                        </EditTodoLink>
                                     </div>
                                     <div>
                                         <BoldSpan>Estimation: </BoldSpan>
@@ -210,6 +229,13 @@ const ProjectPage: React.FC = () => {
                         }}
                     >
                         Add users
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            navigate('edit');
+                        }}
+                    >
+                        Edit project
                     </Button>
                 </div>
             </Container>
