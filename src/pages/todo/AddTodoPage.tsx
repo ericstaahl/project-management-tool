@@ -9,6 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import UserSelect from '../../components/input/UserSelect';
 import TextArea from '../../components/styled/TextArea';
+import InputError from '../../components/input/InputError';
 
 const InputContainer = styled.div({
     display: 'flex',
@@ -87,9 +88,7 @@ const AddTodoPage: React.FC = () => {
                     <InputLabelWrapper>
                         <label htmlFor='title'>Title</label>
                         {errors.title !== undefined && (
-                            <span style={{ fontSize: '0.8rem', color: 'red' }}>
-                                * Required
-                            </span>
+                            <InputError>* Required</InputError>
                         )}
                     </InputLabelWrapper>
 
@@ -104,9 +103,7 @@ const AddTodoPage: React.FC = () => {
                     <InputLabelWrapper>
                         <label htmlFor='estimate'>Estimate</label>
                         {errors.estimate !== undefined && (
-                            <span style={{ fontSize: '0.8rem', color: 'red' }}>
-                                * Required
-                            </span>
+                            <InputError>* Required</InputError>
                         )}
                     </InputLabelWrapper>
 
@@ -121,9 +118,7 @@ const AddTodoPage: React.FC = () => {
                     <InputLabelWrapper>
                         <label htmlFor='description'>Description</label>
                         {errors.description !== undefined && (
-                            <span style={{ fontSize: '0.8rem', color: 'red' }}>
-                                * Required
-                            </span>
+                            <InputError>* Required</InputError>
                         )}
                     </InputLabelWrapper>
 

@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import useDeleteProject from '../../hooks/project/useDeleteProject';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import TextArea from '../../components/styled/TextArea';
+import InputError from '../../components/input/InputError';
 
 interface FormValues {
     title: string;
@@ -90,9 +91,7 @@ const EditProjectPage: React.FC = () => {
                     >
                         <label htmlFor='title'>Title</label>
                         {errors.title !== undefined && (
-                            <span style={{ fontSize: '0.8rem', color: 'red' }}>
-                                * Required
-                            </span>
+                            <InputError>* Required</InputError>
                         )}
                     </div>
 
@@ -112,9 +111,7 @@ const EditProjectPage: React.FC = () => {
                     >
                         <label htmlFor='start_date'>Start date</label>
                         {errors.start_date !== undefined && (
-                            <span style={{ fontSize: '0.8rem', color: 'red' }}>
-                                * Required
-                            </span>
+                            <InputError>* Required</InputError>
                         )}{' '}
                     </div>
 
@@ -134,9 +131,7 @@ const EditProjectPage: React.FC = () => {
                     >
                         <label htmlFor='due_date'>Due date</label>
                         {errors.due_date !== undefined && (
-                            <span style={{ fontSize: '0.8rem', color: 'red' }}>
-                                * Required
-                            </span>
+                            <InputError>* Required</InputError>
                         )}{' '}
                     </div>
 
@@ -159,11 +154,7 @@ const EditProjectPage: React.FC = () => {
                         <label htmlFor='description'>Description</label>
                         {errors.description !== undefined &&
                             errors.description.type === 'maxLength' && (
-                                <span
-                                    style={{ fontSize: '0.8rem', color: 'red' }}
-                                >
-                                    * Max 500 characters
-                                </span>
+                                <InputError>* Max 500 characters</InputError>
                             )}{' '}
                     </div>
 

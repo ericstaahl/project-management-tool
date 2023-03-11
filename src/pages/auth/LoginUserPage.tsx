@@ -6,6 +6,7 @@ import Input from '../../components/styled/Input';
 import useLoginUser from '../../hooks/user/useLoginUser';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useUpdateAuth } from '../../context/AuthContext';
+import InputError from '../../components/input/InputError';
 
 const InputContainer = styled.div({
     display: 'flex',
@@ -129,9 +130,7 @@ const LoginUserPage: React.FC = () => {
                     <InputLabelWrapper>
                         <label htmlFor='username'>Username</label>
                         {inputErrors.username && (
-                            <span style={{ fontSize: '0.8rem', color: 'red' }}>
-                                * Required
-                            </span>
+                            <InputError>* Required</InputError>
                         )}
                     </InputLabelWrapper>
 
@@ -149,9 +148,7 @@ const LoginUserPage: React.FC = () => {
                     <InputLabelWrapper>
                         <label htmlFor='password'>Password</label>
                         {inputErrors.password && (
-                            <span style={{ fontSize: '0.8rem', color: 'red' }}>
-                                * Required
-                            </span>
+                            <InputError>* Required</InputError>
                         )}
                     </InputLabelWrapper>
 

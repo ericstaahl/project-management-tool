@@ -6,6 +6,7 @@ import Input from '../../components/styled/Input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useAddProject from '../../hooks/project/useAddProject';
 import TextArea from '../../components/styled/TextArea';
+import InputError from '../../components/input/InputError';
 
 const InputContainer = styled.div({
     display: 'flex',
@@ -19,14 +20,6 @@ const StyledForm = styled.form({
     flexDirection: 'column',
     rowGap: '0.8rem',
 });
-
-// interface Project {
-//     title?: string;
-//     project_id?: number;
-//     number_of_members?: number;
-//     start_date?: string;
-//     due_date?: string;
-// }
 
 interface FormValues {
     title: string;
@@ -62,9 +55,7 @@ const AddProjectPage: React.FC = () => {
                     >
                         <label htmlFor='title'>Title</label>
                         {errors.title !== undefined && (
-                            <span style={{ fontSize: '0.8rem', color: 'red' }}>
-                                * Required
-                            </span>
+                            <InputError>* Required</InputError>
                         )}
                     </div>
 
@@ -84,9 +75,7 @@ const AddProjectPage: React.FC = () => {
                     >
                         <label htmlFor='start_date'>Start date</label>
                         {errors.start_date !== undefined && (
-                            <span style={{ fontSize: '0.8rem', color: 'red' }}>
-                                * Required
-                            </span>
+                            <InputError>* Required</InputError>
                         )}{' '}
                     </div>
 
@@ -106,9 +95,7 @@ const AddProjectPage: React.FC = () => {
                     >
                         <label htmlFor='due_date'>Due date</label>
                         {errors.due_date !== undefined && (
-                            <span style={{ fontSize: '0.8rem', color: 'red' }}>
-                                * Required
-                            </span>
+                            <InputError>* Required</InputError>
                         )}{' '}
                     </div>
 
@@ -131,11 +118,7 @@ const AddProjectPage: React.FC = () => {
                         <label htmlFor='description'>Description</label>
                         {errors.description !== undefined &&
                             errors.description.type === 'maxLength' && (
-                                <span
-                                    style={{ fontSize: '0.8rem', color: 'red' }}
-                                >
-                                    * Max 500 characters
-                                </span>
+                                <InputError>* Max 500 characters</InputError>
                             )}{' '}
                     </div>
 

@@ -1,8 +1,20 @@
+import styled from '@emotion/styled';
 import React, { useMemo, useState } from 'react';
 import useGetAllUsers from '../../hooks/user/useGetAllUsers';
 import useInviteUser from '../../hooks/user/useInviteUsers';
 import SelectInput from '../input/SelectInput';
 import Button from '../styled/Button';
+
+const Container = styled.div({
+    width: '50%',
+    backgroundColor: 'red',
+    borderRadius: '0.5rem',
+    minHeight: '200px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    padding: '2rem 1rem',
+});
 
 const AddUserToProject: React.FC<{ projectId: string | undefined }> = ({
     projectId,
@@ -24,18 +36,7 @@ const AddUserToProject: React.FC<{ projectId: string | undefined }> = ({
     const inviteUser = useInviteUser();
 
     return (
-        <div
-            style={{
-                width: '50%',
-                backgroundColor: 'red',
-                borderRadius: '0.5rem',
-                minHeight: '200px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                padding: '2rem 1rem',
-            }}
-        >
+        <Container>
             <div>Add user to project</div>
             <div style={{ display: 'flex' }}>
                 {options !== undefined && !isLoading && (
@@ -66,7 +67,7 @@ const AddUserToProject: React.FC<{ projectId: string | undefined }> = ({
             >
                 Add
             </Button>
-        </div>
+        </Container>
     );
 };
 

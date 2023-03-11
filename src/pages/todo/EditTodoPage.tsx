@@ -11,6 +11,7 @@ import useGetTodo from '../../hooks/todo/useGetTodo';
 import useUpdateTodo from '../../hooks/todo/useUpdateTodo';
 import TextArea from '../../components/styled/TextArea';
 import useDeleteTodo from '../../hooks/todo/useDeleteTodo';
+import InputError from '../../components/input/InputError';
 
 const InputContainer = styled.div({
     display: 'flex',
@@ -109,11 +110,7 @@ const EditTodoPage: React.FC = () => {
                         <InputLabelWrapper>
                             <label htmlFor='title'>Title</label>
                             {errors.title !== undefined && (
-                                <span
-                                    style={{ fontSize: '0.8rem', color: 'red' }}
-                                >
-                                    * Required
-                                </span>
+                                <InputError>* Required</InputError>
                             )}
                         </InputLabelWrapper>
 
@@ -128,11 +125,7 @@ const EditTodoPage: React.FC = () => {
                         <InputLabelWrapper>
                             <label htmlFor='estimate'>Estimate</label>
                             {errors.estimate !== undefined && (
-                                <span
-                                    style={{ fontSize: '0.8rem', color: 'red' }}
-                                >
-                                    * Required
-                                </span>
+                                <InputError>* Required</InputError>
                             )}
                         </InputLabelWrapper>
 
@@ -148,14 +141,9 @@ const EditTodoPage: React.FC = () => {
                             <label htmlFor='description'>Description</label>
                             {errors.description !== undefined &&
                                 errors.description.type === 'maxLength' && (
-                                    <span
-                                        style={{
-                                            fontSize: '0.8rem',
-                                            color: 'red',
-                                        }}
-                                    >
+                                    <InputError>
                                         * Max 255 characters
-                                    </span>
+                                    </InputError>
                                 )}{' '}
                         </InputLabelWrapper>
 
