@@ -6,7 +6,7 @@ import Input from '../../components/styled/Input';
 import { UpdatedTodo } from '../../types/TodoTypes';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import UserSelect from '../../components/UserSelect';
+import UserSelect from '../../components/input/UserSelect';
 import useGetTodo from '../../hooks/todo/useGetTodo';
 import useUpdateTodo from '../../hooks/todo/useUpdateTodo';
 import TextArea from '../../components/styled/TextArea';

@@ -4,9 +4,9 @@ import Card from '../../components/styled/Card';
 import Container from '../../components/styled/Container';
 import useGetProjects from '../../hooks/project/useGetProjects';
 import H2 from '../../components/styled/H2';
-import SelectInput from '../../components/SelectInput';
+import SelectInput from '../../components/input/SelectInput';
 import useAuth from '../../context/AuthContext';
-import ProjectDescription from '../../components/ProjectDescription';
+import ProjectDescription from '../../components/project/ProjectDescription';
 
 const GridContainer = styled.div({
     display: 'grid',

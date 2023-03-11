@@ -4,7 +4,7 @@ import {
     useController,
     UseControllerProps,
 } from 'react-hook-form';
-import useGetAllMembers from '../hooks/user/useGetAllMembers';
+import useGetAllMembers from '../../hooks/user/useGetAllMembers';
 import SelectInput from './SelectInput';
 
 interface Props<T extends FieldValues> extends UseControllerProps<T> {

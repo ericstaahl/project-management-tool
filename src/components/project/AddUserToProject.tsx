@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react';
-import useGetAllUsers from '../hooks/user/useGetAllUsers';
-import useInviteUser from '../hooks/user/useInviteUsers';
-import SelectInput from './SelectInput';
-import Button from './styled/Button';
+import useGetAllUsers from '../../hooks/user/useGetAllUsers';
+import useInviteUser from '../../hooks/user/useInviteUsers';
+import SelectInput from '../input/SelectInput';
+import Button from '../styled/Button';
 
 const AddUserToProject: React.FC<{ projectId: string | undefined }> = ({
     projectId,

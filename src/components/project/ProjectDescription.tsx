@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import type { Projects } from '../types/ProjectTypes';
-import useAuth from '../context/AuthContext';
+import type { Projects } from '../../types/ProjectTypes';
+import useAuth from '../../context/AuthContext';
 
 const TextContainer = styled.div({
     display: '-webkit-box',

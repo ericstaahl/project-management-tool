@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import AddUserToProject from '../../components/AddUserToProject';
+import AddUserToProject from '../../components/project/AddUserToProject';
 import Modal from '../../components/Modal';
-import ProjectDescription from '../../components/ProjectDescription';
-import SelectInput from '../../components/SelectInput';
+import ProjectDescription from '../../components/project/ProjectDescription';
+import SelectInput from '../../components/input/SelectInput';
 import Button from '../../components/styled/Button';
 import Card from '../../components/styled/Card';
 import Container from '../../components/styled/Container';

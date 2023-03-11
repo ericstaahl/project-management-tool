@@ -7,7 +7,7 @@ import useAddTodo from '../../hooks/todo/useAddTodo';
 import { Todo as TodoToSave } from '../../types/TodoTypes';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import UserSelect from '../../components/UserSelect';
+import UserSelect from '../../components/input/UserSelect';
 import TextArea from '../../components/styled/TextArea';
 
 const InputContainer = styled.div({
