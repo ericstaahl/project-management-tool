@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import AddUserToProject from '../../components/project/AddUserToProject';
 import Modal from '../../components/Modal';
 import ProjectDescription from '../../components/project/ProjectDescription';
@@ -12,6 +12,8 @@ import H2 from '../../components/styled/H2';
 import useAuth from '../../context/AuthContext';
 import useGetProject from '../../hooks/project/useGetProject';
 import useGetTodos from '../../hooks/todo/useGetTodos';
+import TextLineClamp from '../../components/styled/TextLineClamp';
+import EditLink from '../../components/styled/EditLink';
 
 const GridContainer = styled.div({
     display: 'grid',
@@ -21,29 +23,22 @@ const GridContainer = styled.div({
     rowGap: '1rem',
 });
 
-const TextContainer = styled.div({
-    display: '-webkit-box',
-    WebkitBoxOrient: 'vertical',
-    WebkitLineClamp: 3,
-    overflow: 'hidden',
-});
-
-const EditTodoLink = styled(Link)({
-    color: 'white',
-    textDecoration: 'none',
-    display: 'flex',
-    justifyContent: 'center',
-    alignContent: 'center',
-    fontSize: '1.5rem',
-    textAlign: 'center',
-});
-
 const TitleWrapper = styled.div({
     display: '-webkit-box',
     WebkitBoxOrient: 'vertical',
     WebkitLineClamp: 2,
     overflow: 'hidden',
     wordBreak: 'break-all',
+});
+
+const ButtonContainer = styled.div({
+    display: 'flex',
+    columnGap: '1rem',
+    padding: '1rem 0',
+});
+
+const BoldSpan = styled.span({
+    fontWeight: 'bold',
 });
 
 const statuses = {
@@ -62,10 +57,6 @@ const statusOptions: StatusOptions[] = [
     { value: 'IN_PROGRESS', label: 'In progress' },
     { value: 'DONE', label: 'Done' },
 ];
-
-const BoldSpan = styled.span({
-    fontWeight: 'bold',
-});
 
 interface StatusOptions {
     value: 'NOT_STARTED' | 'IN_PROGRESS' | 'DONE';
@@ -188,37 +179,37 @@ const ProjectPage: React.FC = () => {
                                         <TitleWrapper>
                                             <h3>{`${todo.title}`}</h3>
                                         </TitleWrapper>
-                                        <EditTodoLink
+                                        <EditLink
                                             to={`${location.pathname}/todo/${todo.todo_id}/edit`}
                                         >
                                             ...
-                                        </EditTodoLink>
+                                        </EditLink>
                                     </div>
                                     <div>
                                         <BoldSpan>Estimation: </BoldSpan>
-                                        <TextContainer>
+                                        <TextLineClamp>
                                             {todo.estimate}
-                                        </TextContainer>
+                                        </TextLineClamp>
                                     </div>
                                     <div>
                                         <BoldSpan>Status: </BoldSpan>
-                                        <TextContainer>
+                                        <TextLineClamp>
                                             {statuses[todo.status]}
-                                        </TextContainer>
+                                        </TextLineClamp>
                                     </div>
                                     <div>
                                         <BoldSpan>Assignee: </BoldSpan>
-                                        <TextContainer>
+                                        <TextLineClamp>
                                             {todo.assignee ?? 'None'}
-                                        </TextContainer>
+                                        </TextLineClamp>
                                     </div>
                                     <div>
                                         <BoldSpan>Description: </BoldSpan>
-                                        <TextContainer
+                                        <TextLineClamp
                                             style={{ fontSize: '0.9rem' }}
                                         >
                                             {todo.description}
-                                        </TextContainer>
+                                        </TextLineClamp>
                                     </div>
                                 </Card>
                             ))
@@ -228,13 +219,7 @@ const ProjectPage: React.FC = () => {
                             </div>
                         ))}
                 </GridContainer>
-                <div
-                    style={{
-                        display: 'flex',
-                        columnGap: '1rem',
-                        padding: '1rem 0',
-                    }}
-                >
+                <ButtonContainer>
                     <Button
                         onClick={() => {
                             navigate('new-todo');
@@ -256,7 +241,7 @@ const ProjectPage: React.FC = () => {
                     >
                         Edit project
                     </Button>
-                </div>
+                </ButtonContainer>
             </Container>
         </>
     );

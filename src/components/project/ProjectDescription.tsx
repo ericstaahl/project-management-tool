@@ -3,28 +3,12 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import type { Projects } from '../../types/ProjectTypes';
 import useAuth from '../../context/AuthContext';
-
-const TextContainer = styled.div({
-    display: '-webkit-box',
-    WebkitBoxOrient: 'vertical',
-    WebkitLineClamp: 3,
-    overflow: 'hidden',
-});
+import TextLineClamp from '../styled/TextLineClamp';
+import EditLink from '../styled/EditLink';
 
 const BoldSpan = styled.span({
     fontWeight: 'bold',
 });
-
-const StyledLink = styled(Link)({
-    color: 'white',
-    textDecoration: 'none',
-    display: 'flex',
-    justifyContent: 'center',
-    alignContent: 'center',
-    fontSize: '1.5rem',
-    textAlign: 'center',
-});
-
 const TitleWrapper = styled.div({
     display: '-webkit-box',
     WebkitBoxOrient: 'vertical',
@@ -58,46 +42,46 @@ const ProjectDescription = ({
                     <TitleWrapper>
                         <h3>{`${project.title}`}</h3>
                     </TitleWrapper>
-                    <StyledLink to={`/projects/${project.project_id}/edit`}>
+                    <EditLink to={`/projects/${project.project_id}/edit`}>
                         ...
-                    </StyledLink>
+                    </EditLink>
                 </TitleEditWrapper>
             )}
             {project.number_of_members > 0 ? (
                 <div>
                     <BoldSpan>Number of members: </BoldSpan>
-                    <TextContainer>
+                    <TextLineClamp>
                         {`${project.number_of_members}`}
-                    </TextContainer>
+                    </TextLineClamp>
                 </div>
             ) : (
                 <></>
             )}
             <div>
                 <BoldSpan>Start date: </BoldSpan>
-                <TextContainer>
+                <TextLineClamp>
                     {`${new Date(project.start_date).toLocaleDateString(
                         'sv-SE'
                     )}`}
-                </TextContainer>
+                </TextLineClamp>
             </div>
             <div>
                 <BoldSpan>Due date: </BoldSpan>
-                <TextContainer>
+                <TextLineClamp>
                     {`${new Date(project.due_date).toLocaleDateString(
                         'sv-SE'
                     )}`}
-                </TextContainer>
+                </TextLineClamp>
             </div>
             <div>
                 <BoldSpan>Number of todos: </BoldSpan>
-                <TextContainer>{`${project._count.todo}`}</TextContainer>
+                <TextLineClamp>{`${project._count.todo}`}</TextLineClamp>
             </div>
             <div>
                 <BoldSpan>Role: </BoldSpan>
-                <TextContainer>
+                <TextLineClamp>
                     {project.user_id === auth?.user_id ? 'Owner' : 'Member'}
-                </TextContainer>
+                </TextLineClamp>
             </div>
             {!detail && (
                 <Link
