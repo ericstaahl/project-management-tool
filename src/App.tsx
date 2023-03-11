@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ProjectPage from './pages/project/ProjectPage';
 import AddTodoPage from './pages/todo/AddTodoPage';
-import RegisterUserPage from './pages/auth/RegisterUser';
+import RegisterUserPage from './pages/auth/RegisterUserPage';
 import LoginUserPage from './pages/auth/LoginUserPage';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
