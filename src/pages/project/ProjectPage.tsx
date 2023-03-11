@@ -28,7 +28,7 @@ const TitleWrapper = styled.div({
     WebkitBoxOrient: 'vertical',
     WebkitLineClamp: 2,
     overflow: 'hidden',
-    wordBreak: 'break-all',
+    wordBreak: 'break-word',
 });
 
 const ButtonContainer = styled.div({
