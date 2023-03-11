@@ -5,7 +5,6 @@ import Container from '../components/styled/Container';
 import useGetProjects from '../hooks/project/useGetProjects';
 import H2 from '../components/styled/H2';
 import SelectInput from '../components/SelectInput';
-import SortOrderArrow from '../components/SortOrderArrow';
 import useAuth from '../context/AuthContext';
 import ProjectDescription from '../components/ProjectDescription';
 
@@ -23,6 +22,8 @@ const sortOptions = [
     { value: 'todo', label: "To-do's (number)" },
 ];
 
+type SortOrder = 'asc' | 'desc';
+
 const ProjectsPage: React.FC = () => {
     const auth = useAuth();
 
@@ -30,17 +31,25 @@ const ProjectsPage: React.FC = () => {
         value: 'due_date',
         label: 'Due date',
     });
-    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+    const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
     const { isLoading, data: projects } = useGetProjects(
         sortBy.value,
         sortOrder
     );
+
+    const handleSetSortOrder = (order: SortOrder): void => {
+        setSortOrder(order);
+    };
+
     console.log(projects);
+
     return (
         <Container>
             <H2>Projects</H2>
             <SelectInput<typeof sortOptions[0]>
                 label={'Sort by'}
+                sortOrder={sortOrder}
+                handleSetSortOrder={handleSetSortOrder}
                 selectProps={{
                     options: sortOptions,
                     defaultValue: { value: 'due_date', label: 'Due date' },
@@ -52,12 +61,6 @@ const ProjectsPage: React.FC = () => {
                             });
                     },
                 }}
-            />
-            <SortOrderArrow
-                handleSetSortOrder={(order) => {
-                    setSortOrder(order);
-                }}
-                sortOrder={sortOrder}
             />
             <GridContainer>
                 {!isLoading &&

@@ -5,7 +5,6 @@ import AddUserToProject from '../components/AddUserToProject';
 import Modal from '../components/Modal';
 import ProjectDescription from '../components/ProjectDescription';
 import SelectInput from '../components/SelectInput';
-import SortOrderArrow from '../components/SortOrderArrow';
 import Button from '../components/styled/Button';
 import Card from '../components/styled/Card';
 import Container from '../components/styled/Container';
@@ -58,11 +57,6 @@ const sortOptions = [
     { value: 'title', label: 'Title' },
 ];
 
-interface StatusOptions {
-    value: 'NOT_STARTED' | 'IN_PROGRESS' | 'DONE';
-    label: string;
-}
-
 const statusOptions: StatusOptions[] = [
     { value: 'NOT_STARTED', label: 'Not started' },
     { value: 'IN_PROGRESS', label: 'In progress' },
@@ -73,15 +67,21 @@ const BoldSpan = styled.span({
     fontWeight: 'bold',
 });
 
+interface StatusOptions {
+    value: 'NOT_STARTED' | 'IN_PROGRESS' | 'DONE';
+    label: string;
+}
+
+type SortOrder = 'asc' | 'desc';
+
 const ProjectPage: React.FC = () => {
     const location = useLocation();
     console.log(location);
     const { id: projectId } = useParams();
-    const { data: project, isLoading: projectIsLoading } =
-        useGetProject(projectId);
+    const { data: project } = useGetProject(projectId);
     console.log(project);
     const [sortBy, setSortBy] = useState({ value: 'title', label: 'Title' });
-    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+    const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
     const [statusFilter, setStatusFilter] = useState<{
         value: 'NOT_STARTED' | 'IN_PROGRESS' | 'DONE';
         label: string;
@@ -95,6 +95,10 @@ const ProjectPage: React.FC = () => {
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
     const auth = useAuth();
+    const [toggleDescription, setToggleDescription] = useState(false);
+    const handleSetSortOrder = (order: SortOrder): void => {
+        setSortOrder(order);
+    };
 
     return (
         <>
@@ -111,52 +115,61 @@ const ProjectPage: React.FC = () => {
                 {!isLoading && project !== undefined && (
                     <>
                         <H2>{project?.title ?? 'Project'}</H2>
-                        <div>
-                            <ProjectDescription
-                                project={project}
-                                auth={auth}
-                                detail={true}
-                            />
-                        </div>
+                        <Button
+                            onClick={() => {
+                                setToggleDescription(!toggleDescription);
+                            }}
+                        >
+                            Show info
+                        </Button>
+                        {toggleDescription && (
+                            <div>
+                                <ProjectDescription
+                                    project={project}
+                                    auth={auth}
+                                    detail={true}
+                                />
+                            </div>
+                        )}
                     </>
                 )}
-                <SelectInput<typeof sortOptions[0]>
-                    label={'Sort by'}
-                    selectProps={{
-                        options: sortOptions,
-                        defaultValue: { value: 'title', label: 'Title' },
-                        onChange: (selected) => {
-                            if (selected !== null)
-                                setSortBy({
-                                    label: selected.label,
-                                    value: selected.value,
-                                });
-                        },
-                    }}
-                />
-                <SortOrderArrow
-                    handleSetSortOrder={(order) => {
-                        setSortOrder(order);
-                    }}
-                    sortOrder={sortOrder}
-                />
-                <SelectInput<typeof statusOptions[0]>
-                    label={'Filter'}
-                    selectProps={{
-                        options: statusOptions,
-                        onChange: (selected) => {
-                            if (selected !== null)
-                                setStatusFilter({
-                                    label: selected.label,
-                                    value: selected.value,
-                                });
-                            else {
-                                setStatusFilter(null);
-                            }
-                        },
-                        isClearable: true,
-                    }}
-                />
+                <div style={{ display: 'flex' }}>
+                    <SelectInput<typeof sortOptions[0]>
+                        label={'Sort by'}
+                        sortOrder={sortOrder}
+                        handleSetSortOrder={handleSetSortOrder}
+                        selectProps={{
+                            options: sortOptions,
+                            defaultValue: { value: 'title', label: 'Title' },
+                            onChange: (selected) => {
+                                if (selected !== null)
+                                    setSortBy({
+                                        label: selected.label,
+                                        value: selected.value,
+                                    });
+                            },
+                        }}
+                    />
+                </div>
+                <div style={{ display: 'flex' }}>
+                    <SelectInput<typeof statusOptions[0]>
+                        label={'Filter'}
+                        selectProps={{
+                            options: statusOptions,
+                            onChange: (selected) => {
+                                if (selected !== null)
+                                    setStatusFilter({
+                                        label: selected.label,
+                                        value: selected.value,
+                                    });
+                                else {
+                                    setStatusFilter(null);
+                                }
+                            },
+                            isClearable: true,
+                        }}
+                    />
+                </div>
                 <GridContainer>
                     {!isLoading &&
                         data !== undefined &&
@@ -215,7 +228,13 @@ const ProjectPage: React.FC = () => {
                             </div>
                         ))}
                 </GridContainer>
-                <div style={{ display: 'flex', columnGap: '1rem' }}>
+                <div
+                    style={{
+                        display: 'flex',
+                        columnGap: '1rem',
+                        padding: '1rem 0',
+                    }}
+                >
                     <Button
                         onClick={() => {
                             navigate('new-todo');

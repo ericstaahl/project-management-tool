@@ -1,5 +1,24 @@
+import styled from '@emotion/styled';
 import React from 'react';
 import Select, { GroupBase, Props } from 'react-select';
+import SortOrderArrow from './SortOrderArrow';
+
+const Container = styled.div({
+    margin: '1rem 0',
+    display: 'flex',
+    alignContent: 'center',
+    rowGap: '0.5rem',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+});
+
+const LabelWrapper = styled.div({
+    display: 'flex',
+    // justifyContent: 'space-between',
+    columnGap: '0.5rem',
+});
+
+type SortOrder = 'asc' | 'desc';
 
 export type SelectProps<
     Option,
@@ -14,6 +33,8 @@ export interface ComponentProps<
 > {
     label?: string;
     selectProps: SelectProps<Option, IsMulti, Group>;
+    handleSetSortOrder?: (order: SortOrder) => void;
+    sortOrder?: SortOrder;
 }
 
 const SelectInput = <
@@ -24,31 +45,36 @@ const SelectInput = <
     props: ComponentProps<Option, IsMulti, Group>
 ): JSX.Element => {
     return (
-        <div
-            style={{
-                margin: '1rem 0',
-                display: 'flex',
-                alignContent: 'center',
-                columnGap: '1rem',
-                justifyContent: 'space-between',
-            }}
-        >
-            {props.label !== undefined && (
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        fontSize: '1.2rem',
-                    }}
-                >
-                    {props.label}
-                </div>
-            )}
+        <Container>
+            <LabelWrapper>
+                {props.label !== undefined && (
+                    <>
+                        <div
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                fontSize: '1rem',
+                            }}
+                        >
+                            {props.label}
+                        </div>
+                        {props.sortOrder !== undefined &&
+                            props.handleSetSortOrder !== undefined && (
+                                <SortOrderArrow
+                                    sortOrder={props.sortOrder}
+                                    handleSetSortOrder={
+                                        props.handleSetSortOrder
+                                    }
+                                />
+                            )}
+                    </>
+                )}
+            </LabelWrapper>
             <Select
                 styles={{
                     container: (baseStyles) => ({
                         ...baseStyles,
-                        minWidth: '180px',
+                        width: '225px',
                     }),
                     option: (baseStyles) => ({
                         ...baseStyles,
@@ -58,7 +84,7 @@ const SelectInput = <
                 isSearchable={false}
                 {...props.selectProps}
             />
-        </div>
+        </Container>
     );
 };
 
