@@ -166,10 +166,7 @@ const ProjectPage: React.FC = () => {
                         data !== undefined &&
                         (data.length > 0 ? (
                             data?.map((todo) => (
-                                <Card
-                                    style={{ width: '250px' }}
-                                    key={todo.todo_id}
-                                >
+                                <Card key={todo.todo_id}>
                                     <div
                                         style={{
                                             display: 'flex',
