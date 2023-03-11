@@ -7,10 +7,10 @@ const StyledWrapper = styled.div({
     alignItems: 'center',
 });
 
-const InputWrapper = (
+const InputLabelWrapper = (
     props: React.HtmlHTMLAttributes<HTMLDivElement>
 ): JSX.Element => {
     return <StyledWrapper {...props} />;
 };
 
-export default InputWrapper;
+export default InputLabelWrapper;
