@@ -9,7 +9,7 @@ interface User {
 }
 
 interface LoginResponse {
-    user_id: string;
+    user_id: number;
     username: string;
     access_token: string;
     refresh_token: string;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import Button from '../../components/styled/Button';
 import Container from '../../components/styled/Container';
@@ -7,13 +7,9 @@ import useLoginUser from '../../hooks/user/useLoginUser';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useUpdateAuth } from '../../context/AuthContext';
 import InputError from '../../components/input/InputError';
-
-const InputContainer = styled.div({
-    display: 'flex',
-    flexDirection: 'column',
-    width: '50%',
-    rowGap: '0.5rem',
-});
+import InputLabelWrapper from '../../components/input/InputLabelWrapper';
+import InputContainer from '../../components/input/InputContainer';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 const StyledForm = styled.form({
     display: 'flex',
@@ -21,144 +17,78 @@ const StyledForm = styled.form({
     rowGap: '0.8rem',
 });
 
-const InputLabelWrapper = styled.div({
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-});
-
-interface User {
-    username: string;
-    password: string;
-}
-
-interface InputErrors {
-    username: boolean;
-    password: boolean;
-}
-
 interface LocationState {
     state: {
         from: { pathname: string } | null;
     } | null;
 }
 
+interface FormValues {
+    username: string;
+    password: string;
+}
+
 const LoginUserPage: React.FC = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<FormValues>();
     const { state }: LocationState = useLocation();
     const navigate = useNavigate();
-    const [userCredentials, setUserCredentials] = useState<Partial<User>>({});
     const updateAuthFunc = useUpdateAuth();
 
     const loginUser = useLoginUser();
 
-    const [inputErrors, setInputErrors] = useState<InputErrors>({
-        username: false,
-        password: false,
-    });
-
-    const onChangeFunction = <K extends keyof User>(
-        objectKey: K,
-        value: User[K]
-    ): void => {
-        const userCredentialsCopy = { ...userCredentials };
-        if (userCredentialsCopy !== null) {
-            userCredentialsCopy[objectKey] = value;
-            setUserCredentials(userCredentialsCopy);
-        }
-    };
-
-    const onSubmitFunction = (e: React.FormEvent<HTMLFormElement>): void => {
-        e.preventDefault();
-        const inputErrorKeys = Object.keys(inputErrors);
-        // reset errors
-        const newInputErrors = {
-            username: false,
-            password: false,
-        };
-
-        // Get keys from the inputError object to check if they have correct values (or values at all)
-        inputErrorKeys.forEach((key) => {
-            if (userCredentials !== null) {
+    const onSubmit: SubmitHandler<FormValues> = (data) => {
+        loginUser.mutate(data, {
+            onSuccess: (res) => {
+                if (updateAuthFunc !== null) updateAuthFunc(res.data);
                 if (
-                    userCredentials[key as keyof User] === null ||
-                    userCredentials[key as keyof User] === '' ||
-                    userCredentials[key as keyof User] === undefined
+                    state?.from?.pathname !== undefined &&
+                    state?.from?.pathname.length > 0
                 ) {
-                    newInputErrors[key as keyof InputErrors] = true;
+                    navigate(
+                        state.from.pathname.length > 0
+                            ? state.from.pathname
+                            : '/'
+                    );
+                } else {
+                    navigate('/dashboard');
                 }
-            }
+            },
         });
-
-        setInputErrors(newInputErrors);
-
-        if (
-            userCredentials.username !== undefined &&
-            userCredentials.password !== undefined
-        ) {
-            const userCredentialsToUse: User = {
-                username: userCredentials.username,
-                password: userCredentials.password,
-            };
-            loginUser.mutate(userCredentialsToUse, {
-                onSuccess: (res) => {
-                    if (updateAuthFunc !== null) updateAuthFunc(res.data);
-                    if (
-                        state?.from?.pathname !== undefined &&
-                        state?.from?.pathname.length > 0
-                    ) {
-                        navigate(
-                            state.from.pathname.length > 0
-                                ? state.from.pathname
-                                : '/'
-                        );
-                    } else {
-                        navigate('/dashboard');
-                    }
-                },
-            });
-        } else {
-            console.log('Something is undefined');
-        }
-        // }
     };
 
     return (
         <Container>
             <h2 style={{ marginBottom: '1rem' }}>Login</h2>
-            <StyledForm onSubmit={onSubmitFunction}>
+            <StyledForm onSubmit={handleSubmit(onSubmit)}>
                 <InputContainer>
                     <InputLabelWrapper>
                         <label htmlFor='username'>Username</label>
-                        {inputErrors.username && (
+                        {errors.username !== undefined && (
                             <InputError>* Required</InputError>
                         )}
                     </InputLabelWrapper>
 
                     <Input
-                        name='username'
                         type='text'
-                        onChange={(e) => {
-                            onChangeFunction('username', e.currentTarget.value);
-                        }}
-                        // required={true}
+                        {...register('username', { required: true })}
                     />
                 </InputContainer>
 
                 <InputContainer>
                     <InputLabelWrapper>
                         <label htmlFor='password'>Password</label>
-                        {inputErrors.password && (
+                        {errors.password !== undefined && (
                             <InputError>* Required</InputError>
                         )}
                     </InputLabelWrapper>
 
                     <Input
-                        name='password'
                         type='password'
-                        onChange={(e) => {
-                            onChangeFunction('password', e.currentTarget.value);
-                        }}
-                        // required={true}
+                        {...register('password', { required: true })}
                     />
                 </InputContainer>
 

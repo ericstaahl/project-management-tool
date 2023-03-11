@@ -8,13 +8,7 @@ import useAddProject from '../../hooks/project/useAddProject';
 import TextArea from '../../components/styled/TextArea';
 import InputError from '../../components/input/InputError';
 import InputLabelWrapper from '../../components/input/InputLabelWrapper';
-
-const InputContainer = styled.div({
-    display: 'flex',
-    flexDirection: 'column',
-    width: '50%',
-    rowGap: '0.5rem',
-});
+import InputContainer from '../../components/input/InputContainer';
 
 const StyledForm = styled.form({
     display: 'flex',

@@ -6,24 +6,13 @@ import Input from '../../components/styled/Input';
 import useRegisterUser from '../../hooks/user/useRegisterUser';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import InputError from '../../components/input/InputError';
-
-const InputContainer = styled.div({
-    display: 'flex',
-    flexDirection: 'column',
-    width: '50%',
-    rowGap: '0.5rem',
-});
+import InputLabelWrapper from '../../components/input/InputLabelWrapper';
+import InputContainer from '../../components/input/InputContainer';
 
 const StyledForm = styled.form({
     display: 'flex',
     flexDirection: 'column',
     rowGap: '0.8rem',
-});
-
-const InputLabelWrapper = styled.div({
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
 });
 
 interface FormValues {
@@ -42,7 +31,6 @@ const RegisterUserPage: React.FC = () => {
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
         registerUser.mutate(data);
-        // }
     };
 
     return (
@@ -60,7 +48,6 @@ const RegisterUserPage: React.FC = () => {
                     <Input
                         type='text'
                         {...register('username', { required: true })}
-                        // required={true}
                     />
                 </InputContainer>
 
@@ -75,7 +62,6 @@ const RegisterUserPage: React.FC = () => {
                     <Input
                         type='password'
                         {...register('password', { required: true })}
-                        // required={true}
                     />
                 </InputContainer>
 

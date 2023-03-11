@@ -10,24 +10,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import UserSelect from '../../components/input/UserSelect';
 import TextArea from '../../components/styled/TextArea';
 import InputError from '../../components/input/InputError';
-
-const InputContainer = styled.div({
-    display: 'flex',
-    flexDirection: 'column',
-    width: '50%',
-    rowGap: '0.5rem',
-});
+import InputLabelWrapper from '../../components/input/InputLabelWrapper';
+import InputContainer from '../../components/input/InputContainer';
 
 const StyledForm = styled.form({
     display: 'flex',
     flexDirection: 'column',
     rowGap: '0.8rem',
-});
-
-const InputLabelWrapper = styled.div({
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
 });
 
 interface FormValues {
