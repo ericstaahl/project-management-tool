@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { useDraggable, useDroppable, DndContext } from '@dnd-kit/core';
+import {
+    useDraggable,
+    useDroppable,
+    DndContext,
+    DragEndEvent,
+} from '@dnd-kit/core';
 import { Transform } from '@dnd-kit/utilities/dist/css';
 import Container from '../components/styled/Container';
 import styled from '@emotion/styled';
@@ -57,8 +62,8 @@ const DragAndDropPage = (): JSX.Element => {
         </Draggable>
     );
 
-    const handleDragEvent = (event): void => {
-        if (event.over && event.over.id === 'droppable') {
+    const handleDragEvent = (event: DragEndEvent): void => {
+        if (event.over !== null && event.over.id === 'droppable') {
             setIsDropped(true);
         }
     };
