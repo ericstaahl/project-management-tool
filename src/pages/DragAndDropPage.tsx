@@ -24,13 +24,18 @@ const StyledDraggable = styled.div(
                 : undefined,
         backgroundColor: 'blue',
         width: '40px',
+        cursor: 'pointer',
+        margin: '0.5rem',
     })
 );
 
 const DragAndDropPage = (): JSX.Element => {
-    const Droppable = (props: { children?: React.ReactNode }): JSX.Element => {
+    const Droppable = (props: {
+        id: string;
+        children?: React.ReactNode;
+    }): JSX.Element => {
         const { isOver, setNodeRef } = useDroppable({
-            id: 'droppable',
+            id: props.id,
         });
         return (
             <StyledDroppable isOver={isOver} ref={setNodeRef}>
@@ -39,9 +44,12 @@ const DragAndDropPage = (): JSX.Element => {
         );
     };
 
-    const Draggable = (props: { children?: React.ReactNode }): JSX.Element => {
+    const Draggable = (props: {
+        id: string;
+        children: React.ReactNode;
+    }): JSX.Element => {
         const { attributes, listeners, setNodeRef, transform } = useDraggable({
-            id: 'draggable',
+            id: props.id,
         });
         return (
             <StyledDraggable
@@ -55,26 +63,28 @@ const DragAndDropPage = (): JSX.Element => {
         );
     };
 
-    const [isDropped, setIsDropped] = useState(false);
-    const draggableMarkup = (
-        <Draggable>
-            <div>Hi</div>
-        </Draggable>
-    );
+    const containers = ['A', 'B', 'C'];
+
+    const [parent, setParent] = useState<string | number | null>(null);
+
+    const draggableMarkup = <Draggable id={'draggable'}>Hi</Draggable>;
 
     const handleDragEvent = (event: DragEndEvent): void => {
-        if (event.over !== null && event.over.id === 'droppable') {
-            setIsDropped(true);
-        }
+        const { over } = event;
+        setParent(over !== null ? over.id : null);
     };
 
     return (
         <Container>
             <DndContext onDragEnd={handleDragEvent}>
-                {!isDropped ? draggableMarkup : null}
-                <Droppable>
-                    {isDropped ? draggableMarkup : 'Drop here'}
-                </Droppable>
+                {parent === null ? draggableMarkup : null}
+                <div style={{ display: 'flex', columnGap: '1rem' }}>
+                    {containers.map((id) => (
+                        <Droppable key={id} id={id}>
+                            {parent === id ? draggableMarkup : 'Drop here'}
+                        </Droppable>
+                    ))}
+                </div>
             </DndContext>
         </Container>
     );
