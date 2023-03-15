@@ -16,14 +16,11 @@ import ProjectsPage from './pages/project/ProjectsPage';
 import EditProjectPage from './pages/project/EditProjectPage';
 import AddProjectPage from './pages/project/AddProjectPage';
 import EditTodoPage from './pages/todo/EditTodoPage';
-import DragAndDropPage from './pages/DragAndDropPage';
-// import { DndContext } from '@dnd-kit/core';
 
 const queryClient = new QueryClient();
 
 const App: React.FC = () => {
     return (
-        // <DndContext>
         <QueryClientProvider client={queryClient}>
             <AuthProvider>
                 <div className='App'>
@@ -55,7 +52,6 @@ const App: React.FC = () => {
                                 path='/projects/:id/new-todo'
                                 element={<AddTodoPage />}
                             />
-                            <Route path='/test' element={<DragAndDropPage />} />
                         </Route>
                         <Route
                             path='/register'
@@ -68,7 +64,6 @@ const App: React.FC = () => {
             </AuthProvider>
             <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
-        // </DndContext>
     );
 };
 

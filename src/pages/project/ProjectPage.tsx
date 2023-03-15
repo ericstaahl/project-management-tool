@@ -14,6 +14,7 @@ import useGetProject from '../../hooks/project/useGetProject';
 import useGetTodos from '../../hooks/todo/useGetTodos';
 import TextLineClamp from '../../components/styled/TextLineClamp';
 import EditLink from '../../components/styled/EditLink';
+import TodoBoard from '../../components/todo/TodoBoard';
 
 const GridContainer = styled.div({
     display: 'grid',
@@ -239,6 +240,7 @@ const ProjectPage: React.FC = () => {
                         Edit project
                     </Button>
                 </ButtonContainer>
+                {data !== undefined && <TodoBoard data={data} />}
             </Container>
         </>
     );
