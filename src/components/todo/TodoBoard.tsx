@@ -1,11 +1,29 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { DndContext, DragEndEvent } from '@dnd-kit/core';
+import {
+    DndContext,
+    DragEndEvent,
+    UniqueIdentifier,
+    Over,
+} from '@dnd-kit/core';
 import Droppable from './Droppable';
 import Draggable from './Draggable';
 import { Todos } from '../../types/TodoTypes';
 
 interface Props {
     data: Todos;
+}
+
+type CustomUniqueIdentifier =
+    | (UniqueIdentifier & 'NOT_STARTED')
+    | 'IN_PROGRESS'
+    | 'DONE';
+
+interface CustomOver extends Over {
+    id: CustomUniqueIdentifier;
+}
+
+interface CustomDragEndEvent extends DragEndEvent {
+    over: CustomOver;
 }
 
 const containers = [
@@ -30,7 +48,7 @@ const TodoBoard = ({ data: todos }: Props): JSX.Element => {
         }
     }, [todos]);
 
-    const handleDragEvent = (event: DragEndEvent): void => {
+    const handleDragEvent = (event: CustomDragEndEvent): void => {
         const { active, over } = event;
         console.log('over.id:', over?.id);
         console.log('active.id:', active.id);
