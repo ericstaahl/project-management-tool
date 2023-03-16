@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
-import Container from '../styled/Container';
 import Droppable from './Droppable';
 import Draggable from './Draggable';
 import { Todos } from '../../types/TodoTypes';
@@ -32,15 +31,19 @@ const TodoBoard = ({ data: todos }: Props): JSX.Element => {
     }, [todos]);
 
     const handleDragEvent = (event: DragEndEvent): void => {
-        const { over } = event;
-        console.log(over);
+        const { active, over } = event;
+        console.log('over.id:', over?.id);
+        console.log('active.id:', active.id);
+        console.log('typeof active.id:', typeof active.id);
         if (todoState === undefined) return;
-        const newTodoState = todoState.map((todo) => {
-            const newTodo = { ...todo };
-            if (over !== null) newTodo.status = over.id;
-            return newTodo;
-        });
-        console.log(newTodoState);
+        const newTodoState = [...todoState];
+        const todoIndex = newTodoState.findIndex(
+            (todo) => todo.todo_id === Number(active.id)
+        );
+        console.log('todoIndex', todoIndex);
+        if (todoIndex < 0 || over === null) return;
+        newTodoState[todoIndex].status = over.id;
+        console.log('newTodoState', newTodoState);
         setTodoState(newTodoState);
     };
 
@@ -90,43 +93,41 @@ const TodoBoard = ({ data: todos }: Props): JSX.Element => {
     }, [todoState]);
 
     return (
-        <Container>
-            <DndContext onDragEnd={handleDragEvent}>
-                <div style={{ display: 'flex', columnGap: '1rem' }}>
-                    {containers.map((id) => {
-                        console.log(id);
-                        return (
-                            <Droppable key={id} id={id}>
-                                {id === 'NOT_STARTED' ? (
-                                    todosNotStarted.map((draggable) => {
-                                        console.log('RUNNING!');
-                                        return draggable;
-                                    })
-                                ) : (
-                                    <></>
-                                )}
-                                {id === 'IN_PROGRESS' ? (
-                                    todosInProgress.map((draggable) => {
-                                        console.log('RUNNING!');
-                                        return draggable;
-                                    })
-                                ) : (
-                                    <></>
-                                )}
-                                {id === 'DONE' ? (
-                                    todosDone.map((draggable) => {
-                                        console.log('RUNNING!');
-                                        return draggable;
-                                    })
-                                ) : (
-                                    <></>
-                                )}
-                            </Droppable>
-                        );
-                    })}
-                </div>
-            </DndContext>
-        </Container>
+        <DndContext onDragEnd={handleDragEvent}>
+            <div style={{ display: 'flex', columnGap: '1rem' }}>
+                {containers.map((id) => {
+                    console.log(id);
+                    return (
+                        <Droppable key={id} id={id}>
+                            {id === 'NOT_STARTED' ? (
+                                todosNotStarted.map((draggable) => {
+                                    console.log('RUNNING!');
+                                    return draggable;
+                                })
+                            ) : (
+                                <></>
+                            )}
+                            {id === 'IN_PROGRESS' ? (
+                                todosInProgress.map((draggable) => {
+                                    console.log('RUNNING!');
+                                    return draggable;
+                                })
+                            ) : (
+                                <></>
+                            )}
+                            {id === 'DONE' ? (
+                                todosDone.map((draggable) => {
+                                    console.log('RUNNING!');
+                                    return draggable;
+                                })
+                            ) : (
+                                <></>
+                            )}
+                        </Droppable>
+                    );
+                })}
+            </div>
+        </DndContext>
     );
 };
 
