@@ -33,11 +33,14 @@ const TodoBoard = ({ data: todos }: Props): JSX.Element => {
 
     const handleDragEvent = (event: DragEndEvent): void => {
         const { over } = event;
+        console.log(over);
         if (todoState === undefined) return;
         const newTodoState = todoState.map((todo) => {
-            if (todo.todo_id === over?.id) return todo;
-            return todo;
+            const newTodo = { ...todo };
+            if (over !== null) newTodo.status = over.id;
+            return newTodo;
         });
+        console.log(newTodoState);
         setTodoState(newTodoState);
     };
 
@@ -69,7 +72,7 @@ const TodoBoard = ({ data: todos }: Props): JSX.Element => {
                 );
         });
         return todos;
-    }, []);
+    }, [todoState]);
 
     const todosDone = useMemo(() => {
         const todos: JSX.Element[] = [];
@@ -84,7 +87,7 @@ const TodoBoard = ({ data: todos }: Props): JSX.Element => {
                 );
         });
         return todos;
-    }, []);
+    }, [todoState]);
 
     return (
         <Container>
