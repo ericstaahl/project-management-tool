@@ -69,10 +69,8 @@ type SortOrder = 'asc' | 'desc';
 
 const ProjectPage: React.FC = () => {
     const location = useLocation();
-    console.log(location);
     const { id: projectId } = useParams();
     const { data: project } = useGetProject(projectId);
-    console.log(project);
     const [sortBy, setSortBy] = useState({ value: 'title', label: 'Title' });
     const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
     const [statusFilter, setStatusFilter] = useState<{
@@ -142,50 +140,46 @@ const ProjectPage: React.FC = () => {
                         )}
                     </>
                 )}
-                {!toggleBoardView && (
-                    <>
-                        <div style={{ display: 'flex' }}>
-                            <SelectInput<typeof sortOptions[0]>
-                                label={'Sort by'}
-                                sortOrder={sortOrder}
-                                handleSetSortOrder={handleSetSortOrder}
-                                selectProps={{
-                                    options: sortOptions,
-                                    defaultValue: {
-                                        value: 'title',
-                                        label: 'Title',
-                                    },
-                                    onChange: (selected) => {
-                                        if (selected !== null)
-                                            setSortBy({
-                                                label: selected.label,
-                                                value: selected.value,
-                                            });
-                                    },
-                                }}
-                            />
-                        </div>
-                        <div style={{ display: 'flex' }}>
-                            <SelectInput<typeof statusOptions[0]>
-                                label={'Filter'}
-                                selectProps={{
-                                    options: statusOptions,
-                                    onChange: (selected) => {
-                                        if (selected !== null)
-                                            setStatusFilter({
-                                                label: selected.label,
-                                                value: selected.value,
-                                            });
-                                        else {
-                                            setStatusFilter(null);
-                                        }
-                                    },
-                                    isClearable: true,
-                                }}
-                            />
-                        </div>
-                    </>
-                )}
+                <div style={{ display: 'flex' }}>
+                    <SelectInput<typeof sortOptions[0]>
+                        label={'Sort by'}
+                        sortOrder={sortOrder}
+                        handleSetSortOrder={handleSetSortOrder}
+                        selectProps={{
+                            options: sortOptions,
+                            defaultValue: {
+                                value: 'title',
+                                label: 'Title',
+                            },
+                            onChange: (selected) => {
+                                if (selected !== null)
+                                    setSortBy({
+                                        label: selected.label,
+                                        value: selected.value,
+                                    });
+                            },
+                        }}
+                    />
+                </div>
+                <div style={{ display: 'flex' }}>
+                    <SelectInput<typeof statusOptions[0]>
+                        label={'Filter'}
+                        selectProps={{
+                            options: statusOptions,
+                            onChange: (selected) => {
+                                if (selected !== null)
+                                    setStatusFilter({
+                                        label: selected.label,
+                                        value: selected.value,
+                                    });
+                                else {
+                                    setStatusFilter(null);
+                                }
+                            },
+                            isClearable: true,
+                        }}
+                    />
+                </div>
 
                 {toggleBoardView ? (
                     data !== undefined && <TodoBoard data={data} />
