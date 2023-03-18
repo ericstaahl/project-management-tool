@@ -15,6 +15,7 @@ export interface Todo {
     description: string;
     project_id: number;
     assignee?: string;
+    status?: 'NOT_STARTED' | 'IN_PROGRESS' | 'DONE';
 }
 
 export interface UpdatedTodo {
