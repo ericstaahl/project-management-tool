@@ -1,21 +1,18 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import AddUserToProject from '../../components/project/AddUserToProject';
 import Modal from '../../components/Modal';
 import ProjectDescription from '../../components/project/ProjectDescription';
 import SelectInput from '../../components/input/SelectInput';
 import Button from '../../components/styled/Button';
-import Card from '../../components/styled/Card';
 import Container from '../../components/styled/Container';
 import H2 from '../../components/styled/H2';
 import useAuth from '../../context/AuthContext';
 import useGetProject from '../../hooks/project/useGetProject';
 import useGetTodos from '../../hooks/todo/useGetTodos';
-import TextLineClamp from '../../components/styled/TextLineClamp';
-import EditLink from '../../components/styled/EditLink';
 import TodoBoard from '../../components/todo/TodoBoard';
-import H3 from '../../components/styled/H3';
+import TodoCard from '../../components/todo/TodoCard';
 
 const GridContainer = styled.div({
     display: 'grid',
@@ -25,29 +22,11 @@ const GridContainer = styled.div({
     rowGap: '1rem',
 });
 
-const TitleWrapper = styled.div({
-    display: '-webkit-box',
-    WebkitBoxOrient: 'vertical',
-    WebkitLineClamp: 2,
-    overflow: 'hidden',
-    wordBreak: 'break-word',
-});
-
 const ButtonContainer = styled.div({
     display: 'flex',
     columnGap: '1rem',
     padding: '1rem 0',
 });
-
-const BoldSpan = styled.span({
-    fontWeight: 'bold',
-});
-
-const statuses = {
-    NOT_STARTED: 'Not started',
-    IN_PROGRESS: 'In progress',
-    DONE: 'Done',
-};
 
 const sortOptions = [
     { value: 'estimate', label: 'Estimate' },
@@ -68,7 +47,6 @@ interface StatusOptions {
 type SortOrder = 'asc' | 'desc';
 
 const ProjectPage: React.FC = () => {
-    const location = useLocation();
     const { id: projectId } = useParams();
     const { data: project } = useGetProject(projectId);
     const [sortBy, setSortBy] = useState({ value: 'title', label: 'Title' });
@@ -189,49 +167,7 @@ const ProjectPage: React.FC = () => {
                             data !== undefined &&
                             (data.length > 0 ? (
                                 data?.map((todo) => (
-                                    <Card key={todo.todo_id}>
-                                        <div
-                                            style={{
-                                                display: 'flex',
-                                                justifyContent: 'space-between',
-                                            }}
-                                        >
-                                            <TitleWrapper>
-                                                <H3>{`${todo.title}`}</H3>
-                                            </TitleWrapper>
-                                            <EditLink
-                                                to={`${location.pathname}/todo/${todo.todo_id}/edit`}
-                                            >
-                                                ...
-                                            </EditLink>
-                                        </div>
-                                        <div>
-                                            <BoldSpan>Estimation: </BoldSpan>
-                                            <TextLineClamp>
-                                                {todo.estimate}
-                                            </TextLineClamp>
-                                        </div>
-                                        <div>
-                                            <BoldSpan>Status: </BoldSpan>
-                                            <TextLineClamp>
-                                                {statuses[todo.status]}
-                                            </TextLineClamp>
-                                        </div>
-                                        <div>
-                                            <BoldSpan>Assignee: </BoldSpan>
-                                            <TextLineClamp>
-                                                {todo.assignee ?? 'None'}
-                                            </TextLineClamp>
-                                        </div>
-                                        <div>
-                                            <BoldSpan>Description: </BoldSpan>
-                                            <TextLineClamp
-                                                style={{ fontSize: '0.9rem' }}
-                                            >
-                                                {todo.description}
-                                            </TextLineClamp>
-                                        </div>
-                                    </Card>
+                                    <TodoCard key={todo.todo_id} todo={todo} />
                                 ))
                             ) : (
                                 <div style={{ fontStyle: 'italic' }}>
