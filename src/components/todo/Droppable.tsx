@@ -4,9 +4,11 @@ import { useDroppable } from '@dnd-kit/core';
 
 const StyledDroppable = styled.div((props: { isOver: boolean }) => ({
     color: props.isOver ? 'green' : '',
-    backgroundColor: 'red',
-    width: '200px',
-    height: '200px',
+    minHeight: '300px',
+    width: '100%',
+    display: 'flex',
+    rowGap: '0.5rem',
+    flexDirection: 'column',
 }));
 
 const Droppable = (props: {

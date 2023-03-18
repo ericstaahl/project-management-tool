@@ -9,17 +9,21 @@ const StyledDraggable = styled.div(
             props.transform !== null
                 ? `translate3d(${props.transform.x}px, ${props.transform.y}px, 0)`
                 : undefined,
-        backgroundColor: 'blue',
-        width: '40px',
+        backgroundColor: '#ededed',
         cursor: 'pointer',
-        margin: '0.5rem',
+        padding: '0.4rem 0.4rem',
+        minHeight: '70px',
+        borderRadius: '2px',
+        color: '#111',
     })
 );
 
-const Draggable = (props: {
+interface Props extends React.HtmlHTMLAttributes<HTMLDivElement> {
     id: string;
     children: React.ReactNode;
-}): JSX.Element => {
+}
+
+const Draggable = (props: Props): JSX.Element => {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: props.id,
     });
