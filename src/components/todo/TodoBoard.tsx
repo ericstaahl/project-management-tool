@@ -10,7 +10,7 @@ import Draggable from './Draggable';
 import { Todos } from '../../types/TodoTypes';
 import useUpdadeTodo from '../../hooks/todo/useUpdateTodo';
 import styled from '@emotion/styled';
-import H2 from '../styled/H2';
+import H3 from '../styled/H3';
 
 interface Props {
     data: Todos;
@@ -84,13 +84,13 @@ const TodoBoard = ({ data: todos }: Props): JSX.Element => {
                                     padding: '1rem',
                                 }}
                             >
-                                <H2 style={{ margin: '0 0.4rem' }}>
+                                <H3 style={{ margin: '0 0.4rem' }}>
                                     {id === 'NOT_STARTED'
                                         ? 'Not started'
                                         : id === 'IN_PROGRESS'
                                         ? 'In progress'
                                         : 'Done'}
-                                </H2>
+                                </H3>
                                 <div
                                     style={{
                                         display: 'flex',
@@ -115,11 +115,11 @@ const TodoBoard = ({ data: todos }: Props): JSX.Element => {
                                                                 )}
                                                             >
                                                                 <div>
-                                                                    <p>
+                                                                    <h4>
                                                                         {
                                                                             todo.title
                                                                         }
-                                                                    </p>
+                                                                    </h4>
                                                                 </div>
                                                             </Draggable>
                                                         )}
@@ -143,11 +143,11 @@ const TodoBoard = ({ data: todos }: Props): JSX.Element => {
                                                                 )}
                                                             >
                                                                 <div>
-                                                                    <p>
+                                                                    <h4>
                                                                         {
                                                                             todo.title
                                                                         }
-                                                                    </p>
+                                                                    </h4>
                                                                 </div>
                                                             </Draggable>
                                                         )}
@@ -171,11 +171,11 @@ const TodoBoard = ({ data: todos }: Props): JSX.Element => {
                                                                 )}
                                                             >
                                                                 <div>
-                                                                    <p>
+                                                                    <h4>
                                                                         {
                                                                             todo.title
                                                                         }
-                                                                    </p>
+                                                                    </h4>
                                                                 </div>
                                                             </Draggable>
                                                         )}

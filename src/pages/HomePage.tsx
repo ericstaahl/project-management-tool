@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Card from '../components/styled/Card';
 import Container from '../components/styled/Container';
 import H2 from '../components/styled/H2';
+import H3 from '../components/styled/H3';
 import useGetProjects from '../hooks/project/useGetProjects';
 
 const GridContainer = styled.div({
@@ -23,7 +24,7 @@ const HomePage: React.FC = () => {
                 {!isLoading &&
                     projects?.map((project) => (
                         <Card key={project.project_id}>
-                            <h3>{project.title}</h3>
+                            <H3>{project.title}</H3>
                             {project.number_of_members > 0 ? (
                                 <div>{`Number of members: ${project.number_of_members}`}</div>
                             ) : (

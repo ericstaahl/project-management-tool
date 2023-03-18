@@ -15,6 +15,7 @@ import useGetTodos from '../../hooks/todo/useGetTodos';
 import TextLineClamp from '../../components/styled/TextLineClamp';
 import EditLink from '../../components/styled/EditLink';
 import TodoBoard from '../../components/todo/TodoBoard';
+import H3 from '../../components/styled/H3';
 
 const GridContainer = styled.div({
     display: 'grid',
@@ -175,7 +176,7 @@ const ProjectPage: React.FC = () => {
                                         }}
                                     >
                                         <TitleWrapper>
-                                            <h3>{`${todo.title}`}</h3>
+                                            <H3>{`${todo.title}`}</H3>
                                         </TitleWrapper>
                                         <EditLink
                                             to={`${location.pathname}/todo/${todo.todo_id}/edit`}

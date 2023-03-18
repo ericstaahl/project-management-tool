@@ -5,6 +5,7 @@ import type { Projects } from '../../types/ProjectTypes';
 import useAuth from '../../context/AuthContext';
 import TextLineClamp from '../styled/TextLineClamp';
 import EditLink from '../styled/EditLink';
+import H3 from '../styled/H3';
 
 const BoldSpan = styled.span({
     fontWeight: 'bold',
@@ -40,7 +41,7 @@ const ProjectDescription = ({
             {!detail && (
                 <TitleEditWrapper>
                     <TitleWrapper>
-                        <h3>{`${project.title}`}</h3>
+                        <H3>{`${project.title}`}</H3>
                     </TitleWrapper>
                     <EditLink to={`/projects/${project.project_id}/edit`}>
                         ...
