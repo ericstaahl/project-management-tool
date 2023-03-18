@@ -92,6 +92,7 @@ const ProjectPage: React.FC = () => {
     const handleSetSortOrder = (order: SortOrder): void => {
         setSortOrder(order);
     };
+    const [toggleBoardView, setToggleBoardView] = useState(false);
 
     return (
         <>
@@ -108,13 +109,28 @@ const ProjectPage: React.FC = () => {
                 {!isLoading && project !== undefined && (
                     <>
                         <H2>{project?.title ?? 'Project'}</H2>
-                        <Button
-                            onClick={() => {
-                                setToggleDescription(!toggleDescription);
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                rowGap: '1rem',
                             }}
                         >
-                            Show info
-                        </Button>
+                            <Button
+                                onClick={() => {
+                                    setToggleDescription(!toggleDescription);
+                                }}
+                            >
+                                Show info
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    setToggleBoardView(!toggleBoardView);
+                                }}
+                            >
+                                {toggleBoardView ? 'Table' : 'Board'}
+                            </Button>
+                        </div>
                         {toggleDescription && (
                             <div>
                                 <ProjectDescription
@@ -126,98 +142,111 @@ const ProjectPage: React.FC = () => {
                         )}
                     </>
                 )}
-                <div style={{ display: 'flex' }}>
-                    <SelectInput<typeof sortOptions[0]>
-                        label={'Sort by'}
-                        sortOrder={sortOrder}
-                        handleSetSortOrder={handleSetSortOrder}
-                        selectProps={{
-                            options: sortOptions,
-                            defaultValue: { value: 'title', label: 'Title' },
-                            onChange: (selected) => {
-                                if (selected !== null)
-                                    setSortBy({
-                                        label: selected.label,
-                                        value: selected.value,
-                                    });
-                            },
-                        }}
-                    />
-                </div>
-                <div style={{ display: 'flex' }}>
-                    <SelectInput<typeof statusOptions[0]>
-                        label={'Filter'}
-                        selectProps={{
-                            options: statusOptions,
-                            onChange: (selected) => {
-                                if (selected !== null)
-                                    setStatusFilter({
-                                        label: selected.label,
-                                        value: selected.value,
-                                    });
-                                else {
-                                    setStatusFilter(null);
-                                }
-                            },
-                            isClearable: true,
-                        }}
-                    />
-                </div>
-                <GridContainer>
-                    {!isLoading &&
-                        data !== undefined &&
-                        (data.length > 0 ? (
-                            data?.map((todo) => (
-                                <Card key={todo.todo_id}>
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            justifyContent: 'space-between',
-                                        }}
-                                    >
-                                        <TitleWrapper>
-                                            <H3>{`${todo.title}`}</H3>
-                                        </TitleWrapper>
-                                        <EditLink
-                                            to={`${location.pathname}/todo/${todo.todo_id}/edit`}
+                {!toggleBoardView && (
+                    <>
+                        <div style={{ display: 'flex' }}>
+                            <SelectInput<typeof sortOptions[0]>
+                                label={'Sort by'}
+                                sortOrder={sortOrder}
+                                handleSetSortOrder={handleSetSortOrder}
+                                selectProps={{
+                                    options: sortOptions,
+                                    defaultValue: {
+                                        value: 'title',
+                                        label: 'Title',
+                                    },
+                                    onChange: (selected) => {
+                                        if (selected !== null)
+                                            setSortBy({
+                                                label: selected.label,
+                                                value: selected.value,
+                                            });
+                                    },
+                                }}
+                            />
+                        </div>
+                        <div style={{ display: 'flex' }}>
+                            <SelectInput<typeof statusOptions[0]>
+                                label={'Filter'}
+                                selectProps={{
+                                    options: statusOptions,
+                                    onChange: (selected) => {
+                                        if (selected !== null)
+                                            setStatusFilter({
+                                                label: selected.label,
+                                                value: selected.value,
+                                            });
+                                        else {
+                                            setStatusFilter(null);
+                                        }
+                                    },
+                                    isClearable: true,
+                                }}
+                            />
+                        </div>
+                    </>
+                )}
+
+                {toggleBoardView ? (
+                    data !== undefined && <TodoBoard data={data} />
+                ) : (
+                    <GridContainer>
+                        {!isLoading &&
+                            data !== undefined &&
+                            (data.length > 0 ? (
+                                data?.map((todo) => (
+                                    <Card key={todo.todo_id}>
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                justifyContent: 'space-between',
+                                            }}
                                         >
-                                            ...
-                                        </EditLink>
-                                    </div>
-                                    <div>
-                                        <BoldSpan>Estimation: </BoldSpan>
-                                        <TextLineClamp>
-                                            {todo.estimate}
-                                        </TextLineClamp>
-                                    </div>
-                                    <div>
-                                        <BoldSpan>Status: </BoldSpan>
-                                        <TextLineClamp>
-                                            {statuses[todo.status]}
-                                        </TextLineClamp>
-                                    </div>
-                                    <div>
-                                        <BoldSpan>Assignee: </BoldSpan>
-                                        <TextLineClamp>
-                                            {todo.assignee ?? 'None'}
-                                        </TextLineClamp>
-                                    </div>
-                                    <div>
-                                        <BoldSpan>Description: </BoldSpan>
-                                        <TextLineClamp
-                                            style={{ fontSize: '0.9rem' }}
-                                        >
-                                            {todo.description}
-                                        </TextLineClamp>
-                                    </div>
-                                </Card>
-                            ))
-                        ) : (
-                            <div style={{ fontStyle: 'italic' }}>
-                                No to-dos found
-                            </div>
-                        ))}
-                </GridContainer>
+                                            <TitleWrapper>
+                                                <H3>{`${todo.title}`}</H3>
+                                            </TitleWrapper>
+                                            <EditLink
+                                                to={`${location.pathname}/todo/${todo.todo_id}/edit`}
+                                            >
+                                                ...
+                                            </EditLink>
+                                        </div>
+                                        <div>
+                                            <BoldSpan>Estimation: </BoldSpan>
+                                            <TextLineClamp>
+                                                {todo.estimate}
+                                            </TextLineClamp>
+                                        </div>
+                                        <div>
+                                            <BoldSpan>Status: </BoldSpan>
+                                            <TextLineClamp>
+                                                {statuses[todo.status]}
+                                            </TextLineClamp>
+                                        </div>
+                                        <div>
+                                            <BoldSpan>Assignee: </BoldSpan>
+                                            <TextLineClamp>
+                                                {todo.assignee ?? 'None'}
+                                            </TextLineClamp>
+                                        </div>
+                                        <div>
+                                            <BoldSpan>Description: </BoldSpan>
+                                            <TextLineClamp
+                                                style={{ fontSize: '0.9rem' }}
+                                            >
+                                                {todo.description}
+                                            </TextLineClamp>
+                                        </div>
+                                    </Card>
+                                ))
+                            ) : (
+                                <div style={{ fontStyle: 'italic' }}>
+                                    No to-dos found
+                                </div>
+                            ))}
+                    </GridContainer>
+                )}
+
                 <ButtonContainer>
                     <Button
                         onClick={() => {
@@ -241,7 +270,6 @@ const ProjectPage: React.FC = () => {
                         Edit project
                     </Button>
                 </ButtonContainer>
-                {data !== undefined && <TodoBoard data={data} />}
             </Container>
         </>
     );
