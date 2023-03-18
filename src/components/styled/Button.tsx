@@ -13,6 +13,7 @@ const StyledButton = styled.button({
     ':hover': {
         backgroundColor: '#1c2cd9',
     },
+    fontWeight: 600,
 });
 
 const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = (
