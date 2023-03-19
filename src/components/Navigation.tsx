@@ -23,6 +23,7 @@ const StyledLink = styled(Link)({
     ':hover': {
         textDecoration: 'underline',
     },
+    fontWeight: 500,
 });
 
 const Navigation: React.FC = () => {
