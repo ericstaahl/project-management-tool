@@ -11,15 +11,17 @@ const StyledDroppable = styled.div((props: { isOver: boolean }) => ({
     flexDirection: 'column',
 }));
 
-const Droppable = (props: {
+interface Props extends React.HtmlHTMLAttributes<HTMLDivElement> {
     id: string;
     children?: React.ReactNode;
-}): JSX.Element => {
+}
+
+const Droppable = (props: Props): JSX.Element => {
     const { isOver, setNodeRef } = useDroppable({
         id: props.id,
     });
     return (
-        <StyledDroppable isOver={isOver} ref={setNodeRef}>
+        <StyledDroppable style={props.style} isOver={isOver} ref={setNodeRef}>
             {props.children}
         </StyledDroppable>
     );

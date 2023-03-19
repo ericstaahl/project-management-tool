@@ -68,7 +68,7 @@ const ProjectPage: React.FC = () => {
     const handleSetSortOrder = (order: SortOrder): void => {
         setSortOrder(order);
     };
-    const [toggleBoardView, setToggleBoardView] = useState(false);
+    const [toggleBoardView, setToggleBoardView] = useState(true);
 
     return (
         <>

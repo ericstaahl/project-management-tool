@@ -44,6 +44,19 @@ const GridContainer = styled.div({
     width: '100%',
 });
 
+const DroppableContainer = styled.div({
+    backgroundColor: '#363942',
+    borderRadius: '5px',
+    padding: '1rem',
+});
+
+const TodoContainer = styled.div({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: '100%',
+});
+
 const TodoBoard = ({ data: todos }: Props): JSX.Element => {
     console.log(todos);
     const updateTodo = useUpdadeTodo();
@@ -76,14 +89,7 @@ const TodoBoard = ({ data: todos }: Props): JSX.Element => {
                 <GridContainer>
                     {containers.map((id) => {
                         return (
-                            <div
-                                key={id}
-                                style={{
-                                    backgroundColor: '#363942',
-                                    borderRadius: '5px',
-                                    padding: '1rem',
-                                }}
-                            >
+                            <DroppableContainer key={id}>
                                 <H3 style={{ margin: '0 0.4rem' }}>
                                     {id === 'NOT_STARTED'
                                         ? 'Not started'
@@ -110,11 +116,17 @@ const TodoBoard = ({ data: todos }: Props): JSX.Element => {
                                                                 todo.todo_id
                                                             )}
                                                         >
-                                                            <div>
+                                                            <TodoContainer>
                                                                 <h4>
                                                                     {todo.title}
                                                                 </h4>
-                                                            </div>
+                                                                <div>
+                                                                    {`Assignee: ${
+                                                                        todo.assignee ??
+                                                                        'none'
+                                                                    }`}
+                                                                </div>
+                                                            </TodoContainer>
                                                         </Draggable>
                                                     )}
                                                 </React.Fragment>
@@ -122,7 +134,7 @@ const TodoBoard = ({ data: todos }: Props): JSX.Element => {
                                         })}
                                     </Droppable>
                                 </div>
-                            </div>
+                            </DroppableContainer>
                         );
                     })}
                 </GridContainer>
