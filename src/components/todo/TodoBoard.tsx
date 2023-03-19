@@ -98,93 +98,28 @@ const TodoBoard = ({ data: todos }: Props): JSX.Element => {
                                     }}
                                 >
                                     <Droppable id={id}>
-                                        {id === 'NOT_STARTED' ? (
-                                            todos.map((todo) => {
-                                                return (
-                                                    <React.Fragment
-                                                        key={todo.todo_id}
-                                                    >
-                                                        {todo.status ===
-                                                            'NOT_STARTED' && (
-                                                            <Draggable
-                                                                key={
-                                                                    todo.todo_id
-                                                                }
-                                                                id={String(
-                                                                    todo.todo_id
-                                                                )}
-                                                            >
-                                                                <div>
-                                                                    <h4>
-                                                                        {
-                                                                            todo.title
-                                                                        }
-                                                                    </h4>
-                                                                </div>
-                                                            </Draggable>
-                                                        )}
-                                                    </React.Fragment>
-                                                );
-                                            })
-                                        ) : (
-                                            <></>
-                                        )}
-                                        {id === 'IN_PROGRESS' ? (
-                                            todos.map((todo) => {
-                                                return (
-                                                    <React.Fragment
-                                                        key={todo.todo_id}
-                                                    >
-                                                        {todo.status ===
-                                                            'IN_PROGRESS' && (
-                                                            <Draggable
-                                                                id={String(
-                                                                    todo.todo_id
-                                                                )}
-                                                            >
-                                                                <div>
-                                                                    <h4>
-                                                                        {
-                                                                            todo.title
-                                                                        }
-                                                                    </h4>
-                                                                </div>
-                                                            </Draggable>
-                                                        )}
-                                                    </React.Fragment>
-                                                );
-                                            })
-                                        ) : (
-                                            <></>
-                                        )}
-                                        {id === 'DONE' ? (
-                                            todos.map((todo) => {
-                                                return (
-                                                    <React.Fragment
-                                                        key={todo.todo_id}
-                                                    >
-                                                        {todo.status ===
-                                                            'DONE' && (
-                                                            <Draggable
-                                                                id={String(
-                                                                    todo.todo_id
-                                                                )}
-                                                            >
-                                                                <div>
-                                                                    <h4>
-                                                                        {
-                                                                            todo.title
-                                                                        }
-                                                                    </h4>
-                                                                </div>
-                                                            </Draggable>
-                                                        )}
-                                                    </React.Fragment>
-                                                );
-                                            })
-                                        ) : (
-                                            <></>
-                                        )}
+                                        {todos.map((todo) => {
+                                            return (
+                                                <React.Fragment
+                                                    key={todo.todo_id}
+                                                >
+                                                    {todo.status === id && (
+                                                        <Draggable
+                                                            key={todo.todo_id}
+                                                            id={String(
+                                                                todo.todo_id
+                                                            )}
+                                                        >
+                                                            <div>
+                                                                <h4>
+                                                                    {todo.title}
+                                                                </h4>
+                                                            </div>
+                                                        </Draggable>
+                                                    )}
+                                                </React.Fragment>
+                                            );
+                                        })}
                                     </Droppable>
                                 </div>
                             </div>
