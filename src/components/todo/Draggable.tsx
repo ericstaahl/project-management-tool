@@ -33,6 +33,7 @@ const Draggable = (props: Props): JSX.Element => {
             ref={setNodeRef}
             {...listeners}
             {...attributes}
+            onClick={props.onClick}
         >
             {props.children}
         </StyledDraggable>
