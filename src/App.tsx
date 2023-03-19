@@ -23,7 +23,12 @@ const App: React.FC = () => {
     return (
         <QueryClientProvider client={queryClient}>
             <AuthProvider>
-                <div className='App'>
+                <div
+                    style={{
+                        minHeight: '100vh',
+                    }}
+                    className='App'
+                >
                     <Navigation />
                     <Routes>
                         <Route path='/' element={<ProtectedRoute />}>
