@@ -68,6 +68,7 @@ const TodoBoard = ({ data: todos }: Props): JSX.Element => {
             (todo) => todo.todo_id === Number(active.id)
         );
         if (todoToUpdate === undefined) return;
+        if (todoToUpdate.status === over.id) return;
         todoToUpdate.status = over.id;
         updateTodo.mutate(
             {
