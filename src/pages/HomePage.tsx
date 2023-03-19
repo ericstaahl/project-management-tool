@@ -16,7 +16,9 @@ const GridContainer = styled.div({
 });
 
 const HomePage: React.FC = () => {
-    const { isLoading, data: projects } = useGetProjects();
+    const { isLoading, data: projects } = useGetProjects({
+        sortBy: 'due_date',
+    });
     return (
         <Container>
             <H2>Dashboard</H2>

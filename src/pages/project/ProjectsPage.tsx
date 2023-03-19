@@ -17,25 +17,29 @@ const GridContainer = styled.div({
 });
 
 const sortOptions = [
-    { value: 'due_date', label: 'Due date' },
-    { value: 'title', label: 'Title' },
-    { value: 'todo', label: "To-do's (number)" },
+    { value: 'due_date', label: 'Due date' } as const,
+    { value: 'title', label: 'Title' } as const,
+    { value: 'todo', label: "To-do's (number)" } as const,
 ];
+interface SortBy {
+    value: 'due_date' | 'title' | 'todo';
+    label: string;
+}
 
 type SortOrder = 'asc' | 'desc';
 
 const ProjectsPage: React.FC = () => {
     const auth = useAuth();
 
-    const [sortBy, setSortBy] = useState({
+    const [sortBy, setSortBy] = useState<SortBy>({
         value: 'due_date',
         label: 'Due date',
     });
     const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
-    const { isLoading, data: projects } = useGetProjects(
-        sortBy.value,
-        sortOrder
-    );
+    const { isLoading, data: projects } = useGetProjects({
+        sortBy: sortBy.value,
+        sortOrder,
+    });
 
     const handleSetSortOrder = (order: SortOrder): void => {
         setSortOrder(order);
