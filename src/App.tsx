@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import Navigation from './components/Navigation';
-import HomePage from './pages/HomePage';
+import Dashboard from './pages/Dashboard';
 import React from 'react';
 import './assets/css/style.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -32,7 +32,7 @@ const App: React.FC = () => {
                     <Navigation />
                     <Routes>
                         <Route path='/' element={<ProtectedRoute />}>
-                            <Route path='/dashboard' element={<HomePage />} />
+                            <Route path='/dashboard' element={<Dashboard />} />
                             <Route
                                 path='/projects'
                                 element={<ProjectsPage />}
