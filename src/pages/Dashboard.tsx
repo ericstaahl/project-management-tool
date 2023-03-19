@@ -33,7 +33,7 @@ const HomePage: React.FC = () => {
                                     daysLeft={daysLeft}
                                 />
                             ) : (
-                                <></>
+                                <React.Fragment key={project.project_id} />
                             );
                         })}
                     </GridContainer>
@@ -47,7 +47,7 @@ const HomePage: React.FC = () => {
                                     daysLeft={daysLeft}
                                 />
                             ) : (
-                                <></>
+                                <React.Fragment key={project.project_id} />
                             );
                         })}
                     </GridContainer>
