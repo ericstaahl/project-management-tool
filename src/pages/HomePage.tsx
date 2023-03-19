@@ -5,7 +5,7 @@ import Card from '../components/styled/Card';
 import Container from '../components/styled/Container';
 import H2 from '../components/styled/H2';
 import H3 from '../components/styled/H3';
-import formatDate from '../helpers/formatDate';
+import { formatDate, nowFromDate } from '../helpers/formatDate';
 import useGetProjects from '../hooks/project/useGetProjects';
 
 const GridContainer = styled.div({
@@ -27,19 +27,28 @@ const HomePage: React.FC = () => {
                 {!isLoading &&
                     projects?.map((project) => (
                         <Card key={project.project_id}>
-                            <H3>{project.title}</H3>
-                            {project.number_of_members > 0 ? (
-                                <div>{`Number of members: ${project.number_of_members}`}</div>
-                            ) : (
-                                <></>
-                            )}
-                            <div>{`Start date: ${formatDate(
-                                project.start_date
-                            )}`}</div>
+                            <div>
+                                <H3>{project.title}</H3>
+                                <div style={{ marginTop: '0.8rem' }}>
+                                    {`Start date: ${formatDate(
+                                        project.start_date
+                                    )}`}
+                                </div>
 
-                            <div>{`Due date: ${formatDate(
-                                project.due_date
-                            )}`}</div>
+                                <div style={{ marginTop: '0.8rem' }}>
+                                    {`Due date: ${formatDate(
+                                        project.due_date
+                                    )}`}
+                                </div>
+
+                                <div style={{ marginTop: '0.8rem' }}>
+                                    {nowFromDate(project.due_date) > 0
+                                        ? `${nowFromDate(
+                                              project.due_date
+                                          )} days left`
+                                        : 'Due date passed'}
+                                </div>
+                            </div>
 
                             <Link
                                 style={{ color: 'white' }}

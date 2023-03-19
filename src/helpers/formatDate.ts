@@ -1,5 +1,9 @@
-import dayjs from 'dayjs';
+import dayjs, { ConfigType } from 'dayjs';
 
-export default function (date: string): string {
+export function nowFromDate(date1: ConfigType): number {
+    return dayjs(date1).diff(Date.now(), 'days');
+}
+
+export function formatDate(date: string): string {
     return dayjs(date).format('YYYY-MM-DD');
 }
