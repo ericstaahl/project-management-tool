@@ -26,7 +26,7 @@ const HomePage: React.FC = () => {
                     <GridContainer>
                         {projects?.map((project) => {
                             const daysLeft = nowFromDate(project.due_date);
-                            return daysLeft === 0 ? (
+                            return daysLeft === 0 && !project.finished ? (
                                 <ProjectCard
                                     key={project.project_id}
                                     project={project}

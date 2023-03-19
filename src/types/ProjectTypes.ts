@@ -6,6 +6,7 @@ export type Projects = Array<{
     due_date: string;
     description?: string;
     user_id: number;
+    finished: boolean;
     _count: {
         todo: number;
         members: number;
