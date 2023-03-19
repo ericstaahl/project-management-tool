@@ -5,6 +5,7 @@ import Card from '../components/styled/Card';
 import Container from '../components/styled/Container';
 import H2 from '../components/styled/H2';
 import H3 from '../components/styled/H3';
+import formatDate from '../helpers/formatDate';
 import useGetProjects from '../hooks/project/useGetProjects';
 
 const GridContainer = styled.div({
@@ -32,12 +33,14 @@ const HomePage: React.FC = () => {
                             ) : (
                                 <></>
                             )}
-                            <div>{`Start date: ${new Date(
+                            <div>{`Start date: ${formatDate(
                                 project.start_date
-                            ).toLocaleDateString('sv-SE')}`}</div>
-                            <div>{`Due date: ${new Date(
+                            )}`}</div>
+
+                            <div>{`Due date: ${formatDate(
                                 project.due_date
-                            ).toLocaleDateString('sv-SE')}`}</div>
+                            )}`}</div>
+
                             <Link
                                 style={{ color: 'white' }}
                                 to={`/projects/${project.project_id}`}
