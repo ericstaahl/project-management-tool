@@ -32,9 +32,7 @@ const HomePage: React.FC = () => {
                                     project={project}
                                     daysLeft={daysLeft}
                                 />
-                            ) : (
-                                <React.Fragment key={project.project_id} />
-                            );
+                            ) : null;
                         })}
                     </GridContainer>
                     <GridContainer>
@@ -46,9 +44,7 @@ const HomePage: React.FC = () => {
                                     project={project}
                                     daysLeft={daysLeft}
                                 />
-                            ) : (
-                                <React.Fragment key={project.project_id} />
-                            );
+                            ) : null;
                         })}
                     </GridContainer>
                 </div>
