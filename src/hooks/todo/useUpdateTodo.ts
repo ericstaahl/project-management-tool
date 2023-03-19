@@ -2,6 +2,7 @@ import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import type { UpdatedTodo } from '../../types/TodoTypes';
 import useAuth from '../../context/AuthContext';
+import { toast } from 'react-toastify';
 
 const API_URL: string = import.meta.env.VITE_API_URL;
 
@@ -36,6 +37,7 @@ const useUpdadeTodo = (): UseMutationResult<
         },
         onError: async () => {
             console.log('An error occured when trying to update a to-do.');
+            toast.error('An error occured while updating the to-do.');
         },
     });
 
