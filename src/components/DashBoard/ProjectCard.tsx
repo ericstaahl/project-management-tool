@@ -24,7 +24,13 @@ const ProjectCard = ({ project, daysLeft }: Props): JSX.Element => {
                 </div>
 
                 <div style={{ marginTop: '0.8rem' }}>
-                    {daysLeft > 0 ? `${daysLeft} days left` : 'Due date passed'}
+                    {daysLeft > 0
+                        ? `${daysLeft} days left`
+                        : daysLeft === 0
+                        ? 'Due date is today'
+                        : `${Math.abs(daysLeft)} ${
+                              Math.abs(daysLeft) > 1 ? 'days' : 'day'
+                          } since due date passed`}
                 </div>
             </div>
 
