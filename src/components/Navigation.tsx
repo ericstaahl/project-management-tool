@@ -28,7 +28,7 @@ const StyledLink = styled(Link)({
 });
 
 const StyledH1 = styled.h1({
-    fontSize: '1.4rem',
+    fontSize: '1.3rem',
 });
 
 const Navigation: React.FC = () => {
