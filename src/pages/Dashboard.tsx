@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useMemo } from 'react';
 import ProjectCard from '../components/DashBoard/ProjectCard';
 import Container from '../components/styled/Container';
 import H2 from '../components/styled/H2';
@@ -18,35 +18,54 @@ const HomePage: React.FC = () => {
     const { isLoading, data: projects } = useGetProjects({
         sortBy: 'due_date',
     });
+
+    const expiredProjects = useMemo(() => {
+        const expiredProjects: JSX.Element[] = [];
+        projects?.forEach((project) => {
+            const daysLeft = nowFromDate(project.due_date);
+            if (daysLeft === 0) {
+                expiredProjects.push(
+                    <ProjectCard
+                        key={project.project_id}
+                        project={project}
+                        daysLeft={daysLeft}
+                    />
+                );
+            }
+        });
+        return expiredProjects;
+    }, [projects]);
+
+    const unfinishedProjects = useMemo(() => {
+        const unfinishedProjects: JSX.Element[] = [];
+        projects?.forEach((project) => {
+            const daysLeft = nowFromDate(project.due_date);
+            if (daysLeft > 0) {
+                unfinishedProjects.push(
+                    <ProjectCard
+                        key={project.project_id}
+                        project={project}
+                        daysLeft={daysLeft}
+                    />
+                );
+            }
+        });
+        return unfinishedProjects;
+    }, [projects]);
+
     return (
         <Container>
             <H2>Dashboard</H2>
             {!isLoading && (
                 <div>
-                    <GridContainer>
-                        {projects?.map((project) => {
-                            const daysLeft = nowFromDate(project.due_date);
-                            return daysLeft === 0 && !project.finished ? (
-                                <ProjectCard
-                                    key={project.project_id}
-                                    project={project}
-                                    daysLeft={daysLeft}
-                                />
-                            ) : null;
-                        })}
-                    </GridContainer>
-                    <GridContainer>
-                        {projects?.map((project) => {
-                            const daysLeft = nowFromDate(project.due_date);
-                            return daysLeft > 0 ? (
-                                <ProjectCard
-                                    key={project.project_id}
-                                    project={project}
-                                    daysLeft={daysLeft}
-                                />
-                            ) : null;
-                        })}
-                    </GridContainer>
+                    {expiredProjects !== undefined &&
+                        expiredProjects.length > 0 && (
+                            <GridContainer>{expiredProjects}</GridContainer>
+                        )}
+                    {unfinishedProjects !== undefined &&
+                        unfinishedProjects.length > 0 && (
+                            <GridContainer>{unfinishedProjects}</GridContainer>
+                        )}
                 </div>
             )}
         </Container>
