@@ -32,6 +32,7 @@ const App: React.FC = () => {
                     <Navigation />
                     <Routes>
                         <Route path='/' element={<ProtectedRoute />}>
+                            <Route index element={<Dashboard />} />
                             <Route path='/dashboard' element={<Dashboard />} />
                             <Route
                                 path='/projects'
