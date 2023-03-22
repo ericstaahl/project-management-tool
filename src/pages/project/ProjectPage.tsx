@@ -90,6 +90,7 @@ const ProjectPage: React.FC = () => {
                                 display: 'flex',
                                 flexDirection: 'column',
                                 rowGap: '1rem',
+                                marginTop: '1rem',
                             }}
                         >
                             <Button
