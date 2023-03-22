@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AddUserToProject from '../../components/project/AddUserToProject';
 import Modal from '../../components/Modal';
@@ -13,6 +13,8 @@ import useGetProject from '../../hooks/project/useGetProject';
 import useGetTodos from '../../hooks/todo/useGetTodos';
 import TodoBoard from '../../components/todo/TodoBoard';
 import TodoCard from '../../components/todo/TodoCard';
+import { nowFromDate } from '../../helpers/formatDate';
+import SetNewDueDate from './SetNewDueDate';
 
 const GridContainer = styled.div({
     display: 'grid',
@@ -48,7 +50,7 @@ type SortOrder = 'asc' | 'desc';
 
 const ProjectPage: React.FC = () => {
     const { id: projectId } = useParams();
-    const { data: project } = useGetProject(projectId);
+    const { data: project, refetch } = useGetProject(projectId);
     const [sortBy, setSortBy] = useState({ value: 'title', label: 'Title' });
     const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
     const [statusFilter, setStatusFilter] = useState<{
@@ -63,12 +65,21 @@ const ProjectPage: React.FC = () => {
     );
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
+    const [showNewDateInput, setShowNewDateInput] = useState(false);
     const auth = useAuth();
     const [toggleDescription, setToggleDescription] = useState(false);
     const handleSetSortOrder = (order: SortOrder): void => {
         setSortOrder(order);
     };
     const [toggleBoardView, setToggleBoardView] = useState(true);
+
+    useEffect(() => {
+        if (project === undefined) return;
+        const daysLeft = nowFromDate(project.due_date);
+        if (daysLeft < 0) {
+            setShowNewDateInput(true);
+        }
+    }, [project]);
 
     return (
         <>
@@ -79,6 +90,23 @@ const ProjectPage: React.FC = () => {
                     }}
                 >
                     <AddUserToProject projectId={projectId} />
+                </Modal>
+            )}
+            {showNewDateInput && project !== undefined && (
+                <Modal
+                    handleSetShowModal={() => {
+                        setShowNewDateInput(false);
+                    }}
+                >
+                    <SetNewDueDate
+                        project={project}
+                        handleRefetch={async () => {
+                            await refetch();
+                        }}
+                        handleSetShowModal={() => {
+                            setShowNewDateInput(false);
+                        }}
+                    />
                 </Modal>
             )}
             <Container>
