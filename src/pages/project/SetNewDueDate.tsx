@@ -12,7 +12,7 @@ import { nowFromDate } from '../../helpers/formatDate';
 
 const ModalContainer = styled.div({
     width: '50%',
-    backgroundColor: 'red',
+    backgroundColor: '#242424',
     borderRadius: '0.5rem',
     minHeight: '200px',
     display: 'flex',
@@ -25,6 +25,14 @@ const ButtonContainer = styled.div({
     display: 'flex',
     columnGap: '1rem',
     padding: '1rem 0',
+});
+
+const StyledForm = styled.form({
+    marginTop: '1rem',
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+    minHeight: '150px',
 });
 
 interface Props {
@@ -72,10 +80,7 @@ const SetNewDueDate = ({
             <p>The due date of the project has passed.</p>
             <p>Would you like to pick a new date or mark it as complete?</p>
 
-            <form
-                style={{ marginTop: '1rem' }}
-                onSubmit={handleSubmit(onSubmit)}
-            >
+            <StyledForm onSubmit={handleSubmit(onSubmit)}>
                 <InputContainer>
                     <InputLabelWrapper>
                         <label htmlFor='due_date'>Due date</label>
@@ -88,11 +93,11 @@ const SetNewDueDate = ({
                         type='date'
                     />
                 </InputContainer>
-                <ButtonContainer>
+                <ButtonContainer style={{ padding: '1rem 0 0 0' }}>
                     <Button type='submit'>Save date</Button>
                     <Button>Mark as complete</Button>
                 </ButtonContainer>
-            </form>
+            </StyledForm>
         </ModalContainer>
     );
 };
