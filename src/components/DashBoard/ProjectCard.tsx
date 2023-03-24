@@ -11,10 +11,8 @@ interface Props {
 }
 
 const ProjectCard = ({ project, hoursLeft }: Props): JSX.Element => {
-    console.log(hoursLeft, project.title);
     const daysLeftFloat = hoursLeft / 24;
     const daysLeft = Math.ceil(daysLeftFloat);
-    console.log('daysLeft', daysLeft);
 
     return (
         <Card style={{ display: 'flex', justifyContent: 'space-between' }}>
