@@ -8,6 +8,7 @@ import Button from '../../components/styled/Button';
 import useUpdateProject from '../../hooks/project/useUpdateProject';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { nowFromDate } from '../../helpers/formatDate';
 
 const ModalContainer = styled.div({
     width: '50%',
@@ -41,6 +42,9 @@ const SetNewDueDate = ({
     const updateProject = useUpdateProject();
 
     const onSubmit: SubmitHandler<{ due_date: string }> = (data) => {
+        const dueDateFromNow = nowFromDate(data.due_date, 'days');
+        if (dueDateFromNow < 0)
+            return toast.error(`Can't pick a due date that has already passed`);
         updateProject.mutate(
             {
                 updatedProject: data,

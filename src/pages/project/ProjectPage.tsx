@@ -75,7 +75,7 @@ const ProjectPage: React.FC = () => {
 
     useEffect(() => {
         if (project === undefined) return;
-        const daysLeft = nowFromDate(project.due_date);
+        const daysLeft = nowFromDate(project.due_date, 'days');
         if (daysLeft < 0) {
             setShowNewDateInput(true);
         }
