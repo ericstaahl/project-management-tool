@@ -38,10 +38,10 @@ const StyledForm = styled.form({
 interface Props {
     project: Projects[0];
     handleSetShowModal: () => void;
-    handleRefetch: () => Promise<void>;
+    handleRefetch: () => Promise<any>;
 }
 
-const SetNewDueDate = ({
+const SetNewDueDate = <T extends Promise<T>>({
     project,
     handleRefetch,
     handleSetShowModal,
@@ -61,10 +61,15 @@ const SetNewDueDate = ({
             {
                 onSuccess: () => {
                     toast.success('Updated due date.');
-                    void (async () => {
-                        await handleRefetch();
-                    })();
-                    handleSetShowModal();
+                    handleRefetch()
+                        .then(() => {
+                            handleSetShowModal();
+                        })
+                        .catch(() => {
+                            toast.error(
+                                'An error occured while refetching query..'
+                            );
+                        });
                 },
                 onError: () => {
                     toast.error(

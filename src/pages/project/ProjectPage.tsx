@@ -74,7 +74,7 @@ const ProjectPage: React.FC = () => {
     const [toggleBoardView, setToggleBoardView] = useState(true);
 
     useEffect(() => {
-        if (project === undefined) return;
+        if (project === undefined || project.complete) return;
         const daysLeft = nowFromDate(project.due_date, 'days');
         if (daysLeft < 0) {
             setShowNewDateInput(true);
