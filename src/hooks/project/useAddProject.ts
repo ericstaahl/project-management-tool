@@ -1,8 +1,15 @@
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import useAuth from '../../context/AuthContext';
 import type { Project } from '../../types/ProjectTypes';
+
+interface ErrorResponse {
+    statusCode: number;
+    error: string;
+    message: string;
+}
 
 const API_URL: string = import.meta.env.VITE_API_URL;
 
@@ -31,8 +38,18 @@ const useAddProject = (): UseMutationResult<
             console.log('Successfully added new project.');
             navigate('/projects');
         },
-        onError: async () => {
-            console.log('An error occured when trying to add a new project.');
+        onError: async (err) => {
+            if (isAxiosError<ErrorResponse>(err)) {
+                console.log(
+                    'An error occured when trying to add a new project.'
+                );
+                if (err.response?.data.message !== undefined) {
+                    const error = JSON.parse(err.response?.data.message);
+                    console.log(error);
+                    if (error[0].message !== undefined)
+                        toast.error(error[0].message);
+                }
+            }
         },
     });
 
