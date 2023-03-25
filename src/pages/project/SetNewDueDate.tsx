@@ -86,15 +86,15 @@ const SetNewDueDate = ({
             },
             {
                 onSuccess: () => {
-                    toast.success('Updated due date.');
+                    toast.success('Updated completed status.');
+                    handleSetShowModal();
                     void (async () => {
                         await handleRefetch();
                     })();
-                    handleSetShowModal();
                 },
                 onError: () => {
                     toast.error(
-                        'An error occured while updating the due date.'
+                        'An error occured while updating the completed status.'
                     );
                 },
             }

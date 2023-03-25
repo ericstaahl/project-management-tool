@@ -13,6 +13,7 @@ import TextArea from '../../components/styled/TextArea';
 import InputError from '../../components/input/InputError';
 import InputLabelWrapper from '../../components/input/InputLabelWrapper';
 import InputContainer from '../../components/input/InputContainer';
+import { toast } from 'react-toastify';
 
 interface FormValues {
     title: string;
@@ -29,7 +30,7 @@ const StyledForm = styled.form({
 
 const EditProjectPage: React.FC = () => {
     const { id: projectId } = useParams();
-    const { data: project, remove } = useGetProject(projectId);
+    const { data: project, refetch } = useGetProject(projectId);
     const updateProject = useUpdateProject();
     const deleteProject = useDeleteProject();
     const [initialRender, setInitialRender] = useState(true);
@@ -60,88 +61,131 @@ const EditProjectPage: React.FC = () => {
         }
     }, [project]);
 
-    const onSubmit: SubmitHandler<FormValues> = (data) => {
+    const onSubmit: SubmitHandler<FormValues> = async (data) => {
         if (projectId === undefined) return;
 
         updateProject.mutate({ updatedProject: data, projectId });
-        remove();
+        await refetch();
         navigate(`/projects`);
     };
 
     const handleDeleteProject = (): void => {
         if (projectId !== undefined) deleteProject.mutate({ projectId });
     };
+
+    const handleToggleCompleted = (): void => {
+        if (project === undefined) return;
+        const projectCopy = { ...project };
+        projectCopy.complete = !projectCopy.complete;
+        updateProject.mutate(
+            {
+                updatedProject: projectCopy,
+                projectId: String(project?.project_id),
+            },
+            {
+                onSuccess: () => {
+                    toast.success('Updated completed status.');
+                    void (async () => {
+                        await refetch();
+                    })();
+                },
+                onError: () => {
+                    toast.error(
+                        'An error occured while updating the completed status.'
+                    );
+                },
+            }
+        );
+    };
+
     return (
         <Container>
-            <h2 style={{ marginBottom: '1rem' }}>Edit project</h2>
+            {project !== undefined && (
+                <>
+                    <h2 style={{ marginBottom: '1rem' }}>Edit project</h2>
 
-            <StyledForm onSubmit={handleSubmit(onSubmit)}>
-                <InputContainer>
-                    <InputLabelWrapper>
-                        <label htmlFor='title'>Title</label>
-                        {errors.title !== undefined && (
-                            <InputError>* Required</InputError>
-                        )}
-                    </InputLabelWrapper>
+                    <StyledForm onSubmit={handleSubmit(onSubmit)}>
+                        <InputContainer>
+                            <InputLabelWrapper>
+                                <label htmlFor='title'>Title</label>
+                                {errors.title !== undefined && (
+                                    <InputError>* Required</InputError>
+                                )}
+                            </InputLabelWrapper>
 
-                    <Input
-                        {...register('title', { required: true })}
-                        type='text'
-                    />
-                </InputContainer>
+                            <Input
+                                {...register('title', { required: true })}
+                                type='text'
+                            />
+                        </InputContainer>
 
-                <InputContainer>
-                    <InputLabelWrapper>
-                        <label htmlFor='start_date'>Start date</label>
-                        {errors.start_date !== undefined && (
-                            <InputError>* Required</InputError>
-                        )}{' '}
-                    </InputLabelWrapper>
+                        <InputContainer>
+                            <InputLabelWrapper>
+                                <label htmlFor='start_date'>Start date</label>
+                                {errors.start_date !== undefined && (
+                                    <InputError>* Required</InputError>
+                                )}{' '}
+                            </InputLabelWrapper>
 
-                    <Input
-                        {...register('start_date', { required: true })}
-                        type='date'
-                    />
-                </InputContainer>
+                            <Input
+                                {...register('start_date', { required: true })}
+                                type='date'
+                            />
+                        </InputContainer>
 
-                <InputContainer>
-                    <InputLabelWrapper>
-                        <label htmlFor='due_date'>Due date</label>
-                        {errors.due_date !== undefined && (
-                            <InputError>* Required</InputError>
-                        )}{' '}
-                    </InputLabelWrapper>
+                        <InputContainer>
+                            <InputLabelWrapper>
+                                <label htmlFor='due_date'>Due date</label>
+                                {errors.due_date !== undefined && (
+                                    <InputError>* Required</InputError>
+                                )}{' '}
+                            </InputLabelWrapper>
 
-                    <Input
-                        {...register('due_date', {
-                            required: true,
-                        })}
-                        type='date'
-                    />
-                </InputContainer>
+                            <Input
+                                {...register('due_date', {
+                                    required: true,
+                                })}
+                                type='date'
+                            />
+                        </InputContainer>
 
-                <InputContainer>
-                    <InputLabelWrapper>
-                        <label htmlFor='description'>Description</label>
-                        {errors.description !== undefined &&
-                            errors.description.type === 'maxLength' && (
-                                <InputError>* Max 500 characters</InputError>
-                            )}{' '}
-                    </InputLabelWrapper>
+                        <InputContainer>
+                            <InputLabelWrapper>
+                                <label htmlFor='description'>Description</label>
+                                {errors.description !== undefined &&
+                                    errors.description.type === 'maxLength' && (
+                                        <InputError>
+                                            * Max 500 characters
+                                        </InputError>
+                                    )}{' '}
+                            </InputLabelWrapper>
 
-                    <TextArea
-                        rows={6}
-                        {...register('description', {
-                            maxLength: 500,
-                        })}
-                    />
-                </InputContainer>
-                <div style={{ display: 'flex', columnGap: '1rem' }}>
-                    <Button type='submit'>Save</Button>
-                    <Button onClick={resetValues}>Reset</Button>
-                    <Button onClick={handleDeleteProject}>Delete</Button>
-                </div>
-            </StyledForm>
+                            <TextArea
+                                rows={6}
+                                {...register('description', {
+                                    maxLength: 500,
+                                })}
+                            />
+                        </InputContainer>
+                        <div style={{ display: 'flex', columnGap: '1rem' }}>
+                            <Button type='submit'>Save</Button>
+                            <Button onClick={resetValues}>Reset</Button>
+                            <Button onClick={handleDeleteProject}>
+                                Delete
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    handleToggleCompleted();
+                                }}
+                            >
+                                {project.complete
+                                    ? 'Mark as uncomplete'
+                                    : 'Mark as complete'}
+                            </Button>
+                        </div>
+                    </StyledForm>
+                </>
+            )}
         </Container>
     );
 };
