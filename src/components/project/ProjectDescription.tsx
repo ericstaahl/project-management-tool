@@ -48,16 +48,6 @@ const ProjectDescription = ({
                     </EditLink>
                 </TitleEditWrapper>
             )}
-            {project.number_of_members > 0 ? (
-                <div>
-                    <BoldSpan>Number of members: </BoldSpan>
-                    <TextLineClamp>
-                        {`${project.number_of_members}`}
-                    </TextLineClamp>
-                </div>
-            ) : (
-                <></>
-            )}
             <div>
                 <BoldSpan>Start date: </BoldSpan>
                 <TextLineClamp>

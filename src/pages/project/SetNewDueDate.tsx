@@ -75,6 +75,32 @@ const SetNewDueDate = ({
         );
     };
 
+    const handleMarkAsComplete = (): void => {
+        const projectCopy = { ...project };
+        projectCopy.complete = true;
+        console.log(projectCopy);
+        updateProject.mutate(
+            {
+                updatedProject: projectCopy,
+                projectId: String(project.project_id),
+            },
+            {
+                onSuccess: () => {
+                    toast.success('Updated due date.');
+                    void (async () => {
+                        await handleRefetch();
+                    })();
+                    handleSetShowModal();
+                },
+                onError: () => {
+                    toast.error(
+                        'An error occured while updating the due date.'
+                    );
+                },
+            }
+        );
+    };
+
     return (
         <ModalContainer>
             <p>The due date of the project has passed.</p>
@@ -95,7 +121,13 @@ const SetNewDueDate = ({
                 </InputContainer>
                 <ButtonContainer style={{ padding: '1rem 0 0 0' }}>
                     <Button type='submit'>Save date</Button>
-                    <Button>Mark as complete</Button>
+                    <Button
+                        onClick={() => {
+                            handleMarkAsComplete();
+                        }}
+                    >
+                        Mark as complete
+                    </Button>
                 </ButtonContainer>
             </StyledForm>
         </ModalContainer>

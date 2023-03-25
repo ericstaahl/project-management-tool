@@ -24,6 +24,8 @@ const HomePage: React.FC = () => {
     const expiredProjects = useMemo(() => {
         const expiredProjects: JSX.Element[] = [];
         projects?.forEach((project) => {
+            console.log(project);
+            if (project.complete) return;
             const hoursLeft = nowFromDate(project.due_date, 'hours');
             // Checking against -24 to check if it is still on the due date or if it has passed
             if (hoursLeft < -24) {
@@ -42,6 +44,7 @@ const HomePage: React.FC = () => {
     const unfinishedProjects = useMemo(() => {
         const unfinishedProjects: JSX.Element[] = [];
         projects?.forEach((project) => {
+            if (project.complete) return;
             const hoursLeft = nowFromDate(project.due_date, 'hours');
             // Checking against -24 to check if it is still on the due date or if it has passed
             if (hoursLeft >= -24) {
