@@ -5,7 +5,7 @@ import Button from '../../components/styled/Button';
 import Container from '../../components/styled/Container';
 import Input from '../../components/styled/Input';
 import useGetProject from '../../hooks/project/useGetProject';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import useDeleteProject from '../../hooks/project/useDeleteProject';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -34,7 +34,6 @@ const EditProjectPage: React.FC = () => {
     const updateProject = useUpdateProject();
     const deleteProject = useDeleteProject();
     const [initialRender, setInitialRender] = useState(true);
-    const navigate = useNavigate();
 
     const {
         register,
@@ -64,9 +63,24 @@ const EditProjectPage: React.FC = () => {
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
         if (projectId === undefined) return;
 
-        updateProject.mutate({ updatedProject: data, projectId });
-        await refetch();
-        navigate(`/projects`);
+        updateProject.mutate(
+            { updatedProject: data, projectId },
+            {
+                onSuccess: () => {
+                    toast.success('Updated project.');
+                    refetch()
+                        .then()
+                        .catch(() => {
+                            toast.error(
+                                'An error occured while refetching query.'
+                            );
+                        });
+                },
+                onError: () => {
+                    toast.error('An error occured while updating the project.');
+                },
+            }
+        );
     };
 
     const handleDeleteProject = (): void => {
