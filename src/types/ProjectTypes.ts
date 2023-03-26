@@ -1,12 +1,20 @@
+export interface Member {
+    id: number;
+    project_id: number;
+    role: string;
+    user_id: number;
+    username: string;
+}
+
 export type Projects = Array<{
     title: string;
     project_id: number;
-    number_of_members: number;
     start_date: string;
     due_date: string;
     description?: string;
     user_id: number;
     complete: boolean;
+    members?: Member[];
     _count: {
         todo: number;
         members: number;
