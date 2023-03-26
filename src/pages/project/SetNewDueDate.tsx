@@ -55,7 +55,10 @@ const SetNewDueDate = <T extends Promise<T>>({
             return toast.error(`Can't pick a due date that has already passed`);
         updateProject.mutate(
             {
-                updatedProject: data,
+                updatedProject: {
+                    start_date: project.start_date,
+                    due_date: project.due_date,
+                },
                 projectId: String(project.project_id),
             },
             {
@@ -67,7 +70,7 @@ const SetNewDueDate = <T extends Promise<T>>({
                         })
                         .catch(() => {
                             toast.error(
-                                'An error occured while refetching query..'
+                                'An error occured while refetching query.'
                             );
                         });
                 },
