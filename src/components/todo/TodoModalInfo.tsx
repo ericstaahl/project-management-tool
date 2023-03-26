@@ -31,8 +31,8 @@ const InfoContainer = styled.div({
     backgroundColor: '#363942',
     padding: '1rem',
     fontSize: '1.2rem',
-    height: '80%',
-    width: '80%',
+    height: '40vh',
+    width: '40vw',
 });
 
 const TodoCard = ({ todo }: { todo: Todos[0] }): JSX.Element => {

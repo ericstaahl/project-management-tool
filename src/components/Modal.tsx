@@ -30,8 +30,6 @@ const ModalContainer = styled.div({
 });
 
 const ModalWrapper = styled.div({
-    height: '80vh',
-    width: '80vw',
     borderRadius: '0.5rem',
     display: 'flex',
     justifyContent: 'center',
@@ -42,7 +40,11 @@ const Modal: React.FC<Props> = ({ handleSetShowModal, children }) => {
     return (
         <>
             {createPortal(
-                <ModalContainer>
+                <ModalContainer
+                    onClick={() => {
+                        handleSetShowModal();
+                    }}
+                >
                     <CloseModal
                         onClick={() => {
                             handleSetShowModal();
@@ -50,7 +52,13 @@ const Modal: React.FC<Props> = ({ handleSetShowModal, children }) => {
                     >
                         x
                     </CloseModal>
-                    <ModalWrapper>{children ?? <></>}</ModalWrapper>
+                    <ModalWrapper
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
+                    >
+                        {children ?? <></>}
+                    </ModalWrapper>
                 </ModalContainer>,
                 document.body
             )}

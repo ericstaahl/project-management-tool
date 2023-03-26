@@ -11,7 +11,6 @@ import { toast } from 'react-toastify';
 import { nowFromDate } from '../../helpers/formatDate';
 
 const ModalContainer = styled.div({
-    width: '50%',
     backgroundColor: '#242424',
     borderRadius: '0.5rem',
     minHeight: '200px',
