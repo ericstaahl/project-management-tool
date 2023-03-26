@@ -74,6 +74,10 @@ const ProjectDescription = ({
                     {project.user_id === auth?.user_id ? 'Owner' : 'Member'}
                 </TextLineClamp>
             </div>
+            <div>
+                <BoldSpan>Completed: </BoldSpan>
+                <TextLineClamp>{project.complete ? 'Yes' : 'No'}</TextLineClamp>
+            </div>
             {!detail && (
                 <Link
                     style={{ color: 'white' }}
