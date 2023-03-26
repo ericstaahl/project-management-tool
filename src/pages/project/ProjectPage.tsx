@@ -83,13 +83,13 @@ const ProjectPage: React.FC = () => {
 
     return (
         <>
-            {showModal && (
+            {showModal && project !== undefined && (
                 <Modal
                     handleSetShowModal={() => {
                         setShowModal(false);
                     }}
                 >
-                    <AddUserToProject projectId={projectId} />
+                    <AddUserToProject project={project} />
                 </Modal>
             )}
             {showNewDateInput && project !== undefined && (
