@@ -67,15 +67,8 @@ const LoginUserPage: React.FC = () => {
                 }
             },
             onError: (err) => {
-                if (isAxiosError(err)) {
-                    console.log(
-                        'An error occured when trying to add a new project.'
-                    );
-                }
+                console.log('An error occured when trying to login.');
                 if (isAxiosError<ErrorResponse>(err)) {
-                    console.log(
-                        'An error occured when trying to add a new project.'
-                    );
                     if (err.response?.data.message !== undefined) {
                         toast.error(err.response?.data.message);
                     }
