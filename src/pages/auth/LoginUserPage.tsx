@@ -10,6 +10,8 @@ import InputError from '../../components/input/InputError';
 import InputLabelWrapper from '../../components/input/InputLabelWrapper';
 import InputContainer from '../../components/input/InputContainer';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { isAxiosError } from 'axios';
 
 const StyledForm = styled.form({
     display: 'flex',
@@ -28,6 +30,12 @@ interface FormValues {
     password: string;
 }
 
+interface ErrorResponse {
+    statusCode: number;
+    error: string;
+    message: string;
+}
+
 const LoginUserPage: React.FC = () => {
     const {
         register,
@@ -44,6 +52,7 @@ const LoginUserPage: React.FC = () => {
         loginUser.mutate(data, {
             onSuccess: (res) => {
                 if (updateAuthFunc !== null) updateAuthFunc(res.data);
+                toast.success('Successfully logged in');
                 if (
                     state?.from?.pathname !== undefined &&
                     state?.from?.pathname.length > 0
@@ -55,6 +64,21 @@ const LoginUserPage: React.FC = () => {
                     );
                 } else {
                     navigate('/dashboard');
+                }
+            },
+            onError: (err) => {
+                if (isAxiosError(err)) {
+                    console.log(
+                        'An error occured when trying to add a new project.'
+                    );
+                }
+                if (isAxiosError<ErrorResponse>(err)) {
+                    console.log(
+                        'An error occured when trying to add a new project.'
+                    );
+                    if (err.response?.data.message !== undefined) {
+                        toast.error(err.response?.data.message);
+                    }
                 }
             },
         });
