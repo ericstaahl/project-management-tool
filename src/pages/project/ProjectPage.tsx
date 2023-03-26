@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AddUserToProject from '../../components/project/AddUserToProject';
 import Modal from '../../components/Modal';
-import ProjectDescription from '../../components/project/ProjectDescription';
 import SelectInput from '../../components/input/SelectInput';
 import Button from '../../components/styled/Button';
 import Container from '../../components/styled/Container';
@@ -15,6 +14,7 @@ import TodoBoard from '../../components/todo/TodoBoard';
 import TodoCard from '../../components/todo/TodoCard';
 import { nowFromDate } from '../../helpers/formatDate';
 import SetNewDueDate from './SetNewDueDate';
+import ProjectModalInfo from '../../components/project/ProjectModalInfo';
 
 const GridContainer = styled.div({
     display: 'grid',
@@ -137,13 +137,17 @@ const ProjectPage: React.FC = () => {
                             </Button>
                         </div>
                         {toggleDescription && (
-                            <div>
-                                <ProjectDescription
+                            <Modal
+                                handleSetShowModal={() => {
+                                    setToggleDescription(!toggleDescription);
+                                }}
+                            >
+                                <ProjectModalInfo
                                     project={project}
                                     auth={auth}
                                     detail={true}
                                 />
-                            </div>
+                            </Modal>
                         )}
                     </>
                 )}
