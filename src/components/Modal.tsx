@@ -25,8 +25,9 @@ const ModalContainer = styled.div({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100vh',
-    width: '100vw',
+    height: '100%',
+    width: '100%',
+    overflowX: 'scroll',
 });
 
 const ModalWrapper = styled.div({

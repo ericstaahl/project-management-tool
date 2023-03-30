@@ -10,7 +10,7 @@ import Button from '../styled/Button';
 import H3 from '../styled/H3';
 
 const Container = styled.div({
-    width: '40vw',
+    width: '600px',
     backgroundColor: '#201e1e',
     borderRadius: '0.5rem',
     minHeight: '200px',

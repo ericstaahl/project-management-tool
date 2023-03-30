@@ -5,15 +5,16 @@ import ProjectDescription from './ProjectDescription';
 import useAuth from '../../context/AuthContext';
 
 const InfoContainer = styled.div({
+    rowGap: '1rem',
+    backgroundColor: '#363942',
+    fontSize: '1.2rem',
+    borderRadius: '0.5rem',
+    minHeight: '200px',
+    minWidth: '400px',
     display: 'flex',
     flexDirection: 'column',
-    rowGap: '1rem',
-    borderRadius: '5px',
-    backgroundColor: '#363942',
-    padding: '1rem',
-    fontSize: '1.2rem',
-    height: '40vh',
-    width: '40vw',
+    justifyContent: 'space-between',
+    padding: '2rem 1rem',
 });
 
 interface Props {
