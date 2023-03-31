@@ -9,15 +9,17 @@ import useUpdateProject from '../../hooks/project/useUpdateProject';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { nowFromDate } from '../../helpers/formatDate';
+import { colors } from '../../lib/colors';
 
 const ModalContainer = styled.div({
-    backgroundColor: '#242424',
+    backgroundColor: colors.primary,
     borderRadius: '0.5rem',
     minHeight: '200px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     padding: '2rem 1rem',
+    border: `2px solid ${colors.borderPrimary}`,
 });
 
 const ButtonContainer = styled.div({

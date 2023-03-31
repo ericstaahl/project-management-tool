@@ -8,7 +8,6 @@ const NavContainer = styled.div({
     fontSize: '0.8rem',
     alignItems: 'center',
     padding: '1.3rem 0 1.3rem 1rem',
-    backgroundColor: '#21262e',
 });
 
 const Nav = styled.nav({

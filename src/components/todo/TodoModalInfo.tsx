@@ -4,6 +4,7 @@ import { Todos } from '../../types/TodoTypes';
 import EditLink from '../styled/EditLink';
 import H3 from '../styled/H3';
 import TextLineClamp from '../styled/TextLineClamp';
+import { colors } from '../../lib/colors';
 
 const TitleWrapper = styled.div({
     display: '-webkit-box',
@@ -28,7 +29,7 @@ const InfoContainer = styled.div({
     flexDirection: 'column',
     rowGap: '1rem',
     borderRadius: '5px',
-    backgroundColor: '#363942',
+    backgroundColor: colors.primary,
     padding: '1rem',
     fontSize: '1.2rem',
     height: '40vh',

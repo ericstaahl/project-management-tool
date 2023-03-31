@@ -3,10 +3,11 @@ import styled from '@emotion/styled';
 import { Projects } from '../../types/ProjectTypes';
 import ProjectDescription from './ProjectDescription';
 import useAuth from '../../context/AuthContext';
+import { colors } from '../../lib/colors';
 
 const InfoContainer = styled.div({
     rowGap: '1rem',
-    backgroundColor: '#363942',
+    backgroundColor: colors.primary,
     fontSize: '1.2rem',
     borderRadius: '0.5rem',
     minHeight: '200px',
@@ -15,6 +16,7 @@ const InfoContainer = styled.div({
     flexDirection: 'column',
     justifyContent: 'space-between',
     padding: '2rem 1rem',
+    border: `2px solid ${colors.borderPrimary}`,
 });
 
 interface Props {

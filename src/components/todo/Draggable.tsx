@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useDraggable } from '@dnd-kit/core';
 import { Transform } from '@dnd-kit/utilities/dist/css';
+import { colors } from '../../lib/colors';
 
 const StyledDraggable = styled.div(
     (props: { transform: Transform | null }) => ({
@@ -9,7 +10,7 @@ const StyledDraggable = styled.div(
             props.transform !== null
                 ? `translate3d(${props.transform.x}px, ${props.transform.y}px, 0)`
                 : undefined,
-        backgroundColor: '#ededed',
+        backgroundColor: colors.secondary,
         cursor: 'pointer',
         padding: '0.4rem 0.4rem',
         minHeight: '70px',

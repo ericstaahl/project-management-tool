@@ -7,6 +7,14 @@ import H3 from '../components/styled/H3';
 import { nowFromDate } from '../helpers/formatDate';
 import useGetProjects from '../hooks/project/useGetProjects';
 import useAuth from '../context/AuthContext';
+import { Link } from 'react-router-dom';
+
+const TextWrapper = styled.div({
+    display: 'flex',
+    flexDirection: 'column',
+    rowGap: '0.5rem',
+    marginTop: '1rem',
+});
 
 const GridContainer = styled.div({
     display: 'grid',
@@ -14,6 +22,13 @@ const GridContainer = styled.div({
     gridTemplateColumns: '1fr 1fr 1fr 1fr',
     columnGap: '1rem',
     rowGap: '1rem',
+});
+
+const StyledLink = styled(Link)({
+    color: '#f5f5f5 ',
+    ':hover': {
+        color: '#cfcfcf',
+    },
 });
 
 const HomePage: React.FC = () => {
@@ -91,6 +106,30 @@ const HomePage: React.FC = () => {
                                 </GridContainer>
                             </>
                         )}
+                    {projects !== undefined && (
+                        <>
+                            <H3 style={{ marginTop: '0.5rem' }}>
+                                Nothing here?
+                            </H3>
+                            <TextWrapper>
+                                <p>
+                                    Here you can find information about upcoming
+                                    projects and due dates!
+                                </p>
+                                <p>
+                                    Get started by adding a project{' '}
+                                    <span>
+                                        {
+                                            <StyledLink to={'/projects/new'}>
+                                                here
+                                            </StyledLink>
+                                        }
+                                    </span>
+                                    !
+                                </p>
+                            </TextWrapper>
+                        </>
+                    )}
                 </div>
             )}
         </Container>

@@ -16,6 +16,7 @@ import styled from '@emotion/styled';
 import H3 from '../styled/H3';
 import Modal from '../Modal';
 import TodoModalInfo from './TodoModalInfo';
+import { colors } from '../../lib/colors';
 
 interface Props {
     data: Todos;
@@ -50,7 +51,8 @@ const GridContainer = styled.div({
 });
 
 const DroppableContainer = styled.div({
-    backgroundColor: '#363942',
+    backgroundColor: colors.primaryLighter,
+    border: `2px solid ${colors.borderPrimary}`,
     borderRadius: '5px',
     padding: '1rem',
 });

@@ -6,6 +6,7 @@ const StyledContainer = styled.div({
     backgroundColor: '#1c1c1c',
     margin: '1rem',
     padding: '3rem',
+    boxShadow: '0 0 0.2rem #111',
 });
 
 const Container: React.FC<React.HtmlHTMLAttributes<HTMLDivElement>> = (
