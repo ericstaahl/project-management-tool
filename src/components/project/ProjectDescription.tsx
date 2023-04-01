@@ -6,6 +6,9 @@ import useAuth from '../../context/AuthContext';
 import TextLineClamp from '../styled/TextLineClamp';
 import EditLink from '../styled/EditLink';
 import H3 from '../styled/H3';
+import MoreHorizontal from '@mui/icons-material/MoreHoriz';
+import IconButton from '@mui/material/IconButton';
+import { colors } from '../../lib/colors';
 
 const BoldSpan = styled.span({
     fontWeight: 'bold',
@@ -44,7 +47,9 @@ const ProjectDescription = ({
                         <H3>{`${project.title}`}</H3>
                     </TitleWrapper>
                     <EditLink to={`/projects/${project.project_id}/edit`}>
-                        ...
+                        <IconButton style={{ color: colors.secondary }}>
+                            <MoreHorizontal fontSize={'large'} />
+                        </IconButton>
                     </EditLink>
                 </TitleEditWrapper>
             )}

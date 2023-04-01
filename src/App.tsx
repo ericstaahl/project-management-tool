@@ -16,60 +16,75 @@ import ProjectsPage from './pages/project/ProjectsPage';
 import EditProjectPage from './pages/project/EditProjectPage';
 import AddProjectPage from './pages/project/AddProjectPage';
 import EditTodoPage from './pages/todo/EditTodoPage';
+import { ThemeProvider, createTheme } from '@mui/material';
 
 const queryClient = new QueryClient();
 
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
+
 const App: React.FC = () => {
     return (
-        <QueryClientProvider client={queryClient}>
-            <AuthProvider>
-                <div
-                    style={{
-                        minHeight: '100vh',
-                    }}
-                    className='App'
-                >
-                    <Navigation />
-                    <Routes>
-                        <Route path='/' element={<ProtectedRoute />}>
-                            <Route index element={<Dashboard />} />
-                            <Route path='/dashboard' element={<Dashboard />} />
+        <ThemeProvider theme={darkTheme}>
+            <QueryClientProvider client={queryClient}>
+                <AuthProvider>
+                    <div
+                        style={{
+                            minHeight: '100vh',
+                        }}
+                        className='App'
+                    >
+                        <Navigation />
+                        <Routes>
+                            <Route path='/' element={<ProtectedRoute />}>
+                                <Route index element={<Dashboard />} />
+                                <Route
+                                    path='/dashboard'
+                                    element={<Dashboard />}
+                                />
+                                <Route
+                                    path='/projects'
+                                    element={<ProjectsPage />}
+                                />
+                                <Route
+                                    path='/projects/new'
+                                    element={<AddProjectPage />}
+                                />
+                                <Route
+                                    path='/projects/:id'
+                                    element={<ProjectPage />}
+                                />
+                                <Route
+                                    path='/projects/:id/todo/:todoId/edit'
+                                    element={<EditTodoPage />}
+                                />
+                                <Route
+                                    path='/projects/:id/edit'
+                                    element={<EditProjectPage />}
+                                />
+                                <Route
+                                    path='/projects/:id/new-todo'
+                                    element={<AddTodoPage />}
+                                />
+                            </Route>
                             <Route
-                                path='/projects'
-                                element={<ProjectsPage />}
+                                path='/register'
+                                element={<RegisterUserPage />}
                             />
+                            <Route path='/login' element={<LoginUserPage />} />
                             <Route
-                                path='/projects/new'
-                                element={<AddProjectPage />}
+                                path='/logout'
+                                element={<LogoutUserPage />}
                             />
-                            <Route
-                                path='/projects/:id'
-                                element={<ProjectPage />}
-                            />
-                            <Route
-                                path='/projects/:id/todo/:todoId/edit'
-                                element={<EditTodoPage />}
-                            />
-                            <Route
-                                path='/projects/:id/edit'
-                                element={<EditProjectPage />}
-                            />
-                            <Route
-                                path='/projects/:id/new-todo'
-                                element={<AddTodoPage />}
-                            />
-                        </Route>
-                        <Route
-                            path='/register'
-                            element={<RegisterUserPage />}
-                        />
-                        <Route path='/login' element={<LoginUserPage />} />
-                        <Route path='/logout' element={<LogoutUserPage />} />
-                    </Routes>
-                </div>
-            </AuthProvider>
-            <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
+                        </Routes>
+                    </div>
+                </AuthProvider>
+                <ReactQueryDevtools initialIsOpen={false} />
+            </QueryClientProvider>
+        </ThemeProvider>
     );
 };
 

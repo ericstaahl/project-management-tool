@@ -1,22 +1,16 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import MenuIcon from '@mui/icons-material/Menu';
+import IconButton from '@mui/material/IconButton';
+import AppBar from '@mui/material/AppBar';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-const NavContainer = styled.div({
-    display: 'flex',
-    columnGap: '1.5rem',
-    fontSize: '0.8rem',
-    alignItems: 'center',
-    padding: '1.3rem 0 1.3rem 1rem',
-});
-
-const Nav = styled.nav({
-    display: 'flex',
-    columnGap: '1rem',
-    fontSize: '1.1rem',
-    fontWeight: '500',
-    whiteSpace: 'nowrap',
-});
+import { colors } from '../lib/colors';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import { Toolbar, Typography } from '@mui/material';
 
 const StyledLink = styled(Link)({
     color: '#f5f5f5',
@@ -24,27 +18,161 @@ const StyledLink = styled(Link)({
     ':hover': {
         color: '#cfcfcf',
     },
-    fontWeight: 500,
 });
 
-const StyledH1 = styled.h1({
-    fontSize: '1.3rem',
-});
+const menuItems = [
+    { link: '/projects', label: 'Projects' },
+    { link: '/projects/new', label: 'Add project' },
+    { link: '#', label: 'About' },
+];
+
+const authItems = [
+    { link: '/register', label: 'Register' },
+    { link: '/login', label: 'Login' },
+    { link: '/logout', label: 'Logout' },
+];
 
 const Navigation: React.FC = () => {
+    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+    const [anchorElAuthNav, setAnchorElAuthNav] = useState<null | HTMLElement>(
+        null
+    );
+
+    const handleOpenNavMenu = (e: React.MouseEvent<HTMLElement>): void => {
+        setAnchorElNav(e.currentTarget);
+    };
+
+    const handleCloseNavMenu = (): void => {
+        setAnchorElNav(null);
+    };
+
+    const handleOpenAuthMenu = (e: React.MouseEvent<HTMLElement>): void => {
+        setAnchorElAuthNav(e.currentTarget);
+    };
+
+    const handleCloseAuthMenu = (): void => {
+        setAnchorElAuthNav(null);
+    };
+
     return (
-        <NavContainer>
-            <StyledH1>Project Mangement Tool</StyledH1>
-            <Nav>
-                <StyledLink to='/dashboard'>Dashboard</StyledLink>
-                <StyledLink to='/projects'>Projects</StyledLink>
-                <StyledLink to='/projects/new'>Add project</StyledLink>
-                <StyledLink to='/register'>Register</StyledLink>
-                <StyledLink to='/login'>Login</StyledLink>
-                <StyledLink to='#'>About</StyledLink>
-                <StyledLink to='/logout'>Logout</StyledLink>
-            </Nav>
-        </NavContainer>
+        <AppBar position='static'>
+            <Container maxWidth='xl'>
+                <Toolbar disableGutters>
+                    <Typography
+                        variant='h6'
+                        noWrap
+                        sx={{
+                            overflow: 'inherit',
+                            color: 'inherit',
+                            mr: '0.3rem',
+                        }}
+                    >
+                        <StyledLink to={'/'}>Project Mangement Tool</StyledLink>
+                    </Typography>
+                    <Box
+                        sx={{
+                            display: {
+                                xs: 'flex',
+                                md: 'none',
+                            },
+                            marginLeft: 'auto',
+                        }}
+                    >
+                        <IconButton
+                            sx={{ color: colors.secondary }}
+                            onClick={handleOpenNavMenu}
+                        >
+                            <MenuIcon fontSize='large' />
+                        </IconButton>
+                        <Menu
+                            id='menu-appbar'
+                            anchorEl={anchorElNav}
+                            keepMounted
+                            open={Boolean(anchorElNav)}
+                            onClose={handleCloseNavMenu}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                            sx={{
+                                display: { xs: 'block', md: 'none' },
+                            }}
+                            color='inherit'
+                        >
+                            {menuItems.map((item) => (
+                                <MenuItem key={item.label}>
+                                    <StyledLink to={item.link}>
+                                        {item.label}
+                                    </StyledLink>
+                                </MenuItem>
+                            ))}
+                            {authItems.map((item) => (
+                                <MenuItem key={item.label}>
+                                    <StyledLink to={item.link}>
+                                        {item.label}
+                                    </StyledLink>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
+
+                    <Box
+                        sx={{
+                            flexGrow: 1,
+                            display: { xs: 'none', md: 'flex' },
+                            width: '100%',
+                        }}
+                    >
+                        {menuItems.map((item) => (
+                            <Button key={item.label}>
+                                <StyledLink to={item.link}>
+                                    {item.label}
+                                </StyledLink>
+                            </Button>
+                        ))}
+                        <IconButton
+                            sx={{ color: colors.secondary, marginLeft: 'auto' }}
+                            onClick={handleOpenAuthMenu}
+                        >
+                            <MenuIcon fontSize='large' />
+                        </IconButton>
+                    </Box>
+                    <Box
+                        sx={{
+                            flexGrow: 0,
+                            display: { xs: 'none', md: 'flex' },
+                        }}
+                    >
+                        <Menu
+                            id='menu-appbar'
+                            anchorEl={anchorElAuthNav}
+                            keepMounted
+                            open={Boolean(anchorElAuthNav)}
+                            onClose={handleCloseAuthMenu}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                            sx={{
+                                display: {
+                                    xs: 'none',
+                                    md: 'block',
+                                },
+                            }}
+                            color='inherit'
+                        >
+                            {authItems.map((item) => (
+                                <MenuItem key={item.label}>
+                                    <StyledLink to={item.link}>
+                                        {item.label}
+                                    </StyledLink>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
+                </Toolbar>
+            </Container>
+        </AppBar>
     );
 };
 
