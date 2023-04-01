@@ -101,8 +101,8 @@ const HomePage: React.FC = () => {
                         )}
                     {projects !== undefined &&
                         (projects.length === 0 ||
-                            unfinishedProjects.length === 0 ||
-                            expiredProjects.length === 0) && (
+                            (unfinishedProjects.length === 0 &&
+                                expiredProjects.length === 0)) && (
                             <>
                                 <H3 style={{ marginTop: '0.5rem' }}>
                                     Nothing here?
