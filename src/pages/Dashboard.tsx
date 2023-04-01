@@ -8,20 +8,13 @@ import { nowFromDate } from '../helpers/formatDate';
 import useGetProjects from '../hooks/project/useGetProjects';
 import useAuth from '../context/AuthContext';
 import { Link } from 'react-router-dom';
+import GridContainer from '../components/styled/GridContainer';
 
 const TextWrapper = styled.div({
     display: 'flex',
     flexDirection: 'column',
     rowGap: '0.5rem',
     marginTop: '1rem',
-});
-
-const GridContainer = styled.div({
-    display: 'grid',
-    padding: '1rem 0',
-    gridTemplateColumns: '1fr 1fr 1fr 1fr',
-    columnGap: '1rem',
-    rowGap: '1rem',
 });
 
 const StyledLink = styled(Link)({
@@ -106,30 +99,35 @@ const HomePage: React.FC = () => {
                                 </GridContainer>
                             </>
                         )}
-                    {projects !== undefined && (
-                        <>
-                            <H3 style={{ marginTop: '0.5rem' }}>
-                                Nothing here?
-                            </H3>
-                            <TextWrapper>
-                                <p>
-                                    Here you can find information about upcoming
-                                    projects and due dates!
-                                </p>
-                                <p>
-                                    Get started by adding a project{' '}
-                                    <span>
-                                        {
-                                            <StyledLink to={'/projects/new'}>
-                                                here
-                                            </StyledLink>
-                                        }
-                                    </span>
-                                    !
-                                </p>
-                            </TextWrapper>
-                        </>
-                    )}
+                    {projects !== undefined &&
+                        (projects.length === 0 ||
+                            unfinishedProjects.length === 0 ||
+                            expiredProjects.length === 0) && (
+                            <>
+                                <H3 style={{ marginTop: '0.5rem' }}>
+                                    Nothing here?
+                                </H3>
+                                <TextWrapper>
+                                    <p>
+                                        Here you can find information about
+                                        upcoming projects and due dates!
+                                    </p>
+                                    <p>
+                                        Get started by adding a project{' '}
+                                        <span>
+                                            {
+                                                <StyledLink
+                                                    to={'/projects/new'}
+                                                >
+                                                    here
+                                                </StyledLink>
+                                            }
+                                        </span>
+                                        !
+                                    </p>
+                                </TextWrapper>
+                            </>
+                        )}
                 </div>
             )}
         </Container>

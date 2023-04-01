@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import Card from '../../components/styled/Card';
 import Container from '../../components/styled/Container';
@@ -7,14 +6,7 @@ import H2 from '../../components/styled/H2';
 import SelectInput from '../../components/input/SelectInput';
 import useAuth from '../../context/AuthContext';
 import ProjectDescription from '../../components/project/ProjectDescription';
-
-const GridContainer = styled.div({
-    display: 'grid',
-    margin: '1rem 0',
-    gridTemplateColumns: '1fr 1fr 1fr 1fr',
-    columnGap: '1rem',
-    rowGap: '1rem',
-});
+import GridContainer from '../../components/styled/GridContainer';
 
 const sortOptions = [
     { value: 'due_date', label: 'Due date' } as const,

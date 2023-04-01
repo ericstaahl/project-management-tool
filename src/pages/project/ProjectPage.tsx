@@ -15,14 +15,7 @@ import TodoCard from '../../components/todo/TodoCard';
 import { nowFromDate } from '../../helpers/formatDate';
 import SetNewDueDate from './SetNewDueDate';
 import ProjectModalInfo from '../../components/project/ProjectModalInfo';
-
-const GridContainer = styled.div({
-    display: 'grid',
-    margin: '1rem 0',
-    gridTemplateColumns: '1fr 1fr 1fr 1fr',
-    columnGap: '1rem',
-    rowGap: '1rem',
-});
+import GridContainer from '../../components/styled/GridContainer';
 
 const ButtonContainer = styled.div({
     display: 'flex',
@@ -191,24 +184,25 @@ const ProjectPage: React.FC = () => {
                         }}
                     />
                 </div>
+                <div style={{ display: toggleBoardView ? 'initial' : 'none' }}>
+                    {data !== undefined && <TodoBoard data={data} />}
+                </div>
 
-                {toggleBoardView ? (
-                    data !== undefined && <TodoBoard data={data} />
-                ) : (
-                    <GridContainer>
-                        {!isLoading &&
-                            data !== undefined &&
-                            (data.length > 0 ? (
-                                data?.map((todo) => (
-                                    <TodoCard key={todo.todo_id} todo={todo} />
-                                ))
-                            ) : (
-                                <div style={{ fontStyle: 'italic' }}>
-                                    No to-dos found
-                                </div>
-                            ))}
-                    </GridContainer>
-                )}
+                <GridContainer
+                    style={{ display: toggleBoardView ? 'none' : 'grid' }}
+                >
+                    {!isLoading &&
+                        data !== undefined &&
+                        (data.length > 0 ? (
+                            data?.map((todo) => (
+                                <TodoCard key={todo.todo_id} todo={todo} />
+                            ))
+                        ) : (
+                            <div style={{ fontStyle: 'italic' }}>
+                                No to-dos found
+                            </div>
+                        ))}
+                </GridContainer>
 
                 <ButtonContainer>
                     <Button
