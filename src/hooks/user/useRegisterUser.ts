@@ -29,6 +29,7 @@ const useRegisterUser = (): UseMutationResult<
             navigate('/');
         },
         onError: async (res) => {
+            console.log('An error occured when trying to register user');
             if (res instanceof AxiosError && res.response?.status === 409) {
                 toast.error('Username is already taken.');
             }
