@@ -5,7 +5,7 @@ import { breakpoints } from '../../lib/breakpoints';
 const StyledContainer = styled.div`
     margin: 0.5rem;
     padding: 1rem;
-    @media (min-width: ${breakpoints.md}) {
+    @media (min-width: ${breakpoints.md}px) {
         margin: 1rem;
         padding: 2rem;
     }

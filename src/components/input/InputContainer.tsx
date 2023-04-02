@@ -6,7 +6,7 @@ const StyledInputContainer = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 0.5rem;
-    @media (min-width: ${breakpoints.md}) {
+    @media (min-width: ${breakpoints.md}px) {
         width: 50%;
     }
 `;

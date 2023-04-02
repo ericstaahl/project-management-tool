@@ -56,7 +56,7 @@ const Navigation: React.FC = () => {
 
     return (
         <AppBar position='static'>
-            <Container maxWidth='xl'>
+            <Container maxWidth={false}>
                 <Toolbar disableGutters>
                     <Typography
                         variant='h6'
@@ -90,6 +90,13 @@ const Navigation: React.FC = () => {
                             keepMounted
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
+                            PaperProps={{
+                                sx: {
+                                    width: {
+                                        xs: '100%',
+                                    },
+                                },
+                            }}
                             anchorOrigin={{
                                 vertical: 'bottom',
                                 horizontal: 'left',

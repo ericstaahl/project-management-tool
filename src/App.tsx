@@ -17,10 +17,16 @@ import EditProjectPage from './pages/project/EditProjectPage';
 import AddProjectPage from './pages/project/AddProjectPage';
 import EditTodoPage from './pages/todo/EditTodoPage';
 import { ThemeProvider, createTheme } from '@mui/material';
+import { breakpoints } from './lib/breakpoints';
 
 const queryClient = new QueryClient();
 
-const darkTheme = createTheme({
+const theme = createTheme({
+    breakpoints: {
+        values: {
+            ...breakpoints,
+        },
+    },
     palette: {
         mode: 'dark',
     },
@@ -28,7 +34,7 @@ const darkTheme = createTheme({
 
 const App: React.FC = () => {
     return (
-        <ThemeProvider theme={darkTheme}>
+        <ThemeProvider theme={theme}>
             <QueryClientProvider client={queryClient}>
                 <AuthProvider>
                     <div

@@ -8,10 +8,10 @@ const Grid = styled.div`
     grid-template-columns: 1fr;
     column-gap: 1rem;
     row-gap: 1rem;
-    @media (min-width: ${breakpoints.md}) {
+    @media (min-width: ${breakpoints.md}px) {
         grid-template-columns: 1fr 1fr;
     }
-    @media (min-width: ${breakpoints.lg}) {
+    @media (min-width: ${breakpoints.lg}px) {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 `;
