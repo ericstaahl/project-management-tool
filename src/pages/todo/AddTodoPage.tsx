@@ -12,6 +12,7 @@ import TextArea from '../../components/styled/TextArea';
 import InputError from '../../components/input/InputError';
 import InputLabelWrapper from '../../components/input/InputLabelWrapper';
 import InputContainer from '../../components/input/InputContainer';
+import TitleError from '../../components/input/TitleError';
 
 const StyledForm = styled.form({
     display: 'flex',
@@ -76,15 +77,16 @@ const AddTodoPage: React.FC = () => {
                 <InputContainer>
                     <InputLabelWrapper>
                         <label htmlFor='title'>Title</label>
-                        {errors.title !== undefined && (
-                            <InputError>* Required</InputError>
-                        )}
+                        <TitleError errors={errors} />
                     </InputLabelWrapper>
 
                     <Input
-                        {...register('title', { required: true })}
+                        {...register('title', {
+                            required: true,
+                            minLength: 3,
+                            maxLength: 20,
+                        })}
                         type='text'
-                        // required={true}
                     />
                 </InputContainer>
 

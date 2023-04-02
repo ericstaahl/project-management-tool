@@ -9,6 +9,7 @@ import TextArea from '../../components/styled/TextArea';
 import InputError from '../../components/input/InputError';
 import InputLabelWrapper from '../../components/input/InputLabelWrapper';
 import InputContainer from '../../components/input/InputContainer';
+import TitleError from '../../components/input/TitleError';
 
 const StyledForm = styled.form({
     display: 'flex',
@@ -43,15 +44,7 @@ const AddProjectPage: React.FC = () => {
                 <InputContainer>
                     <InputLabelWrapper>
                         <label htmlFor='title'>Title</label>
-                        {errors.title?.type === 'required' && (
-                            <InputError>* Required</InputError>
-                        )}
-                        {errors.title?.type === 'maxLength' && (
-                            <InputError>* Max 20 characters</InputError>
-                        )}
-                        {errors.title?.type === 'minLength' && (
-                            <InputError>* Min. 3 characters</InputError>
-                        )}
+                        <TitleError errors={errors} />
                     </InputLabelWrapper>
 
                     <Input

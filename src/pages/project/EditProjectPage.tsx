@@ -15,6 +15,7 @@ import InputLabelWrapper from '../../components/input/InputLabelWrapper';
 import InputContainer from '../../components/input/InputContainer';
 import { toast } from 'react-toastify';
 import ButtonContainer from '../../components/styled/ButtonContainer';
+import TitleError from '../../components/input/TitleError';
 
 interface FormValues {
     title: string;
@@ -123,15 +124,7 @@ const EditProjectPage: React.FC = () => {
                         <InputContainer>
                             <InputLabelWrapper>
                                 <label htmlFor='title'>Title</label>
-                                {errors.title?.type === 'required' && (
-                                    <InputError>* Required</InputError>
-                                )}
-                                {errors.title?.type === 'maxLength' && (
-                                    <InputError>* Max 20 characters</InputError>
-                                )}
-                                {errors.title?.type === 'minLength' && (
-                                    <InputError>* Min. 3 characters</InputError>
-                                )}
+                                <TitleError errors={errors} />
                             </InputLabelWrapper>
 
                             <Input
