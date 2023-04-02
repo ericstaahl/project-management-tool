@@ -48,6 +48,7 @@ const GridContainer = styled.div({
     columnGap: '1rem',
     rowGap: '1rem',
     width: '100%',
+    overflow: 'scroll',
 });
 
 const DroppableContainer = styled.div({

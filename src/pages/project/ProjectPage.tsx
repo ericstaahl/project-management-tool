@@ -18,9 +18,11 @@ import ProjectModalInfo from '../../components/project/ProjectModalInfo';
 import GridContainer from '../../components/styled/GridContainer';
 
 const ButtonContainer = styled.div({
-    display: 'flex',
-    columnGap: '1rem',
     padding: '1rem 0',
+    display: 'flex',
+    flexWrap: 'wrap',
+    columnGap: '1rem',
+    rowGap: '1rem',
 });
 
 const sortOptions = [
