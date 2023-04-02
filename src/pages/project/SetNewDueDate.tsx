@@ -10,6 +10,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { nowFromDate } from '../../helpers/formatDate';
 import { colors } from '../../lib/colors';
+import ButtonContainer from '../../components/styled/ButtonContainer';
 
 const ModalContainer = styled.div({
     backgroundColor: colors.primary,
@@ -20,12 +21,6 @@ const ModalContainer = styled.div({
     justifyContent: 'space-between',
     padding: '2rem 1rem',
     border: `2px solid ${colors.borderPrimary}`,
-});
-
-const ButtonContainer = styled.div({
-    display: 'flex',
-    columnGap: '1rem',
-    padding: '1rem 0',
 });
 
 const StyledForm = styled.form({

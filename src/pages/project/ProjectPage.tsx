@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AddUserToProject from '../../components/project/AddUserToProject';
@@ -16,14 +15,7 @@ import { nowFromDate } from '../../helpers/formatDate';
 import SetNewDueDate from './SetNewDueDate';
 import ProjectModalInfo from '../../components/project/ProjectModalInfo';
 import GridContainer from '../../components/styled/GridContainer';
-
-const ButtonContainer = styled.div({
-    padding: '1rem 0',
-    display: 'flex',
-    flexWrap: 'wrap',
-    columnGap: '1rem',
-    rowGap: '1rem',
-});
+import ButtonContainer from '../../components/styled/ButtonContainer';
 
 const sortOptions = [
     { value: 'estimate', label: 'Estimate' },

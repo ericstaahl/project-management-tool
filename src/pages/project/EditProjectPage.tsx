@@ -14,6 +14,7 @@ import InputError from '../../components/input/InputError';
 import InputLabelWrapper from '../../components/input/InputLabelWrapper';
 import InputContainer from '../../components/input/InputContainer';
 import { toast } from 'react-toastify';
+import ButtonContainer from '../../components/styled/ButtonContainer';
 
 interface FormValues {
     title: string;
@@ -181,7 +182,7 @@ const EditProjectPage: React.FC = () => {
                                 })}
                             />
                         </InputContainer>
-                        <div style={{ display: 'flex', columnGap: '1rem' }}>
+                        <ButtonContainer>
                             <Button type='submit'>Save</Button>
                             <Button onClick={resetValues}>Reset</Button>
                             <Button onClick={handleDeleteProject}>
@@ -196,7 +197,7 @@ const EditProjectPage: React.FC = () => {
                                     ? 'Mark as uncomplete'
                                     : 'Mark as complete'}
                             </Button>
-                        </div>
+                        </ButtonContainer>
                     </StyledForm>
                 </>
             )}
