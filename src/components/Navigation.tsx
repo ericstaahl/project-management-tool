@@ -132,8 +132,11 @@ const Navigation: React.FC = () => {
                         }}
                     >
                         {menuItems.map((item) => (
-                            <Button key={item.label}>
-                                <StyledLink to={item.link}>
+                            <Button sx={{ padding: 0 }} key={item.label}>
+                                <StyledLink
+                                    style={{ padding: '0.5rem 0.5rem' }}
+                                    to={item.link}
+                                >
                                     {item.label}
                                 </StyledLink>
                             </Button>
