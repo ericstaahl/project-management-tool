@@ -19,6 +19,7 @@ const TitleWrapper = styled.div({
     WebkitLineClamp: 2,
     overflow: 'hidden',
     wordBreak: 'break-word',
+    margin: 'auto 0',
 });
 
 const TitleEditWrapper = styled.div({
