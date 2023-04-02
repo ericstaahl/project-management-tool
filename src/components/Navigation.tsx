@@ -18,6 +18,7 @@ const StyledLink = styled(Link)({
     ':hover': {
         color: '#cfcfcf',
     },
+    width: '100%',
 });
 
 const menuItems = [
