@@ -1,7 +1,8 @@
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const API_URL: string = import.meta.env.VITE_API_URL;
 
@@ -27,8 +28,10 @@ const useRegisterUser = (): UseMutationResult<
             console.log(res);
             navigate('/');
         },
-        onError: async () => {
-            console.log('An error occured when trying to register user');
+        onError: async (res) => {
+            if (res instanceof AxiosError && res.response?.status === 409) {
+                toast.error('Username is already taken.');
+            }
         },
     });
 
