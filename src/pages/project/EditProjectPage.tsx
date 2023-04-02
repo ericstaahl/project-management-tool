@@ -123,13 +123,23 @@ const EditProjectPage: React.FC = () => {
                         <InputContainer>
                             <InputLabelWrapper>
                                 <label htmlFor='title'>Title</label>
-                                {errors.title !== undefined && (
+                                {errors.title?.type === 'required' && (
                                     <InputError>* Required</InputError>
+                                )}
+                                {errors.title?.type === 'maxLength' && (
+                                    <InputError>* Max 20 characters</InputError>
+                                )}
+                                {errors.title?.type === 'minLength' && (
+                                    <InputError>* Min. 3 characters</InputError>
                                 )}
                             </InputLabelWrapper>
 
                             <Input
-                                {...register('title', { required: true })}
+                                {...register('title', {
+                                    required: true,
+                                    minLength: 3,
+                                    maxLength: 20,
+                                })}
                                 type='text'
                             />
                         </InputContainer>
