@@ -21,20 +21,18 @@ const ModalContainer = styled.div({
     top: 0,
     left: 0,
     zIndex: 999,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
     height: '100%',
     width: '100%',
-    overflowX: 'scroll',
+    overflow: 'scroll',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
 });
 
 const ModalWrapper = styled.div({
-    borderRadius: '0.5rem',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    margin: 'auto',
+    maxHeight: '100%',
+    overflow: 'auto',
 });
 
 const Modal: React.FC<Props> = ({ handleSetShowModal, children }) => {
