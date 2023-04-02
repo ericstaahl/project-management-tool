@@ -1,4 +1,7 @@
 import React from 'react';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownwardRounded';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpwardRounded';
+import IconButton from '@mui/material/IconButton';
 
 interface Props {
     sortOrder: 'asc' | 'desc';
@@ -11,8 +14,7 @@ const SortOrderArrow: React.FC<Props> = ({
     ...rest
 }: Props) => {
     return (
-        <div
-            style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+        <IconButton
             onClick={() => {
                 sortOrder === 'asc'
                     ? handleSetSortOrder('desc')
@@ -20,8 +22,8 @@ const SortOrderArrow: React.FC<Props> = ({
             }}
             {...rest}
         >
-            {sortOrder === 'asc' ? '↑' : '↓'}
-        </div>
+            {sortOrder === 'asc' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
+        </IconButton>
     );
 };
 
