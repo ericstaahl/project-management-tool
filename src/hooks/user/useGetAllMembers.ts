@@ -2,21 +2,21 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import useAuth from '../../context/AuthContext';
 import userQueryKeys from '../../query-keys/userQueryKeys';
-import { User } from '../../types/UserTypes';
+import { Member } from '../../types/UserTypes';
 
 const API_URL: string = import.meta.env.VITE_API_URL;
 
-const useGetAllUsers = (
+const useGetAllMemnbers = (
     projectId: number | undefined
 ): {
-    data: User[] | undefined;
+    data: Member[] | undefined;
     isLoading: boolean;
 } => {
     const auth = useAuth();
     const { data, isLoading } = useQuery({
         queryKey: userQueryKeys.list(projectId),
-        queryFn: async (): Promise<User[]> => {
-            const res = await axios.get<User[]>(
+        queryFn: async (): Promise<Member[]> => {
+            const res = await axios.get<Member[]>(
                 `${API_URL}/users/${projectId ?? ''}`,
                 {
                     headers: {
@@ -38,4 +38,4 @@ const useGetAllUsers = (
     return { data, isLoading };
 };
 
-export default useGetAllUsers;
+export default useGetAllMemnbers;
