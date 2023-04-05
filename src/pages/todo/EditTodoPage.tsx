@@ -79,7 +79,8 @@ const EditTodoPage: React.FC = () => {
             estimate: data.estimate,
             description: data.description,
             assignee:
-                data?.assignee?.value.length !== 0
+                data?.assignee?.value.length !== 0 &&
+                data?.assignee?.value !== undefined
                     ? data.assignee?.value
                     : null,
         };

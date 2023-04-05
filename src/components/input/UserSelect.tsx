@@ -55,6 +55,7 @@ const UserSelect = <T extends FieldValues>({
                                 : null,
                         options,
                         defaultValue,
+                        isClearable: true,
                     }}
                 />
             )}
