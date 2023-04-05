@@ -60,7 +60,7 @@ const AddTodoPage: React.FC = () => {
             estimate: data.estimate,
             description: data.description,
             project_id: Number(projectId),
-            assignee: data?.assignee?.value,
+            assignee: data?.assignee?.value ?? null,
         };
 
         addTodo.mutate(todoToSave, {

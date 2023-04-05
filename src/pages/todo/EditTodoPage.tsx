@@ -46,6 +46,8 @@ const EditTodoPage: React.FC = () => {
         deleteTodo.mutate({ projectId, todoId });
     };
 
+    console.log('assignee:', todo?.assignee);
+
     const {
         register,
         handleSubmit,
@@ -76,8 +78,13 @@ const EditTodoPage: React.FC = () => {
             title: data.title,
             estimate: data.estimate,
             description: data.description,
-            assignee: data?.assignee?.value,
+            assignee:
+                data?.assignee?.value.length !== 0
+                    ? data.assignee?.value
+                    : null,
         };
+
+        console.log(todoToSave);
 
         await updateTodo.mutateAsync(
             { updatedTodo: todoToSave, todoId, projectId },
@@ -156,7 +163,7 @@ const EditTodoPage: React.FC = () => {
                             control={control}
                             name='assignee'
                             projectId={Number(projectId)}
-                            defaultInputValue={todo?.assignee}
+                            defaultInputValue={todo?.assignee ?? undefined}
                         />
                     </InputContainer>
 

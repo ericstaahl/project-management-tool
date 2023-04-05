@@ -4,7 +4,7 @@ export type Todos = Array<{
     estimate: string;
     description: string;
     project_id: number;
-    assignee?: string;
+    assignee?: string | null;
     status: 'NOT_STARTED' | 'IN_PROGRESS' | 'DONE';
 }>;
 
@@ -14,7 +14,7 @@ export interface Todo {
     estimate: string;
     description: string;
     project_id: number;
-    assignee?: string;
+    assignee?: string | null;
     status?: 'NOT_STARTED' | 'IN_PROGRESS' | 'DONE';
 }
 
@@ -22,5 +22,5 @@ export interface UpdatedTodo {
     title?: string;
     estimate?: string;
     description?: string;
-    assignee?: string;
+    assignee?: string | null;
 }
