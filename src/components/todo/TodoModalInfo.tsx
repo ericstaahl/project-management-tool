@@ -5,6 +5,8 @@ import EditLink from '../styled/EditLink';
 import H3 from '../styled/H3';
 import TextLineClamp from '../styled/TextLineClamp';
 import { colors } from '../../lib/colors';
+import IconButton from '@mui/material/IconButton';
+import MoreHorizontal from '@mui/icons-material/MoreHoriz';
 
 const TitleWrapper = styled.div({
     display: '-webkit-box',
@@ -12,6 +14,7 @@ const TitleWrapper = styled.div({
     WebkitLineClamp: 2,
     overflow: 'hidden',
     wordBreak: 'break-word',
+    margin: 'auto 0',
 });
 
 const BoldSpan = styled.span({
@@ -49,7 +52,9 @@ const TodoCard = ({ todo }: { todo: Todos[0] }): JSX.Element => {
                     <H3>{`${todo.title}`}</H3>
                 </TitleWrapper>
                 <EditLink to={`${location.pathname}/todo/${todo.todo_id}/edit`}>
-                    ...
+                    <IconButton style={{ color: colors.secondary }}>
+                        <MoreHorizontal fontSize={'large'} />
+                    </IconButton>
                 </EditLink>
             </div>
             <div>
