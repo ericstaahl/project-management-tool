@@ -16,6 +16,7 @@ import SetNewDueDate from './SetNewDueDate';
 import ProjectModalInfo from '../../components/project/ProjectModalInfo';
 import GridContainer from '../../components/styled/GridContainer';
 import ButtonContainer from '../../components/styled/ButtonContainer';
+import CommentSection from '../../components/CommentSection';
 
 const sortOptions = [
     { value: 'estimate', label: 'Estimate' },
@@ -221,6 +222,9 @@ const ProjectPage: React.FC = () => {
                         Edit project
                     </Button>
                 </ButtonContainer>
+                {projectId !== undefined && (
+                    <CommentSection projectId={projectId} />
+                )}
             </Container>
         </>
     );
