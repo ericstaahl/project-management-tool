@@ -5,11 +5,16 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import TextField from '@mui/material/TextField';
 import MUIButton from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useAddProjectComment from '../hooks/project/useAddProjectComment';
 import { Project } from '../types/ProjectTypes';
 import { toast } from 'react-toastify';
+import dayjs from 'dayjs';
+import isToday from 'dayjs/plugin/isToday';
+
+dayjs.extend(isToday);
 
 interface FormValues {
     content: string;
@@ -66,8 +71,41 @@ const CommentSection = ({
                         <React.Fragment key={comment.comment_id}>
                             <ListItem alignItems='flex-start'>
                                 <ListItemText
-                                    primary={comment.user.username}
-                                    secondary={comment.content}
+                                    primary={
+                                        <>
+                                            <Typography
+                                                sx={{
+                                                    display: 'inline',
+                                                    marginRight: '0.5rem',
+                                                }}
+                                                component='span'
+                                                fontWeight='bold'
+                                                fontSize={'1rem'}
+                                            >
+                                                {comment.user.username}
+                                            </Typography>
+                                            <Typography
+                                                sx={{ display: 'inline' }}
+                                                component='span'
+                                                fontSize={'0.8rem'}
+                                            >
+                                                {dayjs(
+                                                    comment.time_posted
+                                                ).isToday()
+                                                    ? dayjs(
+                                                          comment.time_posted
+                                                      ).format('HH:MM')
+                                                    : dayjs(
+                                                          comment.time_posted
+                                                      ).format('YYYY-MM-DD')}
+                                            </Typography>
+                                        </>
+                                    }
+                                    secondary={
+                                        <Typography fontSize={'1rem'}>
+                                            {comment.content}
+                                        </Typography>
+                                    }
                                 />
                             </ListItem>
                             <Divider component='li' />
@@ -77,9 +115,8 @@ const CommentSection = ({
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box>
                     <TextField
-                        id='outlined-basic'
                         label='Comment'
-                        variant='filled'
+                        variant='outlined'
                         multiline
                         minRows={2}
                         maxRows={2}

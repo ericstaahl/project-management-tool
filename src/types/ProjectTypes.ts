@@ -43,6 +43,7 @@ export interface Project {
         project_id: number;
         content: string;
         reply_to_id: number;
+        time_posted: string;
     }>;
 }
 
