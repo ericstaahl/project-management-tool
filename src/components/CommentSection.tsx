@@ -8,12 +8,19 @@ import MUIButton from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useAddProjectComment from '../hooks/project/useAddProjectComment';
+import { Project } from '../types/ProjectTypes';
 
 interface FormValues {
     content: string;
 }
 
-const CommentSection = ({ projectId }: { projectId: string }): JSX.Element => {
+const CommentSection = ({
+    projectId,
+    comments,
+}: {
+    projectId: string;
+    comments: Project['project_comment'];
+}): JSX.Element => {
     const {
         register,
         handleSubmit,
@@ -40,19 +47,18 @@ const CommentSection = ({ projectId }: { projectId: string }): JSX.Element => {
                     bgcolor: 'background.paper',
                 }}
             >
-                <ListItem alignItems='flex-start'>
-                    <ListItemText
-                        primary='user1'
-                        secondary='Can I get an invite?'
-                    />
-                </ListItem>
-                <Divider component='li' />
-                <ListItem alignItems='flex-start'>
-                    <ListItemText
-                        primary='user2'
-                        secondary='We need to fix this bug.'
-                    />
-                </ListItem>
+                {comments.length > 0 &&
+                    comments.map((comment) => (
+                        <React.Fragment key={comment.comment_id}>
+                            <ListItem alignItems='flex-start'>
+                                <ListItemText
+                                    primary={comment.user.username}
+                                    secondary={comment.content}
+                                />
+                            </ListItem>
+                            <Divider component='li' />
+                        </React.Fragment>
+                    ))}
             </List>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box>

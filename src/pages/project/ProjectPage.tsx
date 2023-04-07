@@ -39,6 +39,7 @@ type SortOrder = 'asc' | 'desc';
 const ProjectPage: React.FC = () => {
     const { id: projectId } = useParams();
     const { data: project, refetch } = useGetProject(projectId);
+    console.log(project);
     const [sortBy, setSortBy] = useState({ value: 'title', label: 'Title' });
     const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
     const [statusFilter, setStatusFilter] = useState<{
@@ -222,8 +223,12 @@ const ProjectPage: React.FC = () => {
                         Edit project
                     </Button>
                 </ButtonContainer>
-                {projectId !== undefined && (
-                    <CommentSection projectId={projectId} />
+
+                {project?.project_comment !== undefined && (
+                    <CommentSection
+                        comments={project.project_comment}
+                        projectId={String(project.project_id)}
+                    />
                 )}
             </Container>
         </>
