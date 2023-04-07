@@ -6,6 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import TextField from '@mui/material/TextField';
 import MUIButton from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import MoreHorizontal from '@mui/icons-material/MoreHoriz';
 import Box from '@mui/material/Box';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useAddProjectComment from '../hooks/project/useAddProjectComment';
@@ -13,6 +14,8 @@ import { Project } from '../types/ProjectTypes';
 import { toast } from 'react-toastify';
 import dayjs from 'dayjs';
 import isToday from 'dayjs/plugin/isToday';
+import IconButton from '@mui/material/IconButton';
+import { colors } from '../lib/colors';
 
 dayjs.extend(isToday);
 
@@ -72,7 +75,12 @@ const CommentSection = ({
                             <ListItem alignItems='flex-start'>
                                 <ListItemText
                                     primary={
-                                        <>
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                            }}
+                                        >
                                             <Typography
                                                 sx={{
                                                     display: 'inline',
@@ -85,7 +93,10 @@ const CommentSection = ({
                                                 {comment.user.username}
                                             </Typography>
                                             <Typography
-                                                sx={{ display: 'inline' }}
+                                                sx={{
+                                                    display: 'inline',
+                                                    textAlign: 'center',
+                                                }}
                                                 component='span'
                                                 fontSize={'0.8rem'}
                                             >
@@ -99,7 +110,24 @@ const CommentSection = ({
                                                           comment.time_posted
                                                       ).format('YYYY-MM-DD')}
                                             </Typography>
-                                        </>
+                                            <Typography
+                                                sx={{ display: 'inline' }}
+                                                component='span'
+                                                fontSize={'0.8rem'}
+                                                marginLeft={'auto'}
+                                            >
+                                                <IconButton
+                                                    sx={{
+                                                        padding: 0,
+                                                        color: colors.secondary,
+                                                    }}
+                                                >
+                                                    <MoreHorizontal
+                                                        fontSize={'medium'}
+                                                    />
+                                                </IconButton>
+                                            </Typography>
+                                        </div>
                                     }
                                     secondary={
                                         <Typography fontSize={'1rem'}>
