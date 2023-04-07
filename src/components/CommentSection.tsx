@@ -31,6 +31,7 @@ const CommentSection = ({
         resetField,
     } = useForm<FormValues>();
 
+    console.log(errors);
     const addProjectComment = useAddProjectComment();
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
@@ -83,8 +84,27 @@ const CommentSection = ({
                         minRows={2}
                         maxRows={2}
                         sx={{ width: '100%' }}
-                        {...register('content', { required: true })}
+                        {...register('content', {
+                            required: {
+                                value: true,
+                                message:
+                                    'Must be between 10 and 200 characters long',
+                            },
+                            minLength: {
+                                value: 10,
+                                message:
+                                    'Must be between 10 and 200 characters long',
+                            },
+                            maxLength: {
+                                value: 200,
+                                message:
+                                    'Must be between 10 and 200 characters long',
+                            },
+                        })}
+                        error={Boolean(errors.content)}
+                        helperText={errors.content?.message}
                     />
+
                     <MUIButton
                         sx={{ display: 'block', ml: 'auto', mt: '0.5rem' }}
                         variant='contained'
