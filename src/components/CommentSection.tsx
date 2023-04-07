@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useAddProjectComment from '../hooks/project/useAddProjectComment';
 import { Project } from '../types/ProjectTypes';
+import { toast } from 'react-toastify';
 
 interface FormValues {
     content: string;
@@ -17,14 +18,17 @@ interface FormValues {
 const CommentSection = ({
     projectId,
     comments,
+    handleRefetch,
 }: {
     projectId: string;
     comments: Project['project_comment'];
+    handleRefetch: () => Promise<any>;
 }): JSX.Element => {
     const {
         register,
         handleSubmit,
         formState: { errors },
+        resetField,
     } = useForm<FormValues>();
 
     const addProjectComment = useAddProjectComment();
@@ -34,8 +38,17 @@ const CommentSection = ({
         const dataToSend = { comment: { content: data.content }, projectId };
 
         addProjectComment.mutate(dataToSend, {
-            onSuccess: () => {},
-            onError: () => {},
+            onSuccess: () => {
+                resetField('content');
+                handleRefetch()
+                    .then()
+                    .catch(() => {
+                        toast.error('An error occured while refetching query.');
+                    });
+            },
+            onError: () => {
+                toast.error('An error occured while updating the due date.');
+            },
         });
     };
 

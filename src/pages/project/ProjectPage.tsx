@@ -228,6 +228,9 @@ const ProjectPage: React.FC = () => {
                     <CommentSection
                         comments={project.project_comment}
                         projectId={String(project.project_id)}
+                        handleRefetch={async () => {
+                            await refetch();
+                        }}
                     />
                 )}
             </Container>

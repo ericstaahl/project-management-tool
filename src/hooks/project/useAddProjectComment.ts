@@ -1,12 +1,6 @@
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
-import axios, { AxiosResponse, isAxiosError } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import useAuth from '../../context/AuthContext';
-
-interface ErrorResponse {
-    statusCode: number;
-    error: string;
-    message: string;
-}
 
 interface Params {
     comment: { content: string };
@@ -37,16 +31,6 @@ const useAddProjectComment = (): UseMutationResult<
                     },
                 }
             );
-        },
-        onSuccess: async () => {
-            console.log('Successfully added new comment.');
-        },
-        onError: async (err) => {
-            if (isAxiosError<ErrorResponse>(err)) {
-                console.log(
-                    'An error occured when trying to add a new comment.'
-                );
-            }
         },
     });
 
