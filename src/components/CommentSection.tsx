@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import MUIButton from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import MoreHorizontal from '@mui/icons-material/MoreHoriz';
+import Delete from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useAddProjectComment from '../hooks/project/useAddProjectComment';
@@ -16,6 +17,8 @@ import dayjs from 'dayjs';
 import isToday from 'dayjs/plugin/isToday';
 import IconButton from '@mui/material/IconButton';
 import { colors } from '../lib/colors';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 dayjs.extend(isToday);
 
@@ -32,6 +35,17 @@ const CommentSection = ({
     comments: Project['project_comment'];
     handleRefetch: () => Promise<any>;
 }): JSX.Element => {
+    const [anchorCommmentMenu, setAnchorCommmentMenu] =
+        useState<null | HTMLElement>(null);
+
+    const handleOpenCommentMenu = (e: React.MouseEvent<HTMLElement>): void => {
+        setAnchorCommmentMenu(e.currentTarget);
+    };
+
+    const handleCloseCommentMenu = (): void => {
+        setAnchorCommmentMenu(null);
+    };
+
     const {
         register,
         handleSubmit,
@@ -115,18 +129,69 @@ const CommentSection = ({
                                                 component='span'
                                                 fontSize={'0.8rem'}
                                                 marginLeft={'auto'}
+                                                noWrap
                                             >
                                                 <IconButton
                                                     sx={{
                                                         padding: 0,
                                                         color: colors.secondary,
                                                     }}
+                                                    onClick={
+                                                        handleOpenCommentMenu
+                                                    }
                                                 >
                                                     <MoreHorizontal
                                                         fontSize={'medium'}
                                                     />
                                                 </IconButton>
                                             </Typography>
+                                            <Box
+                                                sx={{
+                                                    flexGrow: 0,
+                                                    display: {
+                                                        xs: 'none',
+                                                        md: 'flex',
+                                                    },
+                                                }}
+                                            >
+                                                <Menu
+                                                    id='menu-appbar'
+                                                    anchorEl={
+                                                        anchorCommmentMenu
+                                                    }
+                                                    keepMounted
+                                                    open={Boolean(
+                                                        anchorCommmentMenu
+                                                    )}
+                                                    onClose={
+                                                        handleCloseCommentMenu
+                                                    }
+                                                    anchorOrigin={{
+                                                        vertical: 'bottom',
+                                                        horizontal: 'left',
+                                                    }}
+                                                    sx={{
+                                                        display: {
+                                                            xs: 'none',
+                                                            md: 'block',
+                                                        },
+                                                    }}
+                                                    color='inherit'
+                                                >
+                                                    <MenuItem>
+                                                        <IconButton
+                                                            sx={{
+                                                                color: colors.secondary,
+                                                                marginLeft:
+                                                                    'auto',
+                                                                padding: 0,
+                                                            }}
+                                                        >
+                                                            <Delete fontSize='small' />
+                                                        </IconButton>
+                                                    </MenuItem>
+                                                </Menu>
+                                            </Box>
                                         </div>
                                     }
                                     secondary={
