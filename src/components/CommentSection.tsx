@@ -19,6 +19,7 @@ import IconButton from '@mui/material/IconButton';
 import { colors } from '../lib/colors';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import useDeleteProjectComment from '../hooks/project/useDeleteComment';
 
 dayjs.extend(isToday);
 
@@ -53,14 +54,14 @@ const CommentSection = ({
         resetField,
     } = useForm<FormValues>();
 
-    console.log(errors);
-    const addProjectComment = useAddProjectComment();
+    const addComment = useAddProjectComment();
+    const deleteComment = useDeleteProjectComment();
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
         console.log(data);
         const dataToSend = { comment: { content: data.content }, projectId };
 
-        addProjectComment.mutate(dataToSend, {
+        addComment.mutate(dataToSend, {
             onSuccess: () => {
                 resetField('content');
                 handleRefetch()
@@ -70,7 +71,7 @@ const CommentSection = ({
                     });
             },
             onError: () => {
-                toast.error('An error occured while updating the due date.');
+                toast.error('An error occured while adding the comment.');
             },
         });
     };
@@ -185,6 +186,37 @@ const CommentSection = ({
                                                                 marginLeft:
                                                                     'auto',
                                                                 padding: 0,
+                                                            }}
+                                                            onClick={() => {
+                                                                deleteComment.mutate(
+                                                                    {
+                                                                        commentId:
+                                                                            comment.comment_id,
+                                                                    },
+                                                                    {
+                                                                        onSuccess:
+                                                                            () => {
+                                                                                resetField(
+                                                                                    'content'
+                                                                                );
+                                                                                handleRefetch()
+                                                                                    .then()
+                                                                                    .catch(
+                                                                                        () => {
+                                                                                            toast.error(
+                                                                                                'An error occured while refetching query.'
+                                                                                            );
+                                                                                        }
+                                                                                    );
+                                                                            },
+                                                                        onError:
+                                                                            () => {
+                                                                                toast.error(
+                                                                                    'An error occured while deleting the comment.'
+                                                                                );
+                                                                            },
+                                                                    }
+                                                                );
                                                             }}
                                                         >
                                                             <Delete fontSize='small' />
