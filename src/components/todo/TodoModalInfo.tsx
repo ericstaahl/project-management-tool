@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import EditLink from '../styled/EditLink';
 import H3 from '../styled/H3';
@@ -11,6 +11,9 @@ import CommentSection, { Params } from '../CommentSection';
 import { MutateOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import useAddTodoComment from '../../hooks/todo/useAddTodoComment';
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 
 const TitleWrapper = styled.div({
     display: '-webkit-box',
@@ -73,6 +76,11 @@ const TodoCard = ({ todoId, projectId }: Props): JSX.Element => {
         addComment.mutate(data, options);
     };
 
+    const [showDescription, setShowDescription] = useState(false);
+    const toggleShowDescription = (): void => {
+        setShowDescription(!showDescription);
+    };
+
     return (
         <>
             <OuterContainer>
@@ -116,9 +124,25 @@ const TodoCard = ({ todoId, projectId }: Props): JSX.Element => {
                             </div>
                             <div>
                                 <BoldSpan>Description: </BoldSpan>
-                                <TextLineClamp style={{ fontSize: '1.1rem' }}>
-                                    {todo.description}
-                                </TextLineClamp>
+                                {!showDescription && (
+                                    <TextLineClamp
+                                        style={{ fontSize: '1.1rem' }}
+                                    >
+                                        {todo.description}
+                                    </TextLineClamp>
+                                )}
+                                <Collapse in={showDescription}>
+                                    <p style={{ fontSize: '1.1rem' }}>
+                                        {todo.description}
+                                    </p>
+                                </Collapse>
+                                <IconButton onClick={toggleShowDescription}>
+                                    {showDescription ? (
+                                        <ExpandLess />
+                                    ) : (
+                                        <ExpandMore />
+                                    )}
+                                </IconButton>
                             </div>
                         </InfoContainer>
                         <div
