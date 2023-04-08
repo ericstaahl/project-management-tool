@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -6,20 +6,18 @@ import ListItemText from '@mui/material/ListItemText';
 import TextField from '@mui/material/TextField';
 import MUIButton from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import MoreHorizontal from '@mui/icons-material/MoreHoriz';
 import Delete from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import useAddProjectComment from '../hooks/project/useAddProjectComment';
 import { Project } from '../types/ProjectTypes';
 import { toast } from 'react-toastify';
 import dayjs from 'dayjs';
 import isToday from 'dayjs/plugin/isToday';
 import IconButton from '@mui/material/IconButton';
 import { colors } from '../lib/colors';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import useDeleteProjectComment from '../hooks/project/useDeleteComment';
+import { MutateOptions } from '@tanstack/react-query';
+import { AxiosResponse } from 'axios';
 
 dayjs.extend(isToday);
 
@@ -27,25 +25,30 @@ interface FormValues {
     content: string;
 }
 
+export interface Params {
+    comment: { content: string };
+    id: string;
+}
+
+interface Props {
+    projectId: string;
+    comments: Project['project_comment'];
+    handleRefetch: () => Promise<any>;
+    handleAddComment: (
+        data: Params,
+        options?:
+            | MutateOptions<AxiosResponse<any, any>, unknown, Params, unknown>
+            | undefined
+    ) => void;
+}
+
 const CommentSection = ({
     projectId,
     comments,
     handleRefetch,
-}: {
-    projectId: string;
-    comments: Project['project_comment'];
-    handleRefetch: () => Promise<any>;
-}): JSX.Element => {
-    const [anchorCommmentMenu, setAnchorCommmentMenu] =
-        useState<null | HTMLElement>(null);
-
-    const handleOpenCommentMenu = (e: React.MouseEvent<HTMLElement>): void => {
-        setAnchorCommmentMenu(e.currentTarget);
-    };
-
-    const handleCloseCommentMenu = (): void => {
-        setAnchorCommmentMenu(null);
-    };
+    handleAddComment,
+}: Props): JSX.Element => {
+    console.log(comments);
 
     const {
         register,
@@ -54,14 +57,40 @@ const CommentSection = ({
         resetField,
     } = useForm<FormValues>();
 
-    const addComment = useAddProjectComment();
+    // const addComment = useAddProjectComment();
     const deleteComment = useDeleteProjectComment();
+    const handleDeleteComment = (id: string): void => {
+        console.log(id);
+        deleteComment.mutate(
+            {
+                commentId: id,
+            },
+            {
+                onSuccess: () => {
+                    resetField('content');
+                    handleRefetch()
+                        .then()
+                        .catch(() => {
+                            toast.error(
+                                'An error occured while refetching query.'
+                            );
+                        });
+                },
+                onError: () => {
+                    toast.error('An error occured while deleting the comment.');
+                },
+            }
+        );
+    };
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
         console.log(data);
-        const dataToSend = { comment: { content: data.content }, projectId };
+        const dataToSend = {
+            comment: { content: data.content },
+            id: projectId,
+        };
 
-        addComment.mutate(dataToSend, {
+        handleAddComment(dataToSend, {
             onSuccess: () => {
                 resetField('content');
                 handleRefetch()
@@ -134,96 +163,19 @@ const CommentSection = ({
                                             >
                                                 <IconButton
                                                     sx={{
-                                                        padding: 0,
                                                         color: colors.secondary,
+                                                        marginLeft: 'auto',
+                                                        padding: 0,
                                                     }}
-                                                    onClick={
-                                                        handleOpenCommentMenu
-                                                    }
+                                                    onClick={() => {
+                                                        handleDeleteComment(
+                                                            comment.comment_id
+                                                        );
+                                                    }}
                                                 >
-                                                    <MoreHorizontal
-                                                        fontSize={'medium'}
-                                                    />
+                                                    <Delete fontSize='small' />
                                                 </IconButton>
                                             </Typography>
-                                            <Box
-                                                sx={{
-                                                    flexGrow: 0,
-                                                    display: {
-                                                        xs: 'none',
-                                                        md: 'flex',
-                                                    },
-                                                }}
-                                            >
-                                                <Menu
-                                                    id='menu-appbar'
-                                                    anchorEl={
-                                                        anchorCommmentMenu
-                                                    }
-                                                    keepMounted
-                                                    open={Boolean(
-                                                        anchorCommmentMenu
-                                                    )}
-                                                    onClose={
-                                                        handleCloseCommentMenu
-                                                    }
-                                                    anchorOrigin={{
-                                                        vertical: 'bottom',
-                                                        horizontal: 'left',
-                                                    }}
-                                                    sx={{
-                                                        display: {
-                                                            xs: 'none',
-                                                            md: 'block',
-                                                        },
-                                                    }}
-                                                    color='inherit'
-                                                >
-                                                    <MenuItem>
-                                                        <IconButton
-                                                            sx={{
-                                                                color: colors.secondary,
-                                                                marginLeft:
-                                                                    'auto',
-                                                                padding: 0,
-                                                            }}
-                                                            onClick={() => {
-                                                                deleteComment.mutate(
-                                                                    {
-                                                                        commentId:
-                                                                            comment.comment_id,
-                                                                    },
-                                                                    {
-                                                                        onSuccess:
-                                                                            () => {
-                                                                                resetField(
-                                                                                    'content'
-                                                                                );
-                                                                                handleRefetch()
-                                                                                    .then()
-                                                                                    .catch(
-                                                                                        () => {
-                                                                                            toast.error(
-                                                                                                'An error occured while refetching query.'
-                                                                                            );
-                                                                                        }
-                                                                                    );
-                                                                            },
-                                                                        onError:
-                                                                            () => {
-                                                                                toast.error(
-                                                                                    'An error occured while deleting the comment.'
-                                                                                );
-                                                                            },
-                                                                    }
-                                                                );
-                                                            }}
-                                                        >
-                                                            <Delete fontSize='small' />
-                                                        </IconButton>
-                                                    </MenuItem>
-                                                </Menu>
-                                            </Box>
                                         </div>
                                     }
                                     secondary={

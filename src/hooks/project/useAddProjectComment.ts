@@ -1,11 +1,7 @@
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import useAuth from '../../context/AuthContext';
-
-interface Params {
-    comment: { content: string };
-    projectId: string;
-}
+import { Params } from '../../components/CommentSection';
 
 const API_URL: string = import.meta.env.VITE_API_URL;
 
@@ -18,7 +14,7 @@ const useAddProjectComment = (): UseMutationResult<
     const auth = useAuth();
 
     const mutation = useMutation({
-        mutationFn: async ({ projectId, comment }: Params) => {
+        mutationFn: async ({ id: projectId, comment }: Params) => {
             return await axios.post(
                 `${API_URL}/projects/${projectId}/comment`,
                 comment,

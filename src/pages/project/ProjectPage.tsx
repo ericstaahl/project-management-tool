@@ -16,7 +16,10 @@ import SetNewDueDate from './SetNewDueDate';
 import ProjectModalInfo from '../../components/project/ProjectModalInfo';
 import GridContainer from '../../components/styled/GridContainer';
 import ButtonContainer from '../../components/styled/ButtonContainer';
-import CommentSection from '../../components/CommentSection';
+import CommentSection, { Params } from '../../components/CommentSection';
+import useAddProjectComment from '../../hooks/project/useAddProjectComment';
+import { MutateOptions } from '@tanstack/react-query';
+import { AxiosResponse } from 'axios';
 
 const sortOptions = [
     { value: 'estimate', label: 'Estimate' },
@@ -39,7 +42,6 @@ type SortOrder = 'asc' | 'desc';
 const ProjectPage: React.FC = () => {
     const { id: projectId } = useParams();
     const { data: project, refetch } = useGetProject(projectId);
-    console.log(project);
     const [sortBy, setSortBy] = useState({ value: 'title', label: 'Title' });
     const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
     const [statusFilter, setStatusFilter] = useState<{
@@ -69,6 +71,16 @@ const ProjectPage: React.FC = () => {
             setShowNewDateInput(true);
         }
     }, [project]);
+
+    const addComment = useAddProjectComment();
+    const handleAddComment = (
+        data: Params,
+        options?:
+            | MutateOptions<AxiosResponse<any, any>, unknown, Params, unknown>
+            | undefined
+    ): void => {
+        addComment.mutate(data, options);
+    };
 
     return (
         <>
@@ -231,6 +243,7 @@ const ProjectPage: React.FC = () => {
                         handleRefetch={async () => {
                             await refetch();
                         }}
+                        handleAddComment={handleAddComment}
                     />
                 )}
             </Container>
