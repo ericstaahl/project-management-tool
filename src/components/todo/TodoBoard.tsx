@@ -112,7 +112,10 @@ const TodoBoard = ({ data: todos }: Props): JSX.Element => {
                     }}
                 >
                     {todoToShow !== null && (
-                        <TodoModalInfo todo={todoToShow}></TodoModalInfo>
+                        <TodoModalInfo
+                            todoId={String(todoToShow.todo_id)}
+                            projectId={String(todoToShow.project_id)}
+                        ></TodoModalInfo>
                     )}
                 </Modal>
             )}

@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import todoQueryKeys from '../../query-keys/todoQueryKeys';
 import axios from 'axios';
-import type { Todo } from '../../types/TodoTypes';
+import type { FetchedTodo } from '../../types/TodoTypes';
 import useAuth from '../../context/AuthContext';
 
 const API_URL: string = import.meta.env.VITE_API_URL;
@@ -9,12 +9,12 @@ const API_URL: string = import.meta.env.VITE_API_URL;
 const useGetTodo = (
     projectId: string | undefined,
     todoId: string | undefined
-): UseQueryResult<Todo, unknown> => {
+): UseQueryResult<FetchedTodo, unknown> => {
     const auth = useAuth();
     const query = useQuery({
         queryKey: todoQueryKeys.detail(projectId, todoId),
-        queryFn: async (): Promise<Todo> => {
-            const res = await axios.get<Todo>(
+        queryFn: async (): Promise<FetchedTodo> => {
+            const res = await axios.get<FetchedTodo>(
                 `${API_URL}/todos/${projectId ?? ''}/${todoId ?? ''}`,
                 {
                     headers: {

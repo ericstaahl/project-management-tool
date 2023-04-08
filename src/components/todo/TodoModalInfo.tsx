@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Todos } from '../../types/TodoTypes';
 import EditLink from '../styled/EditLink';
 import H3 from '../styled/H3';
 import TextLineClamp from '../styled/TextLineClamp';
 import { colors } from '../../lib/colors';
 import IconButton from '@mui/material/IconButton';
 import MoreHorizontal from '@mui/icons-material/MoreHoriz';
+import useGetTodo from '../../hooks/todo/useGetTodo';
 
 const TitleWrapper = styled.div({
     display: '-webkit-box',
@@ -39,42 +39,56 @@ const InfoContainer = styled.div({
     width: '40vw',
 });
 
-const TodoCard = ({ todo }: { todo: Todos[0] }): JSX.Element => {
+interface Props {
+    todoId: string;
+    projectId: string;
+}
+
+const TodoCard = ({ todoId, projectId }: Props): JSX.Element => {
+    const { data: todo, isLoading } = useGetTodo(projectId, todoId);
+    console.log(todo);
+
     return (
-        <InfoContainer key={todo.todo_id}>
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                }}
-            >
-                <TitleWrapper>
-                    <H3>{`${todo.title}`}</H3>
-                </TitleWrapper>
-                <EditLink to={`${location.pathname}/todo/${todo.todo_id}/edit`}>
-                    <IconButton style={{ color: colors.secondary }}>
-                        <MoreHorizontal fontSize={'large'} />
-                    </IconButton>
-                </EditLink>
-            </div>
-            <div>
-                <BoldSpan>Estimation: </BoldSpan>
-                <TextLineClamp>{todo.estimate}</TextLineClamp>
-            </div>
-            <div>
-                <BoldSpan>Status: </BoldSpan>
-                <TextLineClamp>{statuses[todo.status]}</TextLineClamp>
-            </div>
-            <div>
-                <BoldSpan>Assignee: </BoldSpan>
-                <TextLineClamp>{todo.assignee ?? 'None'}</TextLineClamp>
-            </div>
-            <div>
-                <BoldSpan>Description: </BoldSpan>
-                <TextLineClamp style={{ fontSize: '1.1rem' }}>
-                    {todo.description}
-                </TextLineClamp>
-            </div>
+        <InfoContainer>
+            {todo !== undefined && !isLoading && (
+                <>
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                        }}
+                    >
+                        <TitleWrapper>
+                            <H3>{`${todo.title}`}</H3>
+                        </TitleWrapper>
+                        <EditLink
+                            to={`${location.pathname}/todo/${todo.todo_id}/edit`}
+                        >
+                            <IconButton style={{ color: colors.secondary }}>
+                                <MoreHorizontal fontSize={'large'} />
+                            </IconButton>
+                        </EditLink>
+                    </div>
+                    <div>
+                        <BoldSpan>Estimation: </BoldSpan>
+                        <TextLineClamp>{todo.estimate}</TextLineClamp>
+                    </div>
+                    <div>
+                        <BoldSpan>Status: </BoldSpan>
+                        <TextLineClamp>{statuses[todo.status]}</TextLineClamp>
+                    </div>
+                    <div>
+                        <BoldSpan>Assignee: </BoldSpan>
+                        <TextLineClamp>{todo.assignee ?? 'None'}</TextLineClamp>
+                    </div>
+                    <div>
+                        <BoldSpan>Description: </BoldSpan>
+                        <TextLineClamp style={{ fontSize: '1.1rem' }}>
+                            {todo.description}
+                        </TextLineClamp>
+                    </div>
+                </>
+            )}
         </InfoContainer>
     );
 };
