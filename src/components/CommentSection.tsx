@@ -131,6 +131,9 @@ const CommentSection = ({
                 sx={{
                     width: '100%',
                     bgcolor: 'background.paper',
+                    overflow: 'scroll',
+                    maxHeight: '50vh',
+                    paddingBottom: 0,
                 }}
             >
                 {comments.length > 0 &&

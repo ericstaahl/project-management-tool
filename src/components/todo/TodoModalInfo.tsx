@@ -5,7 +5,7 @@ import H3 from '../styled/H3';
 import TextLineClamp from '../styled/TextLineClamp';
 import { colors } from '../../lib/colors';
 import IconButton from '@mui/material/IconButton';
-import MoreHorizontal from '@mui/icons-material/MoreHoriz';
+import Edit from '@mui/icons-material/Edit';
 import useGetTodo from '../../hooks/todo/useGetTodo';
 import CommentSection, { Params } from '../CommentSection';
 import { MutateOptions } from '@tanstack/react-query';
@@ -39,6 +39,7 @@ const InfoContainer = styled.div({
     backgroundColor: colors.primary,
     padding: '1rem',
     fontSize: '1.2rem',
+    width: '50%',
 });
 
 const OuterContainer = styled.div({
@@ -48,7 +49,7 @@ const OuterContainer = styled.div({
     backgroundColor: colors.primary,
     padding: '1rem',
     fontSize: '1.2rem',
-    minWidth: '80vh',
+    minWidth: '80vw',
     minHeight: '40vh',
     justifyContent: 'space-between',
 });
@@ -93,7 +94,7 @@ const TodoCard = ({ todoId, projectId }: Props): JSX.Element => {
                                     <IconButton
                                         style={{ color: colors.secondary }}
                                     >
-                                        <MoreHorizontal fontSize={'large'} />
+                                        <Edit fontSize={'medium'} />
                                     </IconButton>
                                 </EditLink>
                             </div>
@@ -120,7 +121,12 @@ const TodoCard = ({ todoId, projectId }: Props): JSX.Element => {
                                 </TextLineClamp>
                             </div>
                         </InfoContainer>
-                        <div style={{ padding: '1rem' }}>
+                        <div
+                            style={{
+                                padding: '1rem',
+                                flexGrow: 1,
+                            }}
+                        >
                             <CommentSection
                                 comments={todo.todo_comment}
                                 handleAddComment={handleAddComment}
