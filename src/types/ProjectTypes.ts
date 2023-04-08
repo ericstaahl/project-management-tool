@@ -1,3 +1,5 @@
+import { CommentWithProjectId } from '../components/CommentSection';
+
 export interface Member {
     id: number;
     project_id: number;
@@ -34,17 +36,7 @@ export interface Project {
         todo: number;
         members: number;
     };
-    project_comment: Array<{
-        user: {
-            username: string;
-        };
-        comment_id: string;
-        user_id: number;
-        project_id: number;
-        content: string;
-        reply_to_id: number;
-        time_posted: string;
-    }>;
+    project_comment: CommentWithProjectId[];
 }
 
 export interface UpdateProject {

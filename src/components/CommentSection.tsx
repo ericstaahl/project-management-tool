@@ -9,13 +9,12 @@ import Typography from '@mui/material/Typography';
 import Delete from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Project } from '../types/ProjectTypes';
 import { toast } from 'react-toastify';
 import dayjs from 'dayjs';
 import isToday from 'dayjs/plugin/isToday';
 import IconButton from '@mui/material/IconButton';
 import { colors } from '../lib/colors';
-import useDeleteProjectComment from '../hooks/project/useDeleteComment';
+import useDeleteProjectComment from '../hooks/useDeleteComment';
 import { MutateOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import useAuth from '../context/AuthContext';
@@ -30,10 +29,28 @@ export interface Params {
     comment: { content: string };
     id: string;
 }
+interface Comment {
+    comment_id: number;
+    user_id: number;
+    content: string;
+    time_posted: string;
+    user: {
+        username: string;
+    };
+}
+export interface CommentWithTodoId extends Comment {
+    todo_id: number;
+    project_id?: never;
+}
+
+export interface CommentWithProjectId extends Comment {
+    project_id: number;
+    todo_id?: never;
+}
 
 interface Props {
     id: string;
-    comments: Project['project_comment'];
+    comments: CommentWithTodoId[] | CommentWithProjectId[];
     handleRefetch: () => Promise<any>;
     handleAddComment: (
         data: Params,
@@ -41,6 +58,7 @@ interface Props {
             | MutateOptions<AxiosResponse<any, any>, unknown, Params, unknown>
             | undefined
     ) => void;
+    commentRoute: 'todos' | 'projects';
 }
 
 const CommentSection = ({
@@ -48,6 +66,7 @@ const CommentSection = ({
     comments,
     handleRefetch,
     handleAddComment,
+    commentRoute,
 }: Props): JSX.Element => {
     const {
         register,
@@ -64,6 +83,7 @@ const CommentSection = ({
         deleteComment.mutate(
             {
                 commentId: id,
+                commentRoute,
             },
             {
                 onSuccess: () => {
@@ -171,7 +191,9 @@ const CommentSection = ({
                                                         }}
                                                         onClick={() => {
                                                             handleDeleteComment(
-                                                                comment.comment_id
+                                                                String(
+                                                                    comment.comment_id
+                                                                )
                                                             );
                                                         }}
                                                     >

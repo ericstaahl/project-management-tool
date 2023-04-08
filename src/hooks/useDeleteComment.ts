@@ -1,11 +1,12 @@
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
-import useAuth from '../../context/AuthContext';
+import useAuth from '../context/AuthContext';
 
 const API_URL: string = import.meta.env.VITE_API_URL;
 
 interface Params {
     commentId: string;
+    commentRoute: 'todos' | 'projects';
 }
 
 const useDeleteProjectComment = (): UseMutationResult<
@@ -17,9 +18,9 @@ const useDeleteProjectComment = (): UseMutationResult<
     const auth = useAuth();
 
     const mutation = useMutation({
-        mutationFn: async ({ commentId }: Params) => {
+        mutationFn: async ({ commentId, commentRoute }: Params) => {
             return await axios.delete(
-                `${API_URL}/projects/comment/${commentId}`,
+                `${API_URL}/${commentRoute}/comment/${commentId}`,
                 {
                     headers: {
                         Authorization:

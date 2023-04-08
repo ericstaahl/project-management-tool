@@ -7,6 +7,10 @@ import { colors } from '../../lib/colors';
 import IconButton from '@mui/material/IconButton';
 import MoreHorizontal from '@mui/icons-material/MoreHoriz';
 import useGetTodo from '../../hooks/todo/useGetTodo';
+import CommentSection, { Params } from '../CommentSection';
+import { MutateOptions } from '@tanstack/react-query';
+import { AxiosResponse } from 'axios';
+import useAddTodoComment from '../../hooks/todo/useAddTodoComment';
 
 const TitleWrapper = styled.div({
     display: '-webkit-box',
@@ -35,8 +39,18 @@ const InfoContainer = styled.div({
     backgroundColor: colors.primary,
     padding: '1rem',
     fontSize: '1.2rem',
-    height: '40vh',
-    width: '40vw',
+});
+
+const OuterContainer = styled.div({
+    display: 'flex',
+    rowGap: '1rem',
+    borderRadius: '5px',
+    backgroundColor: colors.primary,
+    padding: '1rem',
+    fontSize: '1.2rem',
+    minWidth: '80vh',
+    minHeight: '40vh',
+    justifyContent: 'space-between',
 });
 
 interface Props {
@@ -45,51 +59,82 @@ interface Props {
 }
 
 const TodoCard = ({ todoId, projectId }: Props): JSX.Element => {
-    const { data: todo, isLoading } = useGetTodo(projectId, todoId);
+    const { data: todo, isLoading, refetch } = useGetTodo(projectId, todoId);
     console.log(todo);
 
+    const addComment = useAddTodoComment();
+    const handleAddComment = (
+        data: Params,
+        options?:
+            | MutateOptions<AxiosResponse<any, any>, unknown, Params, unknown>
+            | undefined
+    ): void => {
+        addComment.mutate(data, options);
+    };
+
     return (
-        <InfoContainer>
-            {todo !== undefined && !isLoading && (
-                <>
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                        }}
-                    >
-                        <TitleWrapper>
-                            <H3>{`${todo.title}`}</H3>
-                        </TitleWrapper>
-                        <EditLink
-                            to={`${location.pathname}/todo/${todo.todo_id}/edit`}
-                        >
-                            <IconButton style={{ color: colors.secondary }}>
-                                <MoreHorizontal fontSize={'large'} />
-                            </IconButton>
-                        </EditLink>
-                    </div>
-                    <div>
-                        <BoldSpan>Estimation: </BoldSpan>
-                        <TextLineClamp>{todo.estimate}</TextLineClamp>
-                    </div>
-                    <div>
-                        <BoldSpan>Status: </BoldSpan>
-                        <TextLineClamp>{statuses[todo.status]}</TextLineClamp>
-                    </div>
-                    <div>
-                        <BoldSpan>Assignee: </BoldSpan>
-                        <TextLineClamp>{todo.assignee ?? 'None'}</TextLineClamp>
-                    </div>
-                    <div>
-                        <BoldSpan>Description: </BoldSpan>
-                        <TextLineClamp style={{ fontSize: '1.1rem' }}>
-                            {todo.description}
-                        </TextLineClamp>
-                    </div>
-                </>
-            )}
-        </InfoContainer>
+        <>
+            <OuterContainer>
+                {todo !== undefined && !isLoading && (
+                    <>
+                        <InfoContainer>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                }}
+                            >
+                                <TitleWrapper>
+                                    <H3>{`${todo.title}`}</H3>
+                                </TitleWrapper>
+                                <EditLink
+                                    to={`${location.pathname}/todo/${todo.todo_id}/edit`}
+                                >
+                                    <IconButton
+                                        style={{ color: colors.secondary }}
+                                    >
+                                        <MoreHorizontal fontSize={'large'} />
+                                    </IconButton>
+                                </EditLink>
+                            </div>
+                            <div>
+                                <BoldSpan>Estimation: </BoldSpan>
+                                <TextLineClamp>{todo.estimate}</TextLineClamp>
+                            </div>
+                            <div>
+                                <BoldSpan>Status: </BoldSpan>
+                                <TextLineClamp>
+                                    {statuses[todo.status]}
+                                </TextLineClamp>
+                            </div>
+                            <div>
+                                <BoldSpan>Assignee: </BoldSpan>
+                                <TextLineClamp>
+                                    {todo.assignee ?? 'None'}
+                                </TextLineClamp>
+                            </div>
+                            <div>
+                                <BoldSpan>Description: </BoldSpan>
+                                <TextLineClamp style={{ fontSize: '1.1rem' }}>
+                                    {todo.description}
+                                </TextLineClamp>
+                            </div>
+                        </InfoContainer>
+                        <div style={{ padding: '1rem' }}>
+                            <CommentSection
+                                comments={todo.todo_comment}
+                                handleAddComment={handleAddComment}
+                                handleRefetch={async () => {
+                                    await refetch();
+                                }}
+                                id={todoId}
+                                commentRoute={'todos'}
+                            />
+                        </div>
+                    </>
+                )}
+            </OuterContainer>
+        </>
     );
 };
 

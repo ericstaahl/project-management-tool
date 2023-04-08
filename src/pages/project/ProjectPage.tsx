@@ -244,6 +244,7 @@ const ProjectPage: React.FC = () => {
                             await refetch();
                         }}
                         handleAddComment={handleAddComment}
+                        commentRoute={'projects'}
                     />
                 )}
             </Container>

@@ -16,7 +16,7 @@ const useAddTodoComment = (): UseMutationResult<
     const mutation = useMutation({
         mutationFn: async ({ id: todoId, comment }: Params) => {
             return await axios.post(
-                `${API_URL}/:todoId/${todoId}/comment`,
+                `${API_URL}/todos/${todoId}/comment`,
                 comment,
                 {
                     headers: {
