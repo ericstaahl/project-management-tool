@@ -239,7 +239,7 @@ const ProjectPage: React.FC = () => {
                 {project?.project_comment !== undefined && (
                     <CommentSection
                         comments={project.project_comment}
-                        projectId={String(project.project_id)}
+                        id={String(project.project_id)}
                         handleRefetch={async () => {
                             await refetch();
                         }}

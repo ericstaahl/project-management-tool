@@ -32,7 +32,7 @@ export interface Params {
 }
 
 interface Props {
-    projectId: string;
+    id: string;
     comments: Project['project_comment'];
     handleRefetch: () => Promise<any>;
     handleAddComment: (
@@ -44,7 +44,7 @@ interface Props {
 }
 
 const CommentSection = ({
-    projectId,
+    id,
     comments,
     handleRefetch,
     handleAddComment,
@@ -87,7 +87,7 @@ const CommentSection = ({
         console.log(data);
         const dataToSend = {
             comment: { content: data.content },
-            id: projectId,
+            id,
         };
 
         handleAddComment(dataToSend, {
