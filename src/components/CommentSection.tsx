@@ -18,6 +18,7 @@ import { colors } from '../lib/colors';
 import useDeleteProjectComment from '../hooks/project/useDeleteComment';
 import { MutateOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
+import useAuth from '../context/AuthContext';
 
 dayjs.extend(isToday);
 
@@ -48,8 +49,6 @@ const CommentSection = ({
     handleRefetch,
     handleAddComment,
 }: Props): JSX.Element => {
-    console.log(comments);
-
     const {
         register,
         handleSubmit,
@@ -57,7 +56,8 @@ const CommentSection = ({
         resetField,
     } = useForm<FormValues>();
 
-    // const addComment = useAddProjectComment();
+    const auth = useAuth();
+
     const deleteComment = useDeleteProjectComment();
     const handleDeleteComment = (id: string): void => {
         console.log(id);
@@ -154,28 +154,31 @@ const CommentSection = ({
                                                           comment.time_posted
                                                       ).format('YYYY-MM-DD')}
                                             </Typography>
-                                            <Typography
-                                                sx={{ display: 'inline' }}
-                                                component='span'
-                                                fontSize={'0.8rem'}
-                                                marginLeft={'auto'}
-                                                noWrap
-                                            >
-                                                <IconButton
-                                                    sx={{
-                                                        color: colors.secondary,
-                                                        marginLeft: 'auto',
-                                                        padding: 0,
-                                                    }}
-                                                    onClick={() => {
-                                                        handleDeleteComment(
-                                                            comment.comment_id
-                                                        );
-                                                    }}
+                                            {comment.user_id ===
+                                                auth?.user_id && (
+                                                <Typography
+                                                    sx={{ display: 'inline' }}
+                                                    component='span'
+                                                    fontSize={'0.8rem'}
+                                                    marginLeft={'auto'}
+                                                    noWrap
                                                 >
-                                                    <Delete fontSize='small' />
-                                                </IconButton>
-                                            </Typography>
+                                                    <IconButton
+                                                        sx={{
+                                                            color: colors.secondary,
+                                                            marginLeft: 'auto',
+                                                            padding: 0,
+                                                        }}
+                                                        onClick={() => {
+                                                            handleDeleteComment(
+                                                                comment.comment_id
+                                                            );
+                                                        }}
+                                                    >
+                                                        <Delete fontSize='small' />
+                                                    </IconButton>
+                                                </Typography>
+                                            )}
                                         </div>
                                     }
                                     secondary={
