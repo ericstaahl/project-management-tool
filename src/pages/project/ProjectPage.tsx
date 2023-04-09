@@ -48,6 +48,7 @@ const ProjectPage: React.FC = () => {
         value: 'NOT_STARTED' | 'IN_PROGRESS' | 'DONE';
         label: string;
     } | null>(null);
+    const [isInitialRender, setIsInitialRender] = useState(true);
     const { data, isLoading } = useGetTodos(
         Number(projectId),
         sortBy.value,
@@ -65,11 +66,13 @@ const ProjectPage: React.FC = () => {
     const [toggleBoardView, setToggleBoardView] = useState(true);
 
     useEffect(() => {
-        if (project === undefined || project.complete) return;
+        if (project === undefined || project.complete || !isInitialRender)
+            return;
         const daysLeft = nowFromDate(project.due_date, 'days');
         if (daysLeft < 0) {
             setShowNewDateInput(true);
         }
+        setIsInitialRender(false);
     }, [project]);
 
     const addComment = useAddProjectComment();
