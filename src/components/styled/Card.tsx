@@ -11,6 +11,7 @@ const StyledDiv = styled.div({
     backgroundColor: colors.primary,
     padding: '1rem',
     border: `2px solid ${colors.borderPrimary}`,
+    minWidth: '300px',
 });
 
 const Card: React.FC<React.HtmlHTMLAttributes<HTMLDivElement>> = (props) => {
