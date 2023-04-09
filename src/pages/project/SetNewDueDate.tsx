@@ -53,7 +53,7 @@ const SetNewDueDate = <T extends Promise<T>>({
             {
                 updatedProject: {
                     start_date: project.start_date,
-                    due_date: project.due_date,
+                    due_date: data.due_date,
                 },
                 projectId: String(project.project_id),
             },
