@@ -134,6 +134,8 @@ const CommentSection = ({
                     overflow: 'scroll',
                     maxHeight: '50vh',
                     paddingBottom: 0,
+                    borderTopLeftRadius: '4px',
+                    borderTopRightRadius: '4px',
                 }}
             >
                 {comments.length === 0 && (
