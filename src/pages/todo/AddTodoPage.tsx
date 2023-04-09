@@ -40,18 +40,6 @@ const AddTodoPage: React.FC = () => {
     const { id: projectId } = useParams();
     const navigate = useNavigate();
 
-    // const [selectedUser, setSelectedUser] = React.useState<{
-    //     value: string;
-    //     label: string;
-    // }>();
-
-    // const handleSetSelectedUser = (selected: {
-    //     label: string;
-    //     value: string;
-    // }): void => {
-    //     setSelectedUser(selected);
-    // };
-
     const addTodo = useAddTodo();
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
@@ -101,20 +89,23 @@ const AddTodoPage: React.FC = () => {
                     <Input
                         {...register('estimate', { required: true })}
                         type='text'
-                        // required={true}
                     />
                 </InputContainer>
 
                 <InputContainer>
                     <InputLabelWrapper>
                         <label htmlFor='description'>Description</label>
-                        {errors.description !== undefined && (
-                            <InputError>* Required</InputError>
-                        )}
+                        {errors.description !== undefined &&
+                            errors.description.type === 'maxLength' && (
+                                <InputError>* Max 255 characters</InputError>
+                            )}{' '}
                     </InputLabelWrapper>
 
                     <TextArea
-                        {...register('description', { required: true })}
+                        {...register('description', {
+                            required: true,
+                            maxLength: 255,
+                        })}
                         rows={4}
                     />
                 </InputContainer>
