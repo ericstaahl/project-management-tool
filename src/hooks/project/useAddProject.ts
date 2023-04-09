@@ -3,7 +3,7 @@ import axios, { AxiosResponse, isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import useAuth from '../../context/AuthContext';
-import type { Project } from '../../types/ProjectTypes';
+import type { AddProject } from '../../types/ProjectTypes';
 
 interface ErrorResponse {
     statusCode: number;
@@ -16,7 +16,7 @@ const API_URL: string = import.meta.env.VITE_API_URL;
 const useAddProject = (): UseMutationResult<
     AxiosResponse<any, any>,
     unknown,
-    Project,
+    AddProject,
     unknown
 > => {
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ const useAddProject = (): UseMutationResult<
     const auth = useAuth();
 
     const mutation = useMutation({
-        mutationFn: async (newProject: Project) => {
+        mutationFn: async (newProject: AddProject) => {
             return await axios.post(`${API_URL}/projects`, newProject, {
                 headers: {
                     Authorization:

@@ -46,3 +46,10 @@ export interface UpdateProject {
     description?: string;
     complete?: boolean;
 }
+
+export interface AddProject {
+    description?: string | undefined;
+    title: string;
+    start_date: string;
+    due_date: string;
+}
