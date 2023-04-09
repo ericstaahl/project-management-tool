@@ -9,6 +9,11 @@ import H3 from '../styled/H3';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import { colors } from '../../lib/colors';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const BoldSpan = styled.span({
     fontWeight: 'bold',
@@ -27,6 +32,10 @@ const TitleEditWrapper = styled.div({
     justifyContent: 'space-between',
     alignContent: 'center',
     height: 'auto',
+});
+
+const CategoryContainer = styled.div({
+    padding: '0 0.5rem',
 });
 
 interface Params {
@@ -54,35 +63,61 @@ const ProjectDescription = ({
                     </EditLink>
                 </TitleEditWrapper>
             )}
-            <div>
-                <BoldSpan>Start date: </BoldSpan>
+            <CategoryContainer>
+                <BoldSpan>Start date </BoldSpan>
                 <TextLineClamp>
                     {`${new Date(project.start_date).toLocaleDateString(
                         'sv-SE'
                     )}`}
                 </TextLineClamp>
-            </div>
-            <div>
+            </CategoryContainer>
+            <CategoryContainer>
                 <BoldSpan>Due date: </BoldSpan>
                 <TextLineClamp>
                     {`${new Date(project.due_date).toLocaleDateString(
                         'sv-SE'
                     )}`}
                 </TextLineClamp>
-            </div>
-            <div>
-                <BoldSpan>Number of todos: </BoldSpan>
+            </CategoryContainer>
+            <CategoryContainer>
+                <BoldSpan>Number of todos </BoldSpan>
                 <TextLineClamp>{`${project._count.todo}`}</TextLineClamp>
-            </div>
-            <div>
-                <BoldSpan>Role: </BoldSpan>
+            </CategoryContainer>
+            <CategoryContainer>
+                <BoldSpan>Role </BoldSpan>
                 <TextLineClamp>
                     {project.user_id === auth?.user_id ? 'Owner' : 'Member'}
                 </TextLineClamp>
-            </div>
-            <div>
-                <BoldSpan>Completed: </BoldSpan>
+            </CategoryContainer>
+            <CategoryContainer>
+                <BoldSpan>Completed </BoldSpan>
                 <TextLineClamp>{project.complete ? 'Yes' : 'No'}</TextLineClamp>
+            </CategoryContainer>
+            <div style={{ maxWidth: '50vw' }}>
+                <BoldSpan style={{ padding: '0 0.5rem' }}>
+                    Description{' '}
+                </BoldSpan>
+                <Accordion sx={{ marginTop: '0.3rem' }}>
+                    <AccordionSummary
+                        sx={{ paddingLeft: '0.5rem' }}
+                        expandIcon={<ExpandMoreIcon />}
+                    >
+                        <Typography
+                            sx={{
+                                display: '-webkit-box',
+                                WebkitBoxOrient: 'vertical',
+                                WebkitLineClamp: 1,
+                                overflow: 'hidden',
+                            }}
+                        >
+                            {project.description}
+                        </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Typography>{project.description}</Typography>
+                    </AccordionDetails>
+                    <Typography></Typography>
+                </Accordion>
             </div>
             {!detail && (
                 <Link

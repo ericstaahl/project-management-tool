@@ -12,12 +12,10 @@ import { MutateOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import useAddTodoComment from '../../hooks/todo/useAddTodoComment';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Typography,
-} from '@mui/material';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Typography from '@mui/material/Typography';
 import { breakpoints } from '../../lib/breakpoints';
 
 const TitleWrapper = styled.div({
