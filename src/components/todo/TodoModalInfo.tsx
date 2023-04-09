@@ -18,6 +18,7 @@ import {
     AccordionSummary,
     Typography,
 } from '@mui/material';
+import { breakpoints } from '../../lib/breakpoints';
 
 const TitleWrapper = styled.div({
     display: '-webkit-box',
@@ -38,28 +39,41 @@ const statuses = {
     DONE: 'Done',
 };
 
-const InfoContainer = styled.div({
-    display: 'flex',
-    flexDirection: 'column',
-    rowGap: '1rem',
-    borderRadius: '5px',
-    backgroundColor: colors.primary,
-    padding: '0.5rem',
-    fontSize: '1.2rem',
-    width: '50%',
-});
+const InfoContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    border-radius: 5px;
+    background-color: ${colors.primary};
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    width: 100%;
+    margin-top: 20px;
+    @media (min-width: ${breakpoints.md}px) {
+        width: 50%;
+        margin-top: inherit;
+    }
+`;
 
-const OuterContainer = styled.div({
-    display: 'flex',
-    rowGap: '1rem',
-    borderRadius: '5px',
-    backgroundColor: colors.primary,
-    padding: '1rem',
-    fontSize: '1.2rem',
-    minWidth: '80vw',
-    minHeight: '40vh',
-    justifyContent: 'space-between',
-});
+const OuterContainer = styled.div`
+    display: flex;
+    row-gap: 1rem;
+    border-radius: 5px;
+    background-color: ${colors.primary};
+    padding: 1rem;
+    font-size: 1.2rem;
+    min-width: 80vw;
+    min-height: 40vh;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-top: 50px;
+    margin: 1.5rem;
+    @media (min-width: ${breakpoints.md}px) {
+        flex-direction: row;
+        margin: 0;
+        max-width: 90vw;
+    }
+`;
 
 const CategoryContainer = styled.div({
     padding: '0 0.5rem',

@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { createPortal } from 'react-dom';
+import ClearIcon from '@mui/icons-material/Clear';
 interface Props {
     handleSetShowModal: () => void;
     children?: React.ReactNode;
@@ -49,7 +50,7 @@ const Modal: React.FC<Props> = ({ handleSetShowModal, children }) => {
                             handleSetShowModal();
                         }}
                     >
-                        x
+                        <ClearIcon fontSize='medium' />
                     </CloseModal>
                     <ModalWrapper
                         onClick={(e) => {
