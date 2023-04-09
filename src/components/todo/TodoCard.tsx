@@ -5,7 +5,7 @@ import Card from '../styled/Card';
 import EditLink from '../styled/EditLink';
 import H3 from '../styled/H3';
 import TextLineClamp from '../styled/TextLineClamp';
-import MoreHorizontal from '@mui/icons-material/MoreHoriz';
+import EditIcon from '@mui/icons-material/Edit';
 import { colors } from '../../lib/colors';
 import IconButton from '@mui/material/IconButton';
 
@@ -42,7 +42,7 @@ const TodoCard = ({ todo }: { todo: Todos[0] }): JSX.Element => {
                 </TitleWrapper>
                 <EditLink to={`${location.pathname}/todo/${todo.todo_id}/edit`}>
                     <IconButton style={{ color: colors.secondary }}>
-                        <MoreHorizontal fontSize={'large'} />
+                        <EditIcon fontSize={'small'} />
                     </IconButton>
                 </EditLink>
             </div>
