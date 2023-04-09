@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import EditLink from '../styled/EditLink';
 import H3 from '../styled/H3';
@@ -11,9 +11,13 @@ import CommentSection, { Params } from '../CommentSection';
 import { MutateOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import useAddTodoComment from '../../hooks/todo/useAddTodoComment';
-import Collapse from '@mui/material/Collapse';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Typography,
+} from '@mui/material';
 
 const TitleWrapper = styled.div({
     display: '-webkit-box',
@@ -40,7 +44,7 @@ const InfoContainer = styled.div({
     rowGap: '1rem',
     borderRadius: '5px',
     backgroundColor: colors.primary,
-    padding: '1rem',
+    padding: '0.5rem',
     fontSize: '1.2rem',
     width: '50%',
 });
@@ -55,6 +59,10 @@ const OuterContainer = styled.div({
     minWidth: '80vw',
     minHeight: '40vh',
     justifyContent: 'space-between',
+});
+
+const CategoryContainer = styled.div({
+    padding: '0 0.5rem',
 });
 
 interface Props {
@@ -76,11 +84,6 @@ const TodoCard = ({ todoId, projectId }: Props): JSX.Element => {
         addComment.mutate(data, options);
     };
 
-    const [showDescription, setShowDescription] = useState(false);
-    const toggleShowDescription = (): void => {
-        setShowDescription(!showDescription);
-    };
-
     return (
         <>
             <OuterContainer>
@@ -91,6 +94,7 @@ const TodoCard = ({ todoId, projectId }: Props): JSX.Element => {
                                 style={{
                                     display: 'flex',
                                     justifyContent: 'space-between',
+                                    padding: '0 0.5rem',
                                 }}
                             >
                                 <TitleWrapper>
@@ -106,43 +110,51 @@ const TodoCard = ({ todoId, projectId }: Props): JSX.Element => {
                                     </IconButton>
                                 </EditLink>
                             </div>
-                            <div>
-                                <BoldSpan>Estimation: </BoldSpan>
-                                <TextLineClamp>{todo.estimate}</TextLineClamp>
-                            </div>
-                            <div>
-                                <BoldSpan>Status: </BoldSpan>
-                                <TextLineClamp>
+                            <CategoryContainer>
+                                <BoldSpan>Estimation </BoldSpan>
+                                <TextLineClamp style={{ marginTop: '0.3rem' }}>
+                                    {todo.estimate}
+                                </TextLineClamp>
+                            </CategoryContainer>
+                            <CategoryContainer>
+                                <BoldSpan>Status </BoldSpan>
+                                <TextLineClamp style={{ marginTop: '0.3rem' }}>
                                     {statuses[todo.status]}
                                 </TextLineClamp>
-                            </div>
-                            <div>
-                                <BoldSpan>Assignee: </BoldSpan>
-                                <TextLineClamp>
+                            </CategoryContainer>
+                            <CategoryContainer>
+                                <BoldSpan>Assignee </BoldSpan>
+                                <TextLineClamp style={{ marginTop: '0.3rem' }}>
                                     {todo.assignee ?? 'None'}
                                 </TextLineClamp>
-                            </div>
+                            </CategoryContainer>
                             <div>
-                                <BoldSpan>Description: </BoldSpan>
-                                {!showDescription && (
-                                    <TextLineClamp
-                                        style={{ fontSize: '1.1rem' }}
+                                <BoldSpan style={{ padding: '0 0.5rem' }}>
+                                    Description{' '}
+                                </BoldSpan>
+                                <Accordion sx={{ marginTop: '0.3rem' }}>
+                                    <AccordionSummary
+                                        sx={{ paddingLeft: '0.5rem' }}
+                                        expandIcon={<ExpandMoreIcon />}
                                     >
-                                        {todo.description}
-                                    </TextLineClamp>
-                                )}
-                                <Collapse in={showDescription}>
-                                    <p style={{ fontSize: '1.1rem' }}>
-                                        {todo.description}
-                                    </p>
-                                </Collapse>
-                                <IconButton onClick={toggleShowDescription}>
-                                    {showDescription ? (
-                                        <ExpandLess />
-                                    ) : (
-                                        <ExpandMore />
-                                    )}
-                                </IconButton>
+                                        <Typography
+                                            sx={{
+                                                display: '-webkit-box',
+                                                WebkitBoxOrient: 'vertical',
+                                                WebkitLineClamp: 1,
+                                                overflow: 'hidden',
+                                            }}
+                                        >
+                                            {todo.description}
+                                        </Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <Typography>
+                                            {todo.description}
+                                        </Typography>
+                                    </AccordionDetails>
+                                    <Typography></Typography>
+                                </Accordion>
                             </div>
                         </InfoContainer>
                         <div
