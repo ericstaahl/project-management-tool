@@ -136,6 +136,18 @@ const CommentSection = ({
                     paddingBottom: 0,
                 }}
             >
+                {comments.length === 0 && (
+                    <ListItem>
+                        <Typography
+                            sx={{
+                                marginRight: '0.5rem',
+                                fontStyle: 'italic',
+                            }}
+                        >
+                            No comments yet...
+                        </Typography>
+                    </ListItem>
+                )}
                 {comments.length > 0 &&
                     comments.map((comment) => (
                         <React.Fragment key={comment.comment_id}>
