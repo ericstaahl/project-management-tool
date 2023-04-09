@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import type { Projects } from '../../types/ProjectTypes';
 import useAuth from '../../context/AuthContext';
 import TextLineClamp from '../styled/TextLineClamp';
@@ -14,6 +14,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Button from '../styled/Button';
 
 const BoldSpan = styled.span({
     fontWeight: 'bold',
@@ -45,6 +46,8 @@ const ProjectDescription = ({
     auth,
     detail = false,
 }: Params): JSX.Element => {
+    const navigate = useNavigate();
+
     return (
         <>
             {!detail && (
@@ -116,12 +119,13 @@ const ProjectDescription = ({
                                     WebkitBoxOrient: 'vertical',
                                     WebkitLineClamp: 1,
                                     overflow: 'hidden',
+                                    wordBreak: 'break-word',
                                 }}
                             >
                                 {project.description}
                             </Typography>
                         </AccordionSummary>
-                        <AccordionDetails>
+                        <AccordionDetails sx={{ paddingLeft: '0.5rem' }}>
                             <Typography>{project.description}</Typography>
                         </AccordionDetails>
                         <Typography></Typography>
@@ -130,12 +134,13 @@ const ProjectDescription = ({
             )}
 
             {!detail && (
-                <Link
-                    style={{ color: 'white' }}
-                    to={`/projects/${project.project_id}`}
+                <Button
+                    onClick={() => {
+                        navigate(`/projects/${project.project_id}`);
+                    }}
                 >
                     See more
-                </Link>
+                </Button>
             )}
         </>
     );

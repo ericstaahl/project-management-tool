@@ -9,19 +9,24 @@ import EditIcon from '@mui/icons-material/Edit';
 import { colors } from '../../lib/colors';
 import IconButton from '@mui/material/IconButton';
 
+const BoldSpan = styled.span({
+    fontWeight: 'bold',
+});
 const TitleWrapper = styled.div({
     display: '-webkit-box',
     WebkitBoxOrient: 'vertical',
     WebkitLineClamp: 2,
     overflow: 'hidden',
-    wordBreak: 'break-word',
+    wordBreak: 'normal',
     margin: 'auto 0',
 });
 
-const BoldSpan = styled.span({
-    fontWeight: 'bold',
+const TitleEditWrapper = styled.div({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    height: 'auto',
 });
-
 const statuses = {
     NOT_STARTED: 'Not started',
     IN_PROGRESS: 'In progress',
@@ -31,12 +36,7 @@ const statuses = {
 const TodoCard = ({ todo }: { todo: Todos[0] }): JSX.Element => {
     return (
         <Card key={todo.todo_id}>
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                }}
-            >
+            <TitleEditWrapper>
                 <TitleWrapper>
                     <H3>{`${todo.title}`}</H3>
                 </TitleWrapper>
@@ -45,21 +45,21 @@ const TodoCard = ({ todo }: { todo: Todos[0] }): JSX.Element => {
                         <EditIcon fontSize={'small'} />
                     </IconButton>
                 </EditLink>
-            </div>
+            </TitleEditWrapper>
             <div>
-                <BoldSpan>Estimation: </BoldSpan>
+                <BoldSpan>Estimation </BoldSpan>
                 <TextLineClamp>{todo.estimate}</TextLineClamp>
             </div>
             <div>
-                <BoldSpan>Status: </BoldSpan>
+                <BoldSpan>Status </BoldSpan>
                 <TextLineClamp>{statuses[todo.status]}</TextLineClamp>
             </div>
             <div>
-                <BoldSpan>Assignee: </BoldSpan>
+                <BoldSpan>Assignee </BoldSpan>
                 <TextLineClamp>{todo.assignee ?? 'None'}</TextLineClamp>
             </div>
             <div>
-                <BoldSpan>Description: </BoldSpan>
+                <BoldSpan>Description </BoldSpan>
                 <TextLineClamp style={{ fontSize: '0.9rem' }}>
                     {todo.description}
                 </TextLineClamp>

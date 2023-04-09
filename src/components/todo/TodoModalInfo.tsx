@@ -155,6 +155,7 @@ const TodoCard = ({ todoId, projectId }: Props): JSX.Element => {
                                                 WebkitBoxOrient: 'vertical',
                                                 WebkitLineClamp: 1,
                                                 overflow: 'hidden',
+                                                wordBreak: 'break-word',
                                             }}
                                         >
                                             {todo.description}

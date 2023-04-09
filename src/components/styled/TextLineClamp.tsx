@@ -6,6 +6,7 @@ const TextContainer = styled.div({
     WebkitBoxOrient: 'vertical',
     WebkitLineClamp: 3,
     overflow: 'hidden',
+    wordBreak: 'break-word',
 });
 
 const TextLineClamp: React.FC<React.HtmlHTMLAttributes<HTMLDivElement>> = (
