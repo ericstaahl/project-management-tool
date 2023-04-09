@@ -34,10 +34,6 @@ const TitleEditWrapper = styled.div({
     height: 'auto',
 });
 
-const CategoryContainer = styled.div({
-    padding: '0 0.5rem',
-});
-
 interface Params {
     project: Projects[0];
     auth: ReturnType<typeof useAuth>;
@@ -63,62 +59,76 @@ const ProjectDescription = ({
                     </EditLink>
                 </TitleEditWrapper>
             )}
-            <CategoryContainer>
+            <div style={{ padding: detail ? '0 0.5rem' : 0 }}>
                 <BoldSpan>Start date </BoldSpan>
                 <TextLineClamp>
                     {`${new Date(project.start_date).toLocaleDateString(
                         'sv-SE'
                     )}`}
                 </TextLineClamp>
-            </CategoryContainer>
-            <CategoryContainer>
+            </div>
+            <div style={{ padding: detail ? '0 0.5rem' : 0 }}>
                 <BoldSpan>Due date: </BoldSpan>
                 <TextLineClamp>
                     {`${new Date(project.due_date).toLocaleDateString(
                         'sv-SE'
                     )}`}
                 </TextLineClamp>
-            </CategoryContainer>
-            <CategoryContainer>
+            </div>
+            <div style={{ padding: detail ? '0 0.5rem' : 0 }}>
                 <BoldSpan>Number of todos </BoldSpan>
                 <TextLineClamp>{`${project._count.todo}`}</TextLineClamp>
-            </CategoryContainer>
-            <CategoryContainer>
+            </div>
+            <div style={{ padding: detail ? '0 0.5rem' : 0 }}>
                 <BoldSpan>Role </BoldSpan>
                 <TextLineClamp>
                     {project.user_id === auth?.user_id ? 'Owner' : 'Member'}
                 </TextLineClamp>
-            </CategoryContainer>
-            <CategoryContainer>
+            </div>
+            <div style={{ padding: detail ? '0 0.5rem' : 0 }}>
                 <BoldSpan>Completed </BoldSpan>
                 <TextLineClamp>{project.complete ? 'Yes' : 'No'}</TextLineClamp>
-            </CategoryContainer>
-            <div style={{ maxWidth: '50vw' }}>
-                <BoldSpan style={{ padding: '0 0.5rem' }}>
-                    Description{' '}
-                </BoldSpan>
-                <Accordion sx={{ marginTop: '0.3rem' }}>
-                    <AccordionSummary
-                        sx={{ paddingLeft: '0.5rem' }}
-                        expandIcon={<ExpandMoreIcon />}
-                    >
-                        <Typography
-                            sx={{
-                                display: '-webkit-box',
-                                WebkitBoxOrient: 'vertical',
-                                WebkitLineClamp: 1,
-                                overflow: 'hidden',
-                            }}
-                        >
-                            {project.description}
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography>{project.description}</Typography>
-                    </AccordionDetails>
-                    <Typography></Typography>
-                </Accordion>
             </div>
+
+            {!detail && (
+                <div style={{ padding: detail ? '0 0.5rem' : 0 }}>
+                    <BoldSpan>Description </BoldSpan>
+                    <TextLineClamp style={{ WebkitLineClamp: 1 }}>
+                        <Typography>{project.description}</Typography>
+                    </TextLineClamp>
+                </div>
+            )}
+
+            {detail && (
+                <div style={{ maxWidth: '50vw' }}>
+                    <BoldSpan style={{ padding: '0 0.5rem' }}>
+                        Description{' '}
+                    </BoldSpan>
+
+                    <Accordion sx={{ marginTop: '0.3rem' }}>
+                        <AccordionSummary
+                            sx={{ paddingLeft: '0.5rem' }}
+                            expandIcon={<ExpandMoreIcon />}
+                        >
+                            <Typography
+                                sx={{
+                                    display: '-webkit-box',
+                                    WebkitBoxOrient: 'vertical',
+                                    WebkitLineClamp: 1,
+                                    overflow: 'hidden',
+                                }}
+                            >
+                                {project.description}
+                            </Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Typography>{project.description}</Typography>
+                        </AccordionDetails>
+                        <Typography></Typography>
+                    </Accordion>
+                </div>
+            )}
+
             {!detail && (
                 <Link
                     style={{ color: 'white' }}
