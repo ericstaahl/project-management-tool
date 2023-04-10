@@ -21,6 +21,8 @@ import useAddProjectComment from '../../hooks/project/useAddProjectComment';
 import { MutateOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import RemoveUserFromProject from '../../components/project/RemoveUserFromProject.tsx';
+import { toast } from 'react-toastify';
+import useLeaveProject from '../../hooks/user/useLeaveProject';
 
 const sortOptions = [
     { value: 'estimate', label: 'Estimate' },
@@ -90,6 +92,28 @@ const ProjectPage: React.FC = () => {
             | undefined
     ): void => {
         addComment.mutate(data, options);
+    };
+
+    const leaveProject = useLeaveProject();
+
+    const handleLeaveProject = (): void => {
+        if (project === undefined || auth === undefined || auth === null)
+            return;
+        leaveProject.mutate(
+            {
+                projectId: String(project.project_id),
+            },
+            {
+                onSuccess: () => {
+                    navigate('/projects');
+                },
+                onError: () => {
+                    toast.error(
+                        'An error occured when trying to leave project.'
+                    );
+                },
+            }
+        );
     };
 
     return (
@@ -258,7 +282,7 @@ const ProjectPage: React.FC = () => {
                     >
                         Remove users
                     </Button>
-                    <Button>Leave project</Button>
+                    <Button onClick={handleLeaveProject}>Leave project</Button>
                     <Button
                         onClick={() => {
                             navigate('edit');
