@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import { Toolbar, Typography } from '@mui/material';
+import useAuth from '../context/AuthContext';
 
 const StyledLink = styled(Link)({
     color: '#f5f5f5',
@@ -54,6 +55,8 @@ const Navigation: React.FC = () => {
     const handleCloseAuthMenu = (): void => {
         setAnchorElAuthNav(null);
     };
+
+    const auth = useAuth();
 
     return (
         <AppBar position='static'>
@@ -114,13 +117,29 @@ const Navigation: React.FC = () => {
                                     </StyledLink>
                                 </MenuItem>
                             ))}
-                            {authItems.map((item) => (
-                                <MenuItem key={item.label}>
-                                    <StyledLink to={item.link}>
-                                        {item.label}
-                                    </StyledLink>
-                                </MenuItem>
-                            ))}
+                            {authItems.map((item) => {
+                                if (
+                                    auth?.access_token !== undefined &&
+                                    auth !== null &&
+                                    item.link !== '/logout'
+                                ) {
+                                    return null;
+                                }
+                                if (
+                                    auth?.access_token === undefined &&
+                                    auth === null &&
+                                    item.link === '/logout'
+                                ) {
+                                    return null;
+                                }
+                                return (
+                                    <MenuItem key={item.label}>
+                                        <StyledLink to={item.link}>
+                                            {item.label}
+                                        </StyledLink>
+                                    </MenuItem>
+                                );
+                            })}
                         </Menu>
                     </Box>
 
@@ -172,13 +191,29 @@ const Navigation: React.FC = () => {
                             }}
                             color='inherit'
                         >
-                            {authItems.map((item) => (
-                                <MenuItem key={item.label}>
-                                    <StyledLink to={item.link}>
-                                        {item.label}
-                                    </StyledLink>
-                                </MenuItem>
-                            ))}
+                            {authItems.map((item) => {
+                                if (
+                                    auth?.access_token !== undefined &&
+                                    auth !== null &&
+                                    item.link !== '/logout'
+                                ) {
+                                    return null;
+                                }
+                                if (
+                                    auth?.access_token === undefined &&
+                                    auth === null &&
+                                    item.link === '/logout'
+                                ) {
+                                    return null;
+                                }
+                                return (
+                                    <MenuItem key={item.label}>
+                                        <StyledLink to={item.link}>
+                                            {item.label}
+                                        </StyledLink>
+                                    </MenuItem>
+                                );
+                            })}
                         </Menu>
                     </Box>
                 </Toolbar>
