@@ -148,7 +148,6 @@ const EditTodoPage: React.FC = () => {
 
                         <TextArea
                             {...register('description', {
-                                required: true,
                                 maxLength: 255,
                             })}
                             rows={4}
