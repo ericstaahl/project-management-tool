@@ -1,4 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
+import {
+    QueryObserverResult,
+    RefetchOptions,
+    RefetchQueryFilters,
+    useQuery,
+} from '@tanstack/react-query';
 import todoQueryKeys from '../../query-keys/todoQueryKeys';
 import axios from 'axios';
 import type { Todos } from '../../types/TodoTypes';
@@ -14,9 +19,12 @@ const useGetTodos = (
 ): {
     data: Todos | undefined;
     isLoading: boolean;
+    refetch: <TPageData>(
+        options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
+    ) => Promise<QueryObserverResult<Todos, unknown>>;
 } => {
     const auth = useAuth();
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, refetch } = useQuery({
         queryKey: todoQueryKeys.list(
             projectId,
             sortBy,
@@ -47,7 +55,7 @@ const useGetTodos = (
         keepPreviousData: true,
     });
 
-    return { data, isLoading };
+    return { data, isLoading, refetch };
 };
 
 export default useGetTodos;

@@ -50,7 +50,11 @@ const ProjectPage: React.FC = () => {
         label: string;
     } | null>(null);
     const [isInitialRender, setIsInitialRender] = useState(true);
-    const { data, isLoading } = useGetTodos(
+    const {
+        data,
+        isLoading,
+        refetch: refetchTodos,
+    } = useGetTodos(
         Number(projectId),
         sortBy.value,
         statusFilter?.value ?? null,
@@ -105,7 +109,12 @@ const ProjectPage: React.FC = () => {
                         setShowRemoveUser(false);
                     }}
                 >
-                    <RemoveUserFromProject project={project} />
+                    <RemoveUserFromProject
+                        handleRefetch={async () => {
+                            await refetchTodos();
+                        }}
+                        project={project}
+                    />
                 </Modal>
             )}
             {showNewDateInput && project !== undefined && (
@@ -249,6 +258,7 @@ const ProjectPage: React.FC = () => {
                     >
                         Remove users
                     </Button>
+                    <Button>Leave project</Button>
                     <Button
                         onClick={() => {
                             navigate('edit');

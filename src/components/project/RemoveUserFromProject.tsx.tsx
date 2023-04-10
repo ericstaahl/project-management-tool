@@ -20,8 +20,10 @@ const Container = styled.div({
 
 const RemoveUserFromProject = ({
     project,
+    handleRefetch,
 }: {
     project: Projects[0];
+    handleRefetch: () => void;
 }): JSX.Element => {
     const options = useMemo(() => {
         const userOptions: Array<{ value: string; label: string }> = [];
@@ -87,7 +89,9 @@ const RemoveUserFromProject = ({
                                     'An error occured when trying to remove a user.'
                                 );
                             },
-                            onSettled: () => {},
+                            onSettled: () => {
+                                handleRefetch();
+                            },
                         }
                     );
                 }}
