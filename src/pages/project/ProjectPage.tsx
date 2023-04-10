@@ -20,6 +20,7 @@ import CommentSection, { Params } from '../../components/CommentSection';
 import useAddProjectComment from '../../hooks/project/useAddProjectComment';
 import { MutateOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
+import RemoveUserFromProject from '../../components/project/RemoveUserFromProject.tsx';
 
 const sortOptions = [
     { value: 'estimate', label: 'Estimate' },
@@ -56,7 +57,9 @@ const ProjectPage: React.FC = () => {
         sortOrder
     );
     const navigate = useNavigate();
-    const [showModal, setShowModal] = useState(false);
+    const [showAddUser, setShowAddUser] = useState(false);
+    const [showRemoveUser, setShowRemoveUser] = useState(false);
+
     const [showNewDateInput, setShowNewDateInput] = useState(false);
     const auth = useAuth();
     const [toggleDescription, setToggleDescription] = useState(false);
@@ -87,13 +90,22 @@ const ProjectPage: React.FC = () => {
 
     return (
         <>
-            {showModal && project !== undefined && (
+            {showAddUser && project !== undefined && (
                 <Modal
                     handleSetShowModal={() => {
-                        setShowModal(false);
+                        setShowAddUser(false);
                     }}
                 >
                     <AddUserToProject project={project} />
+                </Modal>
+            )}
+            {showRemoveUser && project !== undefined && (
+                <Modal
+                    handleSetShowModal={() => {
+                        setShowRemoveUser(false);
+                    }}
+                >
+                    <RemoveUserFromProject project={project} />
                 </Modal>
             )}
             {showNewDateInput && project !== undefined && (
@@ -225,10 +237,17 @@ const ProjectPage: React.FC = () => {
                     </Button>
                     <Button
                         onClick={() => {
-                            setShowModal(true);
+                            setShowAddUser(true);
                         }}
                     >
                         Add users
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            setShowRemoveUser(true);
+                        }}
+                    >
+                        Remove users
                     </Button>
                     <Button
                         onClick={() => {
