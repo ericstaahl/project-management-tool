@@ -15,6 +15,7 @@ import InputError from '../../components/input/InputError';
 import InputLabelWrapper from '../../components/input/InputLabelWrapper';
 import InputContainer from '../../components/input/InputContainer';
 import TitleError from '../../components/input/TitleError';
+import useAssignSelf from '../../hooks/todo/useAssignSelf';
 
 const StyledForm = styled.form({
     display: 'flex',
@@ -37,7 +38,7 @@ const EditTodoPage: React.FC = () => {
     const { data: todo, remove, isLoading } = useGetTodo(projectId, todoId);
     console.log('todo', todo);
     const updateTodo = useUpdateTodo();
-    // const deleteTodo = useDeleteTodo();
+    const assignSelf = useAssignSelf();
     const [initialRender, setInitialRender] = useState(true);
     const deleteTodo = useDeleteTodo();
 
@@ -72,6 +73,19 @@ const EditTodoPage: React.FC = () => {
     }, [todo]);
 
     const navigate = useNavigate();
+
+    const handleAssignSelf = (): void => {
+        assignSelf.mutate(
+            { todoId, projectId },
+            {
+                onSuccess: () => {
+                    if (projectId === undefined) return;
+                    remove();
+                    navigate(`/projects/${projectId}`);
+                },
+            }
+        );
+    };
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
         const todoToSave: UpdatedTodo = {
@@ -169,6 +183,14 @@ const EditTodoPage: React.FC = () => {
 
                     <div style={{ display: 'flex', columnGap: '1rem' }}>
                         <Button type='submit'>Save</Button>
+                        <Button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                handleAssignSelf();
+                            }}
+                        >
+                            Assign yourself
+                        </Button>
                         <Button onClick={resetValues}>Reset</Button>
                         <Button onClick={handleDeleteTodo}>Delete</Button>
                     </div>
