@@ -79,28 +79,31 @@ const TodoBoard = ({ data: todos }: Props): JSX.Element => {
         })
     );
 
-    const handleDragEvent = useCallback((event: CustomDragEndEvent): void => {
-        const { active, over } = event;
-        if (todos === undefined || over === null) return;
-        const todoToUpdate = todos.find(
-            (todo) => todo.todo_id === Number(active.id)
-        );
-        if (todoToUpdate === undefined) return;
-        if (todoToUpdate.status === over.id) return;
-        todoToUpdate.status = over.id;
-        updateTodo.mutate(
-            {
-                updatedTodo: todoToUpdate,
-                projectId: String(todoToUpdate.project_id),
-                todoId: String(todoToUpdate.todo_id),
-            },
-            {
-                onSuccess: () => {
-                    console.log('Successfully updated to-do.');
+    const handleDragEvent = useCallback(
+        (event: CustomDragEndEvent): void => {
+            const { active, over } = event;
+            if (todos === undefined || over === null) return;
+            const todoToUpdate = todos.find(
+                (todo) => todo.todo_id === Number(active.id)
+            );
+            if (todoToUpdate === undefined) return;
+            if (todoToUpdate.status === over.id) return;
+            todoToUpdate.status = over.id;
+            updateTodo.mutate(
+                {
+                    updatedTodo: todoToUpdate,
+                    projectId: String(todoToUpdate.project_id),
+                    todoId: String(todoToUpdate.todo_id),
                 },
-            }
-        );
-    }, []);
+                {
+                    onSuccess: () => {
+                        console.log('Successfully updated to-do.');
+                    },
+                }
+            );
+        },
+        [todos]
+    );
 
     return (
         <>

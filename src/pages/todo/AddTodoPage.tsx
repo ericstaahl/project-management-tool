@@ -13,6 +13,9 @@ import InputError from '../../components/input/InputError';
 import InputLabelWrapper from '../../components/input/InputLabelWrapper';
 import InputContainer from '../../components/input/InputContainer';
 import TitleError from '../../components/input/TitleError';
+import { useQueryClient } from '@tanstack/react-query';
+import todoQueryKeys from '../../query-keys/todoQueryKeys';
+import { toast } from 'react-toastify';
 
 const StyledForm = styled.form({
     display: 'flex',
@@ -41,6 +44,7 @@ const AddTodoPage: React.FC = () => {
     const navigate = useNavigate();
 
     const addTodo = useAddTodo();
+    const queryClient = useQueryClient();
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
         const todoToSave: TodoToSave = {
@@ -53,7 +57,16 @@ const AddTodoPage: React.FC = () => {
 
         addTodo.mutate(todoToSave, {
             onSuccess: () => {
-                if (projectId !== undefined) navigate(`/projects/${projectId}`);
+                queryClient
+                    .invalidateQueries(todoQueryKeys.lists())
+                    .then()
+                    .catch(() => {
+                        toast.error('An error occured while refetching query.');
+                    })
+                    .finally(() => {
+                        if (projectId !== undefined)
+                            navigate(`/projects/${projectId}`);
+                    });
             },
         });
     };

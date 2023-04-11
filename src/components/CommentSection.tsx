@@ -79,7 +79,6 @@ const CommentSection = ({
 
     const deleteComment = useDeleteProjectComment();
     const handleDeleteComment = (id: string): void => {
-        console.log(id);
         deleteComment.mutate(
             {
                 commentId: id,
@@ -104,7 +103,6 @@ const CommentSection = ({
     };
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
-        console.log(data);
         const dataToSend = {
             comment: { content: data.content },
             id,
