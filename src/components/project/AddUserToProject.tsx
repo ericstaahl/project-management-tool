@@ -22,8 +22,10 @@ const Container = styled.div({
 
 const AddUserToProject = ({
     project,
+    handleRefetchProjects,
 }: {
     project: Projects[0];
+    handleRefetchProjects: () => Promise<void>;
 }): JSX.Element => {
     const { data: users, isLoading, refetch } = useGetAllUsers();
 
@@ -47,7 +49,7 @@ const AddUserToProject = ({
             });
         });
         return userOptions;
-    }, [users]);
+    }, [users, project]);
 
     const [selectedUser, setSelectedUser] = useState<{
         value: string;
@@ -74,6 +76,7 @@ const AddUserToProject = ({
                                         value: selected.value,
                                     });
                             },
+                            value: selectedUser,
                         }}
                     />
                 )}
@@ -102,7 +105,14 @@ const AddUserToProject = ({
                             },
                             onSettled: () => {
                                 refetch()
-                                    .then()
+                                    .then(() => {})
+                                    .catch(() => {
+                                        toast.error(
+                                            'An error occured while refetching query.'
+                                        );
+                                    });
+                                handleRefetchProjects()
+                                    .then(() => {})
                                     .catch(() => {
                                         toast.error(
                                             'An error occured while refetching query.'

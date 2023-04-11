@@ -124,7 +124,12 @@ const ProjectPage: React.FC = () => {
                         setShowAddUser(false);
                     }}
                 >
-                    <AddUserToProject project={project} />
+                    <AddUserToProject
+                        project={project}
+                        handleRefetchProjects={async () => {
+                            await refetch();
+                        }}
+                    />
                 </Modal>
             )}
             {showRemoveUser && project !== undefined && (
@@ -134,7 +139,8 @@ const ProjectPage: React.FC = () => {
                     }}
                 >
                     <RemoveUserFromProject
-                        handleRefetch={async () => {
+                        handleRefetchs={async () => {
+                            await refetch();
                             await refetchTodos();
                         }}
                         project={project}

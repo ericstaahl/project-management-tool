@@ -20,10 +20,10 @@ const Container = styled.div({
 
 const RemoveUserFromProject = ({
     project,
-    handleRefetch,
+    handleRefetchs,
 }: {
     project: Projects[0];
-    handleRefetch: () => void;
+    handleRefetchs: () => Promise<void>;
 }): JSX.Element => {
     const options = useMemo(() => {
         const userOptions: Array<{ value: string; label: string }> = [];
@@ -56,6 +56,7 @@ const RemoveUserFromProject = ({
                         selectProps={{
                             placeholder: 'Select user...',
                             options,
+                            value: selectedUser,
                             onChange: (selected) => {
                                 if (selected !== null)
                                     setSelectedUser({
@@ -90,7 +91,13 @@ const RemoveUserFromProject = ({
                                 );
                             },
                             onSettled: () => {
-                                handleRefetch();
+                                handleRefetchs()
+                                    .then(() => {})
+                                    .catch(() => {
+                                        toast.error(
+                                            'An error occured while refetching query.'
+                                        );
+                                    });
                             },
                         }
                     );
