@@ -84,28 +84,40 @@ const LoginUserPage: React.FC = () => {
                 <InputContainer>
                     <InputLabelWrapper>
                         <label htmlFor='username'>Username</label>
-                        {errors.username !== undefined && (
+                        {errors.username?.type === 'required' && (
                             <InputError>* Required</InputError>
+                        )}
+                        {errors.username?.type === 'minLength' && (
+                            <InputError>* Min. 5 characters</InputError>
                         )}
                     </InputLabelWrapper>
 
                     <Input
                         type='text'
-                        {...register('username', { required: true })}
+                        {...register('username', {
+                            required: true,
+                            minLength: 5,
+                        })}
                     />
                 </InputContainer>
 
                 <InputContainer>
                     <InputLabelWrapper>
                         <label htmlFor='password'>Password</label>
-                        {errors.password !== undefined && (
+                        {errors.password?.type === 'required' && (
                             <InputError>* Required</InputError>
+                        )}
+                        {errors.password?.type === 'minLength' && (
+                            <InputError>* Min. 8 characters</InputError>
                         )}
                     </InputLabelWrapper>
 
                     <Input
                         type='password'
-                        {...register('password', { required: true })}
+                        {...register('password', {
+                            required: true,
+                            minLength: 8,
+                        })}
                     />
                 </InputContainer>
 
