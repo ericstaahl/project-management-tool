@@ -104,7 +104,9 @@ const AddProjectPage: React.FC = () => {
                     />
                 </InputContainer>
 
-                <Button type='submit'>Save</Button>
+                <Button disabled={addProject.isLoading} type='submit'>
+                    Save
+                </Button>
             </StyledForm>
         </Container>
     );

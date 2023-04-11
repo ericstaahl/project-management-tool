@@ -186,9 +186,17 @@ const EditProjectPage: React.FC = () => {
                             />
                         </InputContainer>
                         <ButtonContainer>
-                            <Button type='submit'>Save</Button>
+                            <Button
+                                disabled={updateProject.isLoading}
+                                type='submit'
+                            >
+                                Save
+                            </Button>
                             <Button onClick={resetValues}>Reset</Button>
-                            <Button onClick={handleDeleteProject}>
+                            <Button
+                                onClick={handleDeleteProject}
+                                disabled={deleteProject.isLoading}
+                            >
                                 Delete
                             </Button>
                             <Button

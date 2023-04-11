@@ -182,7 +182,9 @@ const EditTodoPage: React.FC = () => {
                     </InputContainer>
 
                     <div style={{ display: 'flex', columnGap: '1rem' }}>
-                        <Button type='submit'>Save</Button>
+                        <Button disabled={updateTodo.isLoading} type='submit'>
+                            Save
+                        </Button>
                         <Button
                             onClick={(e) => {
                                 e.preventDefault();
@@ -192,7 +194,12 @@ const EditTodoPage: React.FC = () => {
                             Assign yourself
                         </Button>
                         <Button onClick={resetValues}>Reset</Button>
-                        <Button onClick={handleDeleteTodo}>Delete</Button>
+                        <Button
+                            disabled={deleteTodo.isLoading}
+                            onClick={handleDeleteTodo}
+                        >
+                            Delete
+                        </Button>
                     </div>
                 </StyledForm>
             )}

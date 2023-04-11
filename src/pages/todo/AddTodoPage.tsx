@@ -121,7 +121,9 @@ const AddTodoPage: React.FC = () => {
                     />
                 </InputContainer>
 
-                <Button type='submit'>Save</Button>
+                <Button disabled={addTodo.isLoading} type='submit'>
+                    Save
+                </Button>
             </StyledForm>
         </Container>
     );
