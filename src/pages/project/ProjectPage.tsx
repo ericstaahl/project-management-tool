@@ -268,21 +268,29 @@ const ProjectPage: React.FC = () => {
                     >
                         Add to-do
                     </Button>
-                    <Button
-                        onClick={() => {
-                            setShowAddUser(true);
-                        }}
-                    >
-                        Add users
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            setShowRemoveUser(true);
-                        }}
-                    >
-                        Remove users
-                    </Button>
-                    <Button onClick={handleLeaveProject}>Leave project</Button>
+                    {auth?.user_id === project?.user_id && (
+                        <>
+                            <Button
+                                onClick={() => {
+                                    setShowAddUser(true);
+                                }}
+                            >
+                                Add users
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    setShowRemoveUser(true);
+                                }}
+                            >
+                                Remove users
+                            </Button>
+                        </>
+                    )}
+                    {auth?.user_id !== project?.user_id && (
+                        <Button onClick={handleLeaveProject}>
+                            Leave project
+                        </Button>
+                    )}
                     <Button
                         onClick={() => {
                             navigate('edit');
