@@ -141,9 +141,6 @@ const TodoCard = ({ todoId, projectId }: Props): JSX.Element => {
                                 </TextLineClamp>
                             </CategoryContainer>
                             <div>
-                                <BoldSpan style={{ padding: '0 0.5rem' }}>
-                                    Description{' '}
-                                </BoldSpan>
                                 <Accordion sx={{ marginTop: '0.3rem' }}>
                                     <AccordionSummary
                                         sx={{ paddingLeft: '0.5rem' }}
@@ -156,13 +153,19 @@ const TodoCard = ({ todoId, projectId }: Props): JSX.Element => {
                                                 WebkitLineClamp: 1,
                                                 overflow: 'hidden',
                                                 wordBreak: 'break-word',
+                                                style: 'padding: 0 0.5rem',
                                             }}
                                         >
-                                            {todo.description}
+                                            Description
                                         </Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
-                                        <Typography>
+                                        <Typography
+                                            sx={{
+                                                wordBreak: 'break-word',
+                                                style: 'padding: 0 0.5rem',
+                                            }}
+                                        >
                                             {todo.description}
                                         </Typography>
                                     </AccordionDetails>

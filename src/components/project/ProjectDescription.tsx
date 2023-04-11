@@ -104,10 +104,6 @@ const ProjectDescription = ({
 
             {detail && (
                 <div style={{ maxWidth: '50vw' }}>
-                    <BoldSpan style={{ padding: '0 0.5rem' }}>
-                        Description{' '}
-                    </BoldSpan>
-
                     <Accordion sx={{ marginTop: '0.3rem' }}>
                         <AccordionSummary
                             sx={{ paddingLeft: '0.5rem' }}
@@ -120,13 +116,21 @@ const ProjectDescription = ({
                                     WebkitLineClamp: 1,
                                     overflow: 'hidden',
                                     wordBreak: 'break-word',
+                                    style: 'padding: 0 0.5rem',
+                                }}
+                            >
+                                Description
+                            </Typography>
+                        </AccordionSummary>
+                        <AccordionDetails sx={{ paddingLeft: '0.5rem' }}>
+                            <Typography
+                                sx={{
+                                    wordBreak: 'break-word',
+                                    style: 'padding: 0 0.5rem',
                                 }}
                             >
                                 {project.description}
                             </Typography>
-                        </AccordionSummary>
-                        <AccordionDetails sx={{ paddingLeft: '0.5rem' }}>
-                            <Typography>{project.description}</Typography>
                         </AccordionDetails>
                         <Typography></Typography>
                     </Accordion>
