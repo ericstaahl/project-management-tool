@@ -110,7 +110,10 @@ const Navigation: React.FC = () => {
                             color='inherit'
                         >
                             {menuItems.map((item) => (
-                                <MenuItem key={item.label}>
+                                <MenuItem
+                                    onClick={handleCloseNavMenu}
+                                    key={item.label}
+                                >
                                     <StyledLink to={item.link}>
                                         {item.label}
                                     </StyledLink>
@@ -132,7 +135,10 @@ const Navigation: React.FC = () => {
                                     return null;
                                 }
                                 return (
-                                    <MenuItem key={item.label}>
+                                    <MenuItem
+                                        onClick={handleCloseNavMenu}
+                                        key={item.label}
+                                    >
                                         <StyledLink to={item.link}>
                                             {item.label}
                                         </StyledLink>
@@ -206,7 +212,10 @@ const Navigation: React.FC = () => {
                                     return null;
                                 }
                                 return (
-                                    <MenuItem key={item.label}>
+                                    <MenuItem
+                                        onClick={handleCloseAuthMenu}
+                                        key={item.label}
+                                    >
                                         <StyledLink to={item.link}>
                                             {item.label}
                                         </StyledLink>
