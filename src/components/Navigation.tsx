@@ -25,7 +25,6 @@ const StyledLink = styled(Link)({
 const menuItems = [
     { link: '/projects', label: 'Projects' },
     { link: '/projects/new', label: 'Add project' },
-    { link: '#', label: 'About' },
 ];
 
 const authItems = [
