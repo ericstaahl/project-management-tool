@@ -290,6 +290,13 @@ const ProjectPage: React.FC = () => {
                             >
                                 Remove users
                             </Button>
+                            <Button
+                                onClick={() => {
+                                    navigate('edit');
+                                }}
+                            >
+                                Edit project
+                            </Button>
                         </>
                     )}
                     {auth?.user_id !== project?.user_id && (
@@ -297,13 +304,6 @@ const ProjectPage: React.FC = () => {
                             Leave project
                         </Button>
                     )}
-                    <Button
-                        onClick={() => {
-                            navigate('edit');
-                        }}
-                    >
-                        Edit project
-                    </Button>
                 </ButtonContainer>
 
                 {project?.project_comment !== undefined && (
