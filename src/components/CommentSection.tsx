@@ -129,7 +129,7 @@ const CommentSection = ({
                 sx={{
                     width: '100%',
                     bgcolor: 'background.paper',
-                    overflow: 'scroll',
+                    overflowY: 'auto',
                     maxHeight: '50vh',
                     paddingBottom: 0,
                     borderTopLeftRadius: '4px',
