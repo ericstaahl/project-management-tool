@@ -131,9 +131,7 @@ const CommentSection = ({
                     bgcolor: 'background.paper',
                     overflowY: 'auto',
                     maxHeight: '50vh',
-                    paddingBottom: 0,
-                    borderTopLeftRadius: '4px',
-                    borderTopRightRadius: '4px',
+                    borderRadius: '4px',
                 }}
             >
                 {comments.length === 0 && (
@@ -229,7 +227,10 @@ const CommentSection = ({
                         </React.Fragment>
                     ))}
             </List>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form
+                style={{ marginTop: '1rem' }}
+                onSubmit={handleSubmit(onSubmit)}
+            >
                 <Box>
                     <TextField
                         label='Comment'
