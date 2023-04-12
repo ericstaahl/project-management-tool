@@ -13,10 +13,9 @@ const Container = styled.div({
     width: '600px',
     backgroundColor: '#201e1e',
     borderRadius: '0.5rem',
-    minHeight: '200px',
+    minHeight: '280px',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
     padding: '2rem 1rem',
 });
 
@@ -67,6 +66,7 @@ const AddUserToProject = ({
                     <SelectInput<typeof options[0]>
                         label={'User'}
                         selectProps={{
+                            maxMenuHeight: 115,
                             placeholder: 'Select user...',
                             options,
                             onChange: (selected) => {
@@ -82,6 +82,7 @@ const AddUserToProject = ({
                 )}
             </div>
             <Button
+                style={{ marginTop: 'auto' }}
                 onClick={() => {
                     if (selectedUser === undefined) return;
 

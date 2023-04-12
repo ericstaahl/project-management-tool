@@ -33,7 +33,7 @@ const ModalContainer = styled.div({
 const ModalWrapper = styled.div({
     margin: 'auto',
     maxHeight: '100%',
-    overflow: 'auto',
+    overflowX: 'auto',
 });
 
 const Modal: React.FC<Props> = ({ handleSetShowModal, children }) => {
